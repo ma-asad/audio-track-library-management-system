@@ -50,4 +50,3 @@ This application has the following dependencies:
 
 - C++ compiler (e.g., g++)
 - Standard Template Library (STL)
-
