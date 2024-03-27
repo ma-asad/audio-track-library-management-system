@@ -3,17 +3,6 @@
 
 #include <string>
 
-
-/*
-    check the number of arguments passed from the command line
-    @param argc The number of command line arguments
-    @param argv The array of command line arguments
-    @param FILENAME Reference to a string where the filename will be stored
-    @return bool
-*/
-bool checkNumberOfArguments(int argc, char* argv[], std::string& FILENAME);
-
-
 /*
     clear the screeen and display title of task
     @param message

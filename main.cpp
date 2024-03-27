@@ -7,18 +7,6 @@
 #include <limits>
 #include <vector>
 
-bool checkNumberOfArguments(int argumentsCount, char* argv[], 
-                            std::string& filename)
-{
-    if (argumentsCount != 2)
-    {
-        std::cerr << "Program Execution : " << argv[0] << " <filename>"
-                  << std::endl;
-        return false;
-    }
-    filename = argv[1];
-    return true;
-}
 
 void clearScreen(const std::string& message)
 {
@@ -46,19 +34,11 @@ void mainMenu()
     std::cout << "*=============================================*" << std::endl;
 }
 
-int main(int argc, char* argv[])
+int main()
 {
     std::cout << std::endl << "Audio Track Library Management System" << std::endl
               << "Group Coursework" << std::endl
               << std::endl;
-    
-    std::string filename;
-    const int argumentCount = argc;
-
-    if (!checkNumberOfArguments(argumentCount, argv, filename))
-    {
-        return 1;
-    }
 
     int choice;
     do
