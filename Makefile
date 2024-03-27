@@ -1,4 +1,4 @@
-# Makefile for creating executable file
+# Makefile for Audio Track Library Management System
 
 # Compiler
 CXX = g++
@@ -6,29 +6,42 @@ CXX = g++
 # Compiler flags
 CXXFLAGS = -g -Wall -Wextra -pedantic
 
+# Source files
+SOURCES = main.cpp AudioTrack.cpp AudioLibrary.cpp validation.cpp
+
+# Header files
+HEADERS = AudioTrack.h AudioLibrary.h validation.h
+
+# Object files
+OBJECTS = $(SOURCES:.cpp=.o)
+
 # Target executable program name
-TARGET = audio-library
-
-# Object dependencies files
-OBJS = main.o validation.o
-
-# Header dependencies files
-HEADERS = main.h validation.h
+TARGET = audio_track_library.exe
 
 # Build target
 .PHONY: all
 all: $(TARGET)
 
-$(TARGET): $(OBJS)
-	@echo "Creating target for the program"
-	$(CXX) $(CXXFLAGS) -o $@ $^
+# Link object files to create the executable
+$(TARGET): $(OBJECTS)
+	@echo "Creating target executable: $@"
+	$(CXX) $(CXXFLAGS) $(OBJECTS) -o $@
 
-# Compile object file which depends on cpp file and headers
+# Compile object files from source files and headers
 %.o: %.cpp $(HEADERS)
+	@echo "Compiling $<"
 	$(CXX) $(CXXFLAGS) -c $<
 
 # Clean up
 .PHONY: clean
 clean:
-	@echo "Clean up Project"
-	rm -f $(OBJS) $(TARGET)
+	@echo "Cleaning up project files"
+	rm -f $(OBJECTS) $(TARGET)
+
+# Run the executable
+.PHONY: run
+run: $(TARGET)
+	@echo "Running $(TARGET)"
+	./$(TARGET)
+
+
