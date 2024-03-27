@@ -14,26 +14,33 @@ This is a command-line interface (CLI) based application written in C++ for mana
 
 1. Clone the repository:
 
-    ```bash
-    https: git clone https://github.com/ma-asad/audio-track-library-management-system.git
+```bash
+https: git clone https://github.com/ma-asad/audio-track-library-management-system.git
+```
 
-    ssh: git clone git@github.com:ma-asad/audio-track-library-management-system.git
-    ```
+```bash
+ssh: git clone git@github.com:ma-asad/audio-track-library-management-system.git
+```
 
-2. Build the application:
+2. Build the application using the provided Makefile:
 
-    ```bash
-    cd audio-track-library-management-system
-    g++ main.cpp -o audio-library
-    ```
+```bash
+make
+```
 
 3. Run the application:
 
-    ```bash
-    ./audio-library
-    ```
+```bash
+make run
+```
 
-4. Follow the on-screen instructions to navigate through the menu and perform various operations.
+4. To clean the build artifacts (object files and executable):
+
+```bash
+make clean
+```
+
+5. Follow the on-screen instructions to navigate through the menu and perform various operations.
 
 ## Dependencies
 
@@ -41,3 +48,4 @@ This application has the following dependencies:
 
 - C++ compiler (e.g., g++)
 - Standard Template Library (STL)
+
