@@ -7,10 +7,10 @@ CXX = g++
 CXXFLAGS = -g -Wall -Wextra -pedantic
 
 # Source files
-SOURCES = main.cpp AudioTrack.cpp AudioLibrary.cpp
+SOURCES = main.cpp audioTrack.cpp audioLibrary.cpp validation.cpp
 
 # Header files
-HEADERS = AudioTrack.h AudioLibrary.h
+HEADERS = audioTrack.h audioLibrary.h validation.h
 
 # Object files
 OBJECTS = $(SOURCES:.cpp=.o)
