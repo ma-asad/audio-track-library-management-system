@@ -3,7 +3,7 @@
 #include <limits>
 
 int getValidChoice()
-{
+
     int choice;
     bool validInput = false;
 
