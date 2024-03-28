@@ -7,10 +7,10 @@ CXX = g++
 CXXFLAGS = -g -Wall -Wextra -pedantic
 
 # Source files
-SOURCES = main.cpp audioTrack.cpp audioLibrary.cpp validation.cpp
+SOURCES = main.cpp AudioTrack.cpp AudioLibrary.cpp validation.cpp
 
 # Header files
-HEADERS = audioTrack.h audioLibrary.h validation.h
+HEADERS = AudioTrack.h AudioLibrary.h validation.h
 
 # Object files
 OBJECTS = $(SOURCES:.cpp=.o)
@@ -43,3 +43,5 @@ clean:
 run: $(TARGET)
 	@echo "Running $(TARGET)"
 	./$(TARGET)
+
+
