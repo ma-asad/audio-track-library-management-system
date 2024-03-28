@@ -14,12 +14,14 @@ This is a command-line interface (CLI) based application written in C++ for mana
 
 1. Clone the repository:
 
+https: 
 ```bash
-https: git clone https://github.com/ma-asad/audio-track-library-management-system.git
+git clone https://github.com/ma-asad/audio-track-library-management-system.git
 ```
 
+ssh: 
 ```bash
-ssh: git clone git@github.com:ma-asad/audio-track-library-management-system.git
+git clone git@github.com:ma-asad/audio-track-library-management-system.git
 ```
 
 2. Build the application using the provided Makefile:
