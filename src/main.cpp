@@ -14,8 +14,7 @@ void clearScreen(const std::string& message)
     std::cout << message << std::endl;
 }
 
-void mainMenu()
-{
+void mainMenu() {
     std::cout << std::endl;
     clearScreen("Menu\n");
     std::cout << std::endl;

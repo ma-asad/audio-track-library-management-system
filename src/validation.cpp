@@ -2,7 +2,7 @@
 #include <iostream>
 #include <limits>
 
-int getValidChoice()
+int getValidChoice() {
 
     int choice;
     bool validInput = false;
