@@ -1,9 +1,8 @@
-#include "audiotrack.h"
+#include "audiotrack.hpp"
 
 
 /*
     audioTrack.cpp
-    Authors: M00851681,
     Created: 
     Updated: 
 */

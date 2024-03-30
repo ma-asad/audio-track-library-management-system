@@ -1,6 +1,6 @@
-#include "main.h"
-#include "validation.h"
-#include "audiolibrary.h"
+#include "main.hpp"
+#include "validation.hpp"
+#include "audiolibrary.hpp"
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -11,7 +11,6 @@
 
 /*
     main.cpp
-    Authors: M00851681,
     Created: 
     Updated: 
 */
@@ -101,10 +100,11 @@ int main(int argc, char* argv[])
     std::string filename;
     int argumentCount = argc;
 
-    if (!checkNumberOfArguments(argumentCount, argv, filename))
-    {
-        return 1;
-    }
+    // TODO --> Review file handling
+    // if (!checkNumberOfArguments(argumentCount, argv, filename))
+    // {
+    //     return 1;
+    // }
 
     AudioLibrary library;
     int choice;

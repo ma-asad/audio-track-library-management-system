@@ -1,11 +1,10 @@
-#include "validation.h"
+#include "validation.hpp"
 
 #include <iostream>
 #include <limits>
 
 /*
     validation.cpp
-    Authors: M00851681,
     Created: 
     Updated: 
 */

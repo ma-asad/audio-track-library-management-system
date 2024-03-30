@@ -1,11 +1,10 @@
-#include "audiolibrary.h"
+#include "audiolibrary.hpp"
 #include <fstream>
 #include <sstream>
 #include <iostream>
 
 /*
     audioLibrary.cpp
-    Authors: M00851681,
     Created: 
     Updated: 
 */

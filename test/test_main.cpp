@@ -1,6 +1,6 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
-#include "validation.h"
+#include "validation.hpp"
 #include <sstream>
 
 
