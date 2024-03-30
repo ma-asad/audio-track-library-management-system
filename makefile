@@ -41,6 +41,6 @@ clean:
 
 # Run the executable
 .PHONY: run
-run: $(TARGET)
-	@echo "Running $(TARGET)"
-	./$(TARGET)
+run:
+	@echo "Running $(TARGET) with the specified filename"
+	./$(TARGET) $(FILE)
