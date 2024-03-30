@@ -5,7 +5,7 @@ This is a command-line interface (CLI) based application written in C++ for mana
 ## Features
 
 - Search: Users can search for specific audio tracks by title, artist, album, genre, or playlist.
-- Add: Users can add new audio tracks to the library by providing the necessary details such as title, artist, album, genre.
+- Add: Users can add new audio tracks to the library by providing the necessary details such as title, artist, album, genre, and a csv file path.
 - Delete: Users can delete existing audio tracks from the library based on their unique identifier.
 - Create Playlist: Users can create playlists by selecting multiple audio tracks from the library.
 - List Audio: Users can view a list of all the audio tracks and their details in the library.
@@ -36,19 +36,13 @@ make
 make run FILE=<file_name>
 ```
 
-4. Test the application:
-
-```bash
-make test
-```
-
-5. To clean the build artifacts (object files and executable):
+4. To clean the build artifacts (object files and executable):
 
 ```bash
 make clean
 ```
 
-6. Follow the on-screen instructions to navigate through the menu and perform various operations.
+5. Follow the on-screen instructions to navigate through the menu and perform various operations.
 
 ## Dependencies
 
