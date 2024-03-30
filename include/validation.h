@@ -1,12 +1,19 @@
 #ifndef VALIDATION_H
 #define VALIDATION_H
 
-/*
-    Ask the user to enter a valid input only, else will flag as error
-    Valid input should be an integer only
-    Integer should be in the range from 1-6 only
 
+/*
+    validation.h
+    Authors: M00851681,
+    Created: 
+    Updated: 
 */
+
+
+/**
+ * @brief Prompts the user to enter a valid choice between 1 and 6.
+ * @return The user's valid choice as an integer.
+ */
 int getValidChoice();
 
 #endif
