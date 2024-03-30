@@ -33,7 +33,7 @@ make
 3. Run the application:
 
 ```bash
-make run
+make run FILE=<file_name>
 ```
 
 4. To clean the build artifacts (object files and executable):
