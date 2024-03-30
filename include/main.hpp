@@ -2,12 +2,11 @@
 #define MAIN_H
 
 #include <string>
-#include "audiolibrary.h"
+#include "audiolibrary.hpp"
 
 
 /*
-    main.h
-    Authors: M00851681,
+    main.hpp
     Created: 
     Updated: 
 */

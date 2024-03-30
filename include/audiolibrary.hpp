@@ -3,14 +3,13 @@
 
 
 /*
-    audiolibrary.h
-    Authors: M00851681,
+    audiolibrary.hpp
     Created: 
     Updated: 
 */
 
 #include <string>
-#include "audioTrack.h"
+#include "audioTrack.hpp"
 #include <unordered_map>
 
 /**

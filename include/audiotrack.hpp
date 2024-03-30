@@ -5,8 +5,7 @@
 
 
 /*
-    audiotrack.h
-    Authors: M00851681,
+    audiotrack.hpp
     Created: 
     Updated: 
 */
