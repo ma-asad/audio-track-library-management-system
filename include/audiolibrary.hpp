@@ -10,7 +10,7 @@
 
 #include <string>
 #include "audioTrack.hpp"
-#include <unordered_map>
+#include "hashtable.hpp"
 
 /**
  * @class AudioLibrary
@@ -19,12 +19,16 @@
  */
 class AudioLibrary {
 private:
-    std::unordered_map<std::string, AudioTrack> tracks;
+    HashTable<std::string, AudioTrack> tracks;
 
 public:
-    void addTrack(const AudioTrack& track);
+    AudioLibrary() {}
+    void addTrackToHashTable(const AudioTrack& track);
     void loadData(const std::string& filename);
-    void userAddTrack();
+    void addTrackFromCSV();
+    bool checkFileExistence(const std::string& filename);
+    void addTrackManually();
+    bool deleteTrack(const std::string& audioName);
 };
 
 #endif
