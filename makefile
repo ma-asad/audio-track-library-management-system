@@ -35,7 +35,7 @@ test: $(TEST_TARGET)
 
 # Build target
 .PHONY: all
-all: $(BUILD_DIR) $(TARGET) $(TEST_TARGET)
+all: $(BUILD_DIR) $(TARGET) 
 
 $(BUILD_DIR):
 	@echo "Creating build directory: $@"
@@ -47,15 +47,9 @@ $(TARGET): $(OBJECTS)
 	$(CXX) $(CXXFLAGS) -I$(INC_DIR) $(OBJECTS) -o $@
 
 # Compile object files from source files
-$(BUILD_DIR)%.o: $(SRC_DIR)%.cpp
+$(BUILD_DIR)%.o: $(SRC_DIR)%.cpp | $(BUILD_DIR)
 	@echo "Compiling $<"
 	$(CXX) $(CXXFLAGS) -I$(INC_DIR) -c $< -o $@
-
-# Test target
-.PHONY: test
-test: $(TEST_TARGET)
-	@echo "Running test executable"
-	./$(TEST_TARGET)
 
 # Link test object files and test sources to create the test executable
 $(TEST_TARGET): $(TEST_OBJECTS) $(TEST_SOURCES)
@@ -75,7 +69,7 @@ run: $(TARGET)
 	./$(TARGET)
 
 # Run the test executable
-.PHONY: runtest
+.PHONY: test
 runtest: $(TEST_TARGET)
 	@echo "Running test executable"
 	./$(TEST_TARGET)
