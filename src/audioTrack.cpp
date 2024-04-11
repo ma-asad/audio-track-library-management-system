@@ -66,3 +66,13 @@ std::string AudioTrack::getPlaylist() const
 {
     return this->playlist;
 }
+
+bool operator==(const AudioTrack& lhs, const AudioTrack& rhs) {
+    return (lhs.authorName == rhs.authorName &&
+            lhs.audioName == rhs.audioName &&
+            lhs.albumName == rhs.albumName &&
+            lhs.genre == rhs.genre &&
+            lhs.duration == rhs.duration &&
+            lhs.datePublished == rhs.datePublished &&
+            lhs.playlist == rhs.playlist);
+}

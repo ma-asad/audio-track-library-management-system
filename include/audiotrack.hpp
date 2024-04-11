@@ -25,6 +25,7 @@ class AudioTrack {
         std::string duration;
         std::string datePublished;
         std::string playlist;
+        friend bool operator==(const AudioTrack& lhs, const AudioTrack& rhs);
     
     public:
         /**

@@ -15,26 +15,16 @@
     Updated: 
 */
 
+void enter(){
+    std::cout << "\nPress Enter two to go back to menu";
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cin.get();
+}
 
 void clearScreen(const std::string& message)
 {
     std::cout << "\033[2J\033[1;1H";
     std::cout << message << std::endl;
-}
-
-bool checkNumberOfArguments(int& argumentsCount, char* argv[], std::string& filename)
-{
-    if (argumentsCount != 2)
-    {
-        std::cerr << "Invalid number of arguments." << std::endl;
-        std::cerr << "Program Execution: " << argv[0] << " <filename>" << std::endl;
-        std::cout << "Please enter the filename: ";
-        std::getline(std::cin, filename);
-        argumentsCount = 2; 
-        return true;
-    }
-    filename = argv[1];
-    return true;
 }
 
 
@@ -48,12 +38,10 @@ void mainMenu()
     std::cout << "*=============================================*" << std::endl;
     std::cout << "| Choose an option below :                    |" << std::endl;
     std::cout << "| 1. Add Music File                           |" << std::endl;
-    std::cout << "| 2. Search Music or Album                    |" << std::endl;
-    std::cout << "| 3. List All Music, Sort by Artist, Album,   |" << std::endl;
-    std::cout << "|    Date, Release, Duration                  |" << std::endl;
+    std::cout << "| 2. Delete                                   |" << std::endl;
+    std::cout << "| 3. Search                                   |" << std::endl;
     std::cout << "| 4. Create Playlist                          |" << std::endl;
-    std::cout << "| 5. Delete Albums or Music, Add Track to     |" << std::endl;
-    std::cout << "|    Playlist                                 |" << std::endl;
+    std::cout << "| 5. List Audio                               |" << std::endl;
     std::cout << "| 6. Exit                                     |" << std::endl;
     std::cout << "*=============================================*" << std::endl;
 }
@@ -61,32 +49,38 @@ void mainMenu()
 
 void userChoice(int choice, AudioLibrary& library)
 {
-    if (choice == 1)
-    {
-        library.userAddTrack();
+    std::string audioName;
+    if (choice == 1){
+        clearScreen("Add: Users can add new audio tracks to the library \n");
+        int addChoice = getValidAddChoice();
+        if (addChoice == 1){
+            library.addTrackFromCSV();
+        } else if (addChoice == 2){
+            library.addTrackManually();
+        }
+        enter();
     }
-    else if (choice == 2)
-    {
-       
+    else if (choice == 2){
+        clearScreen("Delete: Users can delete existing audio tracks from the library \n");
+        std::cout << "Enter the name of the audio track to delete: ";
+        std::getline(std::cin, audioName);
+        library.deleteTrack(audioName);
+        enter();
+
     }
-    else if (choice == 3)
-    {
-        
+    else if (choice == 3){
+            enter();
     }
-    else if (choice == 4)
-    {
-        
+    else if (choice == 4){
+            enter();
     }
-    else if (choice == 5)
-    {
-        
+    else if (choice == 5){
+            enter();
     }
-    else if (choice == 6)
-    {
+    else if (choice == 6){
         std::cout << "Exiting the program. Goodbye!" << std::endl;
     }
-    else
-    {
+    else{
         std::cout << "Invalid choice. Please try again." << std::endl;
     }
 }
@@ -100,11 +94,6 @@ int main(int argc, char* argv[])
     std::string filename;
     int argumentCount = argc;
 
-    // TODO --> Review file handling
-    // if (!checkNumberOfArguments(argumentCount, argv, filename))
-    // {
-    //     return 1;
-    // }
 
     AudioLibrary library;
     int choice;

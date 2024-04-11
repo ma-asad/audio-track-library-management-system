@@ -19,15 +19,6 @@
 void clearScreen(const std::string& message);
 
 /**
- * @brief Checks the number of command-line arguments and prompts the user for the filename.
- * @param argumentsCount Reference to the number of command-line arguments.
- * @param argv The array of command-line arguments.
- * @param filename Reference to a string where the filename will be stored.
- * @return True if the number of arguments is valid or the user provided the filename, false otherwise.
- */
-bool checkNumberOfArguments(int& argumentsCount, char* argv[], std::string& filename);
-
-/**
  * @brief Displays the main menu with different options.
  */
 void mainMenu();
