@@ -51,7 +51,7 @@ void userChoice(int choice, AudioLibrary& library)
 {
     std::string audioName;
     if (choice == 1){
-        clearScreen("Add: Users can add new audio tracks to the library \n");
+        clearScreen("Add: Users can add new audio tracks \n");
         int addChoice = getValidAddChoice();
         if (addChoice == 1){
             library.addTrackFromCSV();
@@ -61,7 +61,7 @@ void userChoice(int choice, AudioLibrary& library)
         enter();
     }
     else if (choice == 2){
-        clearScreen("Delete: Users can delete existing audio tracks from the library \n");
+        clearScreen("Delete: Users can delete existing audio tracks \n");
         std::cout << "Enter the name of the audio track to delete: ";
         std::getline(std::cin, audioName);
         library.deleteTrack(audioName);
@@ -75,6 +75,8 @@ void userChoice(int choice, AudioLibrary& library)
             enter();
     }
     else if (choice == 5){
+            clearScreen("List Audio: View a list of audio tracks &  details");
+            library.listAudio();
             enter();
     }
     else if (choice == 6){

@@ -54,6 +54,19 @@ public:
         *@return true if the key-value pair was removed.
     */
     bool remove(const Key& key);
+
+
+    /**
+        *@brief Check if the hash table is empty.
+        *@return true if the hash table is empty else false.
+    */
+    bool empty() const;
+
+    /**
+        *@brief Get the table of the hash table
+        *@return  The table of the hash table..
+    */
+    const std::vector<std::list<std::pair<Key, Value>>>& getTable() const;
 };
 
 #endif

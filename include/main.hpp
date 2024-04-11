@@ -13,6 +13,11 @@
 
 
 /**
+ * @brief Ask the user to press Enter two times to go back to menu
+ */
+void enter();
+
+/**
  * @brief Clears the screen and displays a message.
  * @param message The message to be displayed.
  */

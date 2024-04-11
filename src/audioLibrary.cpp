@@ -122,3 +122,28 @@ bool AudioLibrary:: deleteTrack(const std::string& audioName) {
     }
 }
 
+
+void AudioLibrary::listAudio() const{
+    if (tracks.empty()){
+        std::cout << "There are no audio tracks in the library."  << std::endl;
+        return;
+    }
+    std::cout << "*-----------------------------*" << std::endl;
+    std::cout << "| Audio Tracks in the Library |" << std::endl;
+    std::cout << "*-----------------------------*" << std::endl;
+
+    for (const auto& bucket : tracks.getTable()) {
+        for (const auto& entry : bucket) {
+            const AudioTrack& track = entry.second;
+            std::cout << "Author Name: " << track.getAuthorName() << std::endl;
+            std::cout << "Audio Name: " << track.getAudioName() << std::endl;
+            std::cout << "Album Name: " << track.getAlbumName() << std::endl;
+            std::cout << "Genre: " << track.getGenre() << std::endl;
+            std::cout << "Duration: " << track.getDuration() << std::endl;
+            std::cout << "Date Published: " << track.getDatePublished() << std::endl;
+            std::cout << "Playlist: " << track.getPlaylist() << std::endl;
+            std::cout << "-----------------------------" << std::endl;
+        }
+    }
+
+}

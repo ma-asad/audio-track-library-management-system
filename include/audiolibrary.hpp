@@ -29,6 +29,7 @@ public:
     bool checkFileExistence(const std::string& filename);
     void addTrackManually();
     bool deleteTrack(const std::string& audioName);
+    void listAudio() const;
 };
 
 #endif
