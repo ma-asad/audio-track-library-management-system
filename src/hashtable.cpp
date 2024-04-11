@@ -26,7 +26,7 @@ void HashTable<Key, Value>::insert(const Key& key, const Value& value){
     size_t index = hash(key);
     std::list<std::pair<Key, Value>>& bucket = table[index];
 
-    // Update exiting entry
+    // Update existing entry
     for (std::pair<Key, Value>& element : bucket) {
         if (element.first == key) {
             element.second = value;
@@ -52,5 +52,24 @@ bool HashTable<Key, Value>::remove(const Key& key) {
 
     return false;
 }
+
+// check if empty
+template <typename Key, typename Value>
+bool HashTable<Key, Value>::empty() const {
+    for (const auto& bucket: table){
+        if (!bucket.empty()) {
+            return false;
+        }
+    }
+    return true;
+}
+
+// Get Table 
+template <typename Key, typename Value>
+const std::vector<std::list<std::pair<Key, Value>>>& 
+        HashTable<Key, Value>::getTable() const{
+            return table;
+}
+
 
 template class HashTable<std::string, AudioTrack>;
