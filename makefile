@@ -70,6 +70,6 @@ run: $(TARGET)
 
 # Run the test executable
 .PHONY: test
-runtest: $(TEST_TARGET)
+test: $(TEST_TARGET)
 	@echo "Running test executable"
 	./$(TEST_TARGET)
