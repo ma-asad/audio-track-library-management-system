@@ -1,72 +1,64 @@
 #ifndef HASHTABLE_H
 #define HASHTABLE_H
 
-#include <vector>
-#include <list>
+
 #include <string>
+#include <cmath>
 
+template <typename T>
+struct Node {
+    T data;
+    Node<T>* next;
+};
 
-/**
- *@brief Hash table class template
- *@tparam Key The type of the key.
- *@tparam Key The type of the value.
- *@param Key The size of the hash table.
-*/
 template <typename Key, typename Value>
 class HashTable {
-    private:
-    std::vector<std::list<std::pair<Key, Value>>> table;
+private:
     size_t tableSize;
+    Node<std::pair<Key, Value>>** table;
 
-
-    /**
-        *@brief Compute the hash value for a given key
-        *@param Key The key to compute the hash value for.
-        *@return The computed hash value.
-    */
-    size_t hash(const Key& key);
+    size_t hasher(const Key& key);
+    size_t nextPrimeNumber(size_t size);
+    bool prime(size_t number);
 
 
 public:
+   
     /**
-        *@brief Default constructor with size of 503
-        *@param size The size of the hash table.
+         *@brief Default constructor
     */
-    
-    HashTable(size_t size = 503);
+    HashTable();
 
     /**
-        *@brief Destroy the Hash Table object.
+         *@brief Destroy the Hash Table object
     */
     ~HashTable();
 
     /**
-        *@brief Insert key-value pair into the hash table.
-        *@param Key The key to insert.
-        *@return The computed hash value.
+         *@brief Insert key-value pair into the hash table.
+         *@param Key the key to insert
+         *@return computed hash value
     */
     void insert(const Key& key, const Value& value);
 
-    
     /**
-        *@brief Remove key-value pair from the hash table.
-        *@param Key The key to remove.
-        *@return true if the key-value pair was removed.
+         *@brief Remove key-value pair into the hash table.
+         *@param Key the key to insert
+         *@return true if key-value pair was removeed
     */
     bool remove(const Key& key);
 
 
     /**
-        *@brief Check if the hash table is empty.
-        *@return true if the hash table is empty else false.
+        *@brief Get the key-value paired from the hash tbale into a dynamically
+                allocated array
+        *@param items a reference to pointer that point to dynamically array 
+                of value pairs
+        *@param counter a referenc to a size_t variable to store total items
+                copied into 'items'.
     */
-    bool empty() const;
-
-    /**
-        *@brief Get the table of the hash table
-        *@return  The table of the hash table..
-    */
-    const std::vector<std::list<std::pair<Key, Value>>>& getTable() const;
+    void getItems(std::pair<Key, Value>*& items, size_t& counter);
+    
 };
 
 #endif

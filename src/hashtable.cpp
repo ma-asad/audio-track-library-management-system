@@ -2,74 +2,129 @@
 #include "audiotrack.hpp"
 #include <algorithm>
 
-
+// element of table initialised to nullptr
 template <typename Key, typename Value>
-HashTable<Key, Value>::HashTable(size_t size) : tableSize(size) {
-    table.resize(size);
+HashTable<Key, Value>::HashTable() {
+    tableSize = nextPrimeNumber(503);
+    table = new Node<std::pair<Key, Value>>*[tableSize]();
 }
 
 
-template <typename key, typename Value>
-HashTable<key, Value> ::~HashTable(){
-
-}
-
-// compute hash value
+// frees allocated memory to prevent memory leaks
 template <typename Key, typename Value>
-size_t HashTable<Key, Value>::hash(const Key& key) {
-    std::hash<Key> hasher;
-    return hasher(key) % tableSize;
-}
-
-template <typename Key, typename Value>
-void HashTable<Key, Value>::insert(const Key& key, const Value& value){
-    size_t index = hash(key);
-    std::list<std::pair<Key, Value>>& bucket = table[index];
-
-    // Update existing entry
-    for (std::pair<Key, Value>& element : bucket) {
-        if (element.first == key) {
-            element.second = value;
-            return;
+HashTable<Key, Value> ::~HashTable(){
+    for (size_t c=0; c< tableSize; ++c){
+        Node<std::pair<Key, Value>>* currentNode = table[c];
+        while (currentNode) {
+            Node<std::pair<Key, Value>>* nextNode = currentNode->next;
+            delete currentNode;
+            currentNode = nextNode;
         }
     }
-    // Add new key-value pair
-    bucket.emplace_back(key, value);
+    delete[] table;
 }
 
-// Delete audio
+
+template <typename Key, typename Value>
+void HashTable<Key, Value>::insert(const Key& key, const Value& value) {
+    size_t position = hasher(key);
+    Node<std::pair<Key, Value>>* newNode 
+    = new Node<std::pair<Key, Value>>{{key, value}, nullptr};
+    if (!table[position]) {
+        table[position] = newNode;
+    } else {
+        Node<std::pair<Key, Value>>* currentNode = table[position];
+        while (currentNode->next) {
+            if (currentNode->data.first == key){
+                //update value and deletee newnode
+                currentNode->data.second = value;
+                delete newNode;
+                return;
+            }
+            currentNode = currentNode->next;
+        }
+        currentNode->next = newNode;
+    }
+}
+
+// Delete 
 template <typename Key, typename Value>
 bool HashTable<Key, Value>::remove(const Key& key) {
-    size_t index = hash(key);
-    std::list<std::pair<Key, Value>>& bucket = table[index];
+    size_t position = hasher(key);
+    Node<std::pair<Key, Value>>* currentNode = table[position];
+    Node<std::pair<Key, Value>>* previousNode = nullptr;
 
-    for (auto& entry : bucket) {
-        if (entry.first == key) {
-            bucket.remove(entry);
+    while (currentNode) {
+        if (currentNode->data.first == key){
+            if (previousNode){
+                previousNode->next = currentNode->next;
+            } else{
+                table[position] = currentNode->next;
+            }
+            delete currentNode;
             return true;
         }
+        previousNode = currentNode;
+        currentNode = currentNode->next;
     }
-
     return false;
 }
 
-// check if empty
 template <typename Key, typename Value>
-bool HashTable<Key, Value>::empty() const {
-    for (const auto& bucket: table){
-        if (!bucket.empty()) {
+void HashTable<Key, Value>::getItems(std::pair<Key, Value>*& items, 
+size_t& counter) {
+    counter = 0;
+    for (size_t c = 0; c < tableSize; ++c) {
+        Node<std::pair<Key, Value>>* currentNode = table[c];
+        while (currentNode){
+            ++counter;
+            currentNode = currentNode->next;
+        }
+    }
+    
+    items = new std::pair<Key,Value>[counter];
+    size_t position = 0;
+    for (size_t c =0; c < tableSize; ++c){
+        Node<std::pair<Key, Value>>* currentNode = table[c];
+        while (currentNode){
+            items[position++] = currentNode->data;
+            currentNode = currentNode->next;
+        }
+    }
+}
+
+
+template <typename Key, typename Value>
+size_t HashTable<Key, Value>::hasher(const Key& key) {
+    size_t hashingValue = 0;
+    for (char character: key){
+        hashingValue = (hashingValue * 31) + character;
+    }
+    return hashingValue % tableSize;
+}
+
+
+template <typename Key, typename Value>
+bool HashTable<Key, Value>::prime(size_t number) {
+    if (number<=1){
+        return false;
+    }
+    for (size_t c = 2; c <= std::sqrt(number); ++c){
+        if (number % c == 0) {
             return false;
         }
     }
     return true;
 }
 
-// Get Table 
 template <typename Key, typename Value>
-const std::vector<std::list<std::pair<Key, Value>>>& 
-        HashTable<Key, Value>::getTable() const{
-            return table;
+size_t HashTable<Key, Value>::nextPrimeNumber(size_t number){
+    while (!prime(number)){
+        ++number;
+    }
+    return number;
 }
+
 
 
 template class HashTable<std::string, AudioTrack>;

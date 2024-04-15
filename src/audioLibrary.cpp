@@ -9,6 +9,7 @@
     Updated: 
 */
 
+AudioLibrary::AudioLibrary() : tracks() {}
 
 void AudioLibrary::addTrackToHashTable(const AudioTrack& track) {
     std::string audioName = track.getAudioName();
@@ -19,7 +20,8 @@ void AudioLibrary::addTrackToHashTable(const AudioTrack& track) {
 void AudioLibrary::loadData(const std::string& filename){
     std::ifstream file(filename);
     if (!file.is_open()) {
-        std::cerr << "Failed to open file: " << filename << std::endl;
+        std::cerr << "Unfortunately failed to open file: " << filename 
+                  << std::endl;
         return;
     }
 
@@ -58,17 +60,18 @@ void AudioLibrary::addTrackFromCSV() {
             if (checkFileExistence(filename)) {
                 validFile = true;
             } else {
-                std::cerr << "File does not exist: " << filename << std::endl;
+                std::cerr << "This file does not exist!: " << filename 
+                          << std::endl;
             }
         } else {
-            std::cerr << "Invalid file format. Please provide a CSV file." 
+            std::cerr << "Invalid file format! Please only csv are allowed" 
                       << std::endl;
         }
     }
 
     loadData(filename);
-    std::cout << "Audio tracks added successfully from " << filename <<  "!" 
-              << std::endl;
+    std::cout << "Audio tracks have been added successfully from " 
+              << filename <<  "!" << std::endl;
 }
 
 
@@ -101,7 +104,7 @@ void AudioLibrary::addTrackManually() {
                     datePublished, playlist);
     addTrackToHashTable(track);
 
-    std::cout << "Audio track added successfully!" << std::endl;
+    std::cout << "The Audio tracks have been added successfully!" << std::endl;
 }
 
 bool AudioLibrary::checkFileExistence(const std::string& filename) {
@@ -112,38 +115,35 @@ bool AudioLibrary::checkFileExistence(const std::string& filename) {
 
 bool AudioLibrary:: deleteTrack(const std::string& audioName) {
     if (tracks.remove(audioName)) {
-        std::cout << "Audio track '" << audioName << "' deleted successfully!" 
-                  << std::endl;
+        std::cout << " The Audio track '" << audioName 
+                  << "' has been deleted successfully!" << std::endl;
         return true;
     } else {
-        std::cout << "Audio track '" << audioName << "' not found." 
+        std::cout << "The Audio track '" << audioName << "'was not found." 
                   << std::endl;
         return false;
     }
 }
 
 
-void AudioLibrary::listAudio() const{
-    if (tracks.empty()){
-        std::cout << "There are no audio tracks in the library."  << std::endl;
-        return;
-    }
-    std::cout << "*-----------------------------*" << std::endl;
-    std::cout << "| Audio Tracks in the Library |" << std::endl;
-    std::cout << "*-----------------------------*" << std::endl;
-
-    for (const auto& bucket : tracks.getTable()) {
-        for (const auto& entry : bucket) {
-            const AudioTrack& track = entry.second;
+void AudioLibrary::listAudio() {
+    size_t counter = 0;
+    std::pair<std::string, AudioTrack>* items = nullptr;
+    tracks.getItems(items, counter);
+    
+    for (size_t c = 0; c < counter; ++c) {
+            const AudioTrack& track = items[c].second;
             std::cout << "Author Name: " << track.getAuthorName() << std::endl;
             std::cout << "Audio Name: " << track.getAudioName() << std::endl;
             std::cout << "Album Name: " << track.getAlbumName() << std::endl;
             std::cout << "Genre: " << track.getGenre() << std::endl;
-            std::cout << "Duration: " << track.getDuration() << std::endl;
-            std::cout << "Date Published: " << track.getDatePublished() << std::endl;
-            std::cout << "Playlist: " << track.getPlaylist() << std::endl;
+            std::cout << "Duration: " << track.getAuthorName() << std::endl;
+            std::cout << "Date Published: " << track.getDatePublished() 
+                      << std::endl;
+            std::cout << "Playlist: " << track.getAuthorName() << std::endl;
             std::cout << "-----------------------------" << std::endl;
-        }
     }
-
 }
+
+
+
