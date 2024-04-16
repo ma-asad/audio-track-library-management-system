@@ -9,8 +9,10 @@
 */
 
 #include <string>
+#include <vector>
 #include "audioTrack.hpp"
 #include "hashtable.hpp"
+
 
 /**
  * @class AudioLibrary
@@ -21,15 +23,24 @@ class AudioLibrary {
 private:
     HashTable<std::string, AudioTrack> tracks;
 
+
 public:
-    AudioLibrary() {}
+    AudioLibrary();
+    
     void addTrackToHashTable(const AudioTrack& track);
     void loadData(const std::string& filename);
     void addTrackFromCSV();
     bool checkFileExistence(const std::string& filename);
     void addTrackManually();
     bool deleteTrack(const std::string& audioName);
-    void listAudio() const;
+    void listAudio() ;
+
+    void createPlaylist();
+    void addTrackToPlaylist();
+    void removeTrackFromPlaylist();
+    void deletePlaylist();
+    void viewPlaylist();
+
 };
 
 #endif

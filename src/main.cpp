@@ -6,7 +6,7 @@
 #include <fstream>
 #include <sstream>
 #include <limits>
-#include <vector>
+
 
 
 /*
@@ -69,15 +69,15 @@ void userChoice(int choice, AudioLibrary& library)
 
     }
     else if (choice == 3){
-            enter();
+        enter();
     }
     else if (choice == 4){
-            enter();
+        enter();
     }
     else if (choice == 5){
-            clearScreen("List Audio: View a list of audio tracks &  details");
-            library.listAudio();
-            enter();
+        clearScreen("List Audio: View a list of audio tracks &  details");
+        library.listAudio();
+        enter();
     }
     else if (choice == 6){
         std::cout << "Exiting the program. Goodbye!" << std::endl;
@@ -87,15 +87,11 @@ void userChoice(int choice, AudioLibrary& library)
     }
 }
 
-int main(int argc, char* argv[])
+int main()
 {
     std::cout << std::endl << "Audio Track Library Management System" << std::endl
               << "Group Coursework" << std::endl
               << std::endl;
-
-    std::string filename;
-    int argumentCount = argc;
-
 
     AudioLibrary library;
     int choice;
