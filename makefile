@@ -1,3 +1,9 @@
+# Purpose: Makefile for the audio track library project.
+
+# Compiler
+CXX = g++
+
+# Compiler flags
 CXXFLAGS = -g -Wall -Wextra -pedantic
 
 # Source directory
@@ -27,8 +33,8 @@ TEST_OBJECTS = $(filter-out $(BUILD_DIR)main.o, $(OBJECTS))
 # Target executable program name
 TARGET = audio_track_library.exe
 
-# Test Target
-TEST_TARGET = $(BUILD_DIR)test.exe
+# Test Targets
+TEST_TARGETS = $(TEST_SOURCES:$(TEST_DIR)%.cpp=$(BUILD_DIR)%_test.exe)
 
 # Test target
 test: $(TEST_TARGET)
@@ -51,10 +57,10 @@ $(BUILD_DIR)%.o: $(SRC_DIR)%.cpp | $(BUILD_DIR)
 	@echo "Compiling $<"
 	$(CXX) $(CXXFLAGS) -I$(INC_DIR) -c $< -o $@
 
-# Link test object files and test sources to create the test executable
-$(TEST_TARGET): $(TEST_OBJECTS) $(TEST_SOURCES)
+# Link test object files and test sources to create the test executables
+$(BUILD_DIR)%_test.exe: $(TEST_DIR)%.cpp $(TEST_OBJECTS)
 	@echo "Creating test executable: $@"
-	$(CXX) $(CXXFLAGS) -I$(INC_DIR) -I$(TEST_DIR) $(TEST_OBJECTS) $(TEST_SOURCES) -o $@
+	$(CXX) $(CXXFLAGS) -I$(INC_DIR) -I$(TEST_DIR) $(TEST_OBJECTS) $< -o $@
 
 # Clean up
 .PHONY: clean
@@ -68,8 +74,8 @@ run: $(TARGET)
 	@echo "Running $(TARGET)"
 	./$(TARGET)
 
-# Run the test executable
+# Run the test executables
 .PHONY: test
-test: $(TEST_TARGET)
-	@echo "Running test executable"
-	./$(TEST_TARGET)
+test: $(TEST_TARGETS)
+	@echo "Running test executables"
+	$(foreach test, $(TEST_TARGETS), ./$(test);)
