@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <algorithm>
 
 /*
     audioLibrary.cpp
@@ -125,25 +126,27 @@ bool AudioLibrary:: deleteTrack(const std::string& audioName) {
     }
 }
 
-
-void AudioLibrary::listAudio() {
+void AudioLibrary::listAudio()
+{
     size_t counter = 0;
-    std::pair<std::string, AudioTrack>* items = nullptr;
+    std::pair<std::string, AudioTrack> *items = nullptr;
     tracks.getItems(items, counter);
-    
-    for (size_t c = 0; c < counter; ++c) {
-            const AudioTrack& track = items[c].second;
-            std::cout << "Author Name: " << track.getAuthorName() << std::endl;
-            std::cout << "Audio Name: " << track.getAudioName() << std::endl;
-            std::cout << "Album Name: " << track.getAlbumName() << std::endl;
-            std::cout << "Genre: " << track.getGenre() << std::endl;
-            std::cout << "Duration: " << track.getAuthorName() << std::endl;
-            std::cout << "Date Published: " << track.getDatePublished() 
-                      << std::endl;
-            std::cout << "Playlist: " << track.getAuthorName() << std::endl;
-            std::cout << "-----------------------------" << std::endl;
+
+    // Sort the items by name
+    std::sort(items, items + counter, [](const std::pair<std::string, AudioTrack> &a, const std::pair<std::string, AudioTrack> &b)
+              { return a.first < b.first; });
+
+    for (size_t c = 0; c < counter; ++c)
+    {
+        const AudioTrack &track = items[c].second;
+        std::cout << "Author Name: " << track.getAuthorName() << std::endl;
+        std::cout << "Audio Name: " << track.getAudioName() << std::endl;
+        std::cout << "Album Name: " << track.getAlbumName() << std::endl;
+        std::cout << "Genre: " << track.getGenre() << std::endl;
+        std::cout << "Duration: " << track.getAuthorName() << std::endl;
+        std::cout << "Date Published: " << track.getDatePublished()
+                  << std::endl;
+        std::cout << "Playlist: " << track.getAuthorName() << std::endl;
+        std::cout << "-----------------------------" << std::endl;
     }
 }
-
-
-
