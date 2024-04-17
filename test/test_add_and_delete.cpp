@@ -42,23 +42,27 @@ TEST_CASE("Adding and Deleting Audio Tracks in HashTable") {
     bool foundTrack1 = false;
     bool foundTrack2 = false;
 
-    foundTrack1 = true;
-    REQUIRE(items[0].second.getAuthorName() == "Debra Alexander");
-    REQUIRE(items[0].second.getAudioName() == "Campaign eye interview");
-    REQUIRE(items[0].second.getAlbumName() == "Social age");
-    REQUIRE(items[0].second.getGenre() == "Country");
-    REQUIRE(items[0].second.getDuration() == "0 : 09 : 51");
-    REQUIRE(items[0].second.getDatePublished() == "2023 - 04 - 14");
-    REQUIRE(items[0].second.getPlaylist() == "Home");
+    if (items[0].second.getAudioName() == "Campaign eye interview") {
+      foundTrack1 = true;
+      REQUIRE(items[0].second.getAuthorName() == "Debra Alexander");
+      REQUIRE(items[0].second.getAudioName() == "Campaign eye interview");
+      REQUIRE(items[0].second.getAlbumName() == "Social age");
+      REQUIRE(items[0].second.getGenre() == "Country");
+      REQUIRE(items[0].second.getDuration() == "0 : 09 : 51");
+      REQUIRE(items[0].second.getDatePublished() == "2023 - 04 - 14");
+      REQUIRE(items[0].second.getPlaylist() == "Home");
+    }
 
-    foundTrack2 = true;
-    REQUIRE(items[1].second.getAuthorName() == "Lori Brown");
-    REQUIRE(items[1].second.getAudioName() == "Call");
-    REQUIRE(items[1].second.getAlbumName() == "Her");
-    REQUIRE(items[1].second.getGenre() == "Hip Hop");
-    REQUIRE(items[1].second.getDuration() == "0 : 09 : 45");
-    REQUIRE(items[1].second.getDatePublished() == "2016 - 10 - 10");
-    REQUIRE(items[1].second.getPlaylist() == "Over off");
+    if (items[1].second.getAudioName() == "Call") {
+      foundTrack2 = true;
+      REQUIRE(items[1].second.getAuthorName() == "Lori Brown");
+      REQUIRE(items[1].second.getAudioName() == "Call");
+      REQUIRE(items[1].second.getAlbumName() == "Her");
+      REQUIRE(items[1].second.getGenre() == "Hip Hop");
+      REQUIRE(items[1].second.getDuration() == "0 : 09 : 45");
+      REQUIRE(items[1].second.getDatePublished() == "2016 - 10 - 10");
+      REQUIRE(items[1].second.getPlaylist() == "Over off");
+    }
 
     REQUIRE(foundTrack1);
     REQUIRE(foundTrack2);
@@ -81,8 +85,7 @@ TEST_CASE("Adding and Deleting Audio Tracks in HashTable") {
 
     REQUIRE(count == 2);
 
-    REQUIRE(
-        hashTable.remove("Call"));  // Removing existing track
+    REQUIRE(hashTable.remove("Call"));  // Removing existing track
     REQUIRE_FALSE(
         hashTable.remove("Nonexistent Track"));  // Removing non-existing track
 
