@@ -1,16 +1,16 @@
 CXXFLAGS = -g -Wall -Wextra -pedantic
 
 # Source directory
-SRC_DIR = src/
+SRC_DIR = ./src/
 
 # Test directory
-TEST_DIR = test/
+TEST_DIR = ./test/
 
 # Include directory
-INC_DIR = include/
+INC_DIR = ./include/
 
 # Object directory
-BUILD_DIR = build/
+BUILD_DIR = ./build/
 
 # Source files
 SOURCES = $(wildcard $(SRC_DIR)*.cpp)
