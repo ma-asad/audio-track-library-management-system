@@ -81,8 +81,7 @@ TEST_CASE("Adding and Deleting Audio Tracks in HashTable") {
 
     REQUIRE(count == 2);
 
-    REQUIRE(
-        hashTable.remove("Call"));  // Removing existing track
+    REQUIRE(hashTable.remove("Call"));  // Removing existing track
     REQUIRE_FALSE(
         hashTable.remove("Nonexistent Track"));  // Removing non-existing track
 
