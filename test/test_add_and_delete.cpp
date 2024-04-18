@@ -32,9 +32,10 @@ TEST_CASE("Adding and Deleting Audio Tracks in HashTable") {
     REQUIRE_FALSE(hashTable.insert(track4.getAudioName(), track4));
 
     // Retrieve items and check count
-    std::pair<std::string, AudioTrack>* items;
-    size_t count;
-    hashTable.getItems(items, count);
+    std::pair<size_t, std::pair<std::string, AudioTrack>*> result =
+        hashTable.listItems();
+    size_t count = result.first;
+    std::pair<std::string, AudioTrack>* items = result.second;
 
     REQUIRE(count == 4);
 
@@ -42,26 +43,30 @@ TEST_CASE("Adding and Deleting Audio Tracks in HashTable") {
     bool foundTrack1 = false;
     bool foundTrack2 = false;
 
-    if (items[0].second.getAudioName() == "Campaign eye interview") {
+    AudioTrack* value = hashTable.findTrack("Campaign eye interview");
+
+    if (value->getAudioName() == "Campaign eye interview") {
       foundTrack1 = true;
-      REQUIRE(items[0].second.getAuthorName() == "Debra Alexander");
-      REQUIRE(items[0].second.getAudioName() == "Campaign eye interview");
-      REQUIRE(items[0].second.getAlbumName() == "Social age");
-      REQUIRE(items[0].second.getGenre() == "Country");
-      REQUIRE(items[0].second.getDuration() == "0 : 09 : 51");
-      REQUIRE(items[0].second.getDatePublished() == "2023 - 04 - 14");
-      REQUIRE(items[0].second.getPlaylist() == "Home");
+      REQUIRE(value->getAuthorName() == "Debra Alexander");
+      REQUIRE(value->getAudioName() == "Campaign eye interview");
+      REQUIRE(value->getAlbumName() == "Social age");
+      REQUIRE(value->getGenre() == "Country");
+      REQUIRE(value->getDuration() == "0 : 09 : 51");
+      REQUIRE(value->getDatePublished() == "2023 - 04 - 14");
+      REQUIRE(value->getPlaylist() == "Home");
     }
 
-    if (items[1].second.getAudioName() == "Call") {
+    value = hashTable.findTrack("Call");
+
+    if (value->getAudioName() == "Call") {
       foundTrack2 = true;
-      REQUIRE(items[1].second.getAuthorName() == "Lori Brown");
-      REQUIRE(items[1].second.getAudioName() == "Call");
-      REQUIRE(items[1].second.getAlbumName() == "Her");
-      REQUIRE(items[1].second.getGenre() == "Hip Hop");
-      REQUIRE(items[1].second.getDuration() == "0 : 09 : 45");
-      REQUIRE(items[1].second.getDatePublished() == "2016 - 10 - 10");
-      REQUIRE(items[1].second.getPlaylist() == "Over off");
+      REQUIRE(value->getAuthorName() == "Lori Brown");
+      REQUIRE(value->getAudioName() == "Call");
+      REQUIRE(value->getAlbumName() == "Her");
+      REQUIRE(value->getGenre() == "Hip Hop");
+      REQUIRE(value->getDuration() == "0 : 09 : 45");
+      REQUIRE(value->getDatePublished() == "2016 - 10 - 10");
+      REQUIRE(value->getPlaylist() == "Over off");
     }
 
     REQUIRE(foundTrack1);
@@ -79,9 +84,10 @@ TEST_CASE("Adding and Deleting Audio Tracks in HashTable") {
     REQUIRE(hashTable.insert(track1.getAudioName(), track1));
     REQUIRE(hashTable.insert(track2.getAudioName(), track2));
 
-    std::pair<std::string, AudioTrack>* items;
-    size_t count;
-    hashTable.getItems(items, count);
+    std::pair<size_t, std::pair<std::string, AudioTrack>*> result =
+        hashTable.listItems();
+    size_t count = result.first;
+    std::pair<std::string, AudioTrack>* items = result.second;
 
     REQUIRE(count == 2);
 
@@ -89,7 +95,9 @@ TEST_CASE("Adding and Deleting Audio Tracks in HashTable") {
     REQUIRE_FALSE(
         hashTable.remove("Nonexistent Track"));  // Removing non-existing track
 
-    hashTable.getItems(items, count);
+    result = hashTable.listItems();
+    count = result.first;
+    items = result.second;
 
     REQUIRE(count == 1);
 
