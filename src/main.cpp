@@ -56,6 +56,7 @@ void userChoice(int choice, AudioLibrary& library) {
   } else if (choice == 5) {
     clearScreen("List Audio: View a list of audio tracks & details");
     std::cout << std::endl;
+    std::cout << "-----------------------------" << std::endl;
     library.listAudio();
     enter();
   } else if (choice == 6) {
