@@ -16,7 +16,6 @@
 #include <string>
 
 #include "audio-library.hpp"
-#include "validation.hpp"
 
 /*
     main.hpp
@@ -25,26 +24,46 @@
 */
 
 /**
- * @brief Ask the user to press Enter two times to go back to menu
+ * @brief Exits the program and sets the stopProgram flag to true.
+ *
+ * This function prints a goodbye message and sets the stopProgram flag to true,
+ * indicating that the program should stop running.
+ *
+ * @param stopProgram A pointer to a boolean flag indicating whether the program
+ * should stop running.
  */
-void enter();
+void exitProgram(bool* stopProgram);
 
 /**
- * @brief Clears the screen and displays a message.
- * @param message The message to be displayed.
+ * Displays a new window with a specified title.
+ *
+ * @param windowTitle The title of the window.
  */
-void clearScreen(const std::string& message);
+void newWindow(std::string windowTitle);
 
 /**
- * @brief Displays the main menu with different options.
+ * Displays the search menu and allows the user to select a search option.
+ *
+ * @param library The AudioLibrary object to perform the search on.
  */
-void mainMenu();
+void searchMenuSelector(AudioLibrary& library);
 
 /**
- * @brief Handles the user's choice from the main menu.
- * @param choice The user's choice.
- * @param library Reference to the AudioLibrary object.
+ * Displays the main menu and handles user input to perform corresponding
+ * actions.
+ *
+ * @param stopProgram A pointer to a boolean variable indicating whether the
+ * program should stop.
+ * @param library The AudioLibrary object used to perform operations on audio
+ * tracks.
  */
-void userChoice(int choice, AudioLibrary& library);
+void mainMenuSelector(bool* stopProgram, AudioLibrary& library);
+
+/**
+ * @brief The entry point of the program.
+ *
+ * @return int The exit status of the program.
+ */
+int main();
 
 #endif
