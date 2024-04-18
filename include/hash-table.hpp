@@ -117,6 +117,20 @@ class HashTable {
    * key was not found.
    */
   Value* findTrack(const Key& key) const;
+
+  /**
+   * @brief Returns the size of the hash table.
+   *
+   * @return The size of the hash table.
+   */
+  size_t getTableSize() const { return tableSize; }
+
+  /**
+   * @brief Returns the table of nodes in the hash table.
+   * 
+   * @return A pointer to the table of nodes in the hash table.
+   */
+  Node<std::pair<Key, Value>>** getTable() const { return table; }
 };
 
 #endif
