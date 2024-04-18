@@ -6,11 +6,67 @@
     Updated:
 */
 
+// Quicksort helper function
+void AudioLibrary::quickSort(std::pair<std::string, AudioTrack> *items, int low,
+                             int high) {
+  if (low < high) {
+    int pivotIndex = partition(
+        items, low, high);  // Partition the array and get the pivot index
+    quickSort(items, low,
+              pivotIndex - 1);  // Recursively sort the left subarray
+    quickSort(items, pivotIndex + 1,
+              high);  // Recursively sort the right subarray
+  }
+}
+
+// Partition function for Quicksort
+int AudioLibrary::partition(std::pair<std::string, AudioTrack> *items, int low,
+                            int high) {
+  // Use the key (audio name) of the last element as the pivot
+  std::string pivot = items[high].first;
+  int i = low - 1;  // Index of the smaller element
+
+  // Iterate over the subarray and partition it around the pivot
+  for (int j = low; j < high; ++j) {
+    // Convert both strings to lowercase before comparing
+    if (toLowercase(items[j].first) <= toLowercase(pivot)) {
+      // Increment the index of the smaller element
+      ++i;
+
+      // Swap the current element with the smaller element
+      std::swap(items[i], items[j]);
+    }
+  }
+
+  std::swap(items[i + 1],
+            items[high]);  // Swap the pivot with the element at index i+1
+  return i + 1;            // Return the index of the pivot element
+}
+
+// Helper function to convert a string to lowercase
+std::string AudioLibrary::toLowercase(const std::string &str) {
+  std::string lowercaseStr = str;
+  // Transform each character in the string to lowercase using std::transform
+  // and std::tolower
+  std::transform(lowercaseStr.begin(), lowercaseStr.end(), lowercaseStr.begin(),
+                 [](unsigned char c) { return std::tolower(c); });
+  return lowercaseStr;
+}
+
 AudioLibrary::AudioLibrary() : tracks() {}
 
-void AudioLibrary::addTrackToHashTable(const AudioTrack &track) {
+void AudioLibrary::addTrackToHashTables(const AudioTrack &track) {
+  std::string authorName = track.getAuthorName();
   std::string audioName = track.getAudioName();
-  tracks.insert(audioName, track);
+  std::string albumName = track.getAlbumName();
+  std::string genre = track.getGenre();
+  std::string playlist = track.getPlaylist();
+
+  tracksTable.insert(audioName, track);
+  artistTable.insert(authorName, track);
+  albumNameTable.insert(albumName, track);
+  genreTable.insert(genre, track);
+  playlistTable.insert(playlist, track);
 }
 
 void AudioLibrary::loadData(const std::string &filename) {
@@ -33,7 +89,7 @@ void AudioLibrary::loadData(const std::string &filename) {
         std::getline(iss, datePublished, ',') && std::getline(iss, playlist)) {
       AudioTrack track(authorName, audioName, albumName, genre, duration,
                        datePublished, playlist);
-      addTrackToHashTable(track);
+      addTrackToHashTables(track);
     }
   }
   file.close();
@@ -44,8 +100,15 @@ void AudioLibrary::addTrackFromCSV() {
   bool validFile = false;
 
   while (!validFile) {
-    std::cout << "Please enter the filename (csv format only): ";
+    std::cout << "Please enter the full path to the CSV file (e.g., "
+                 "C:\\Users\\username\\Documents\\mydata.csv) or enter 'quit' "
+                 "to go back: ";
     std::getline(std::cin, filename);
+
+    // Checks if the user wants to quit
+    if (filename == "quit") {
+      return;
+    }
 
     // Check if the file has a .csv extension
     if (filename.size() >= 5 &&
@@ -54,9 +117,12 @@ void AudioLibrary::addTrackFromCSV() {
         validFile = true;
       } else {
         std::cerr << "This file does not exist!: " << filename << std::endl;
+        std::cerr << "Please enter the full path to the file, including the "
+                     "drive letter and all directory names."
+                  << std::endl;
       }
     } else {
-      std::cerr << "Invalid file format! Please only csv are allowed"
+      std::cerr << "Invalid file format! Please enter a path to a CSV file."
                 << std::endl;
     }
   }
@@ -66,51 +132,44 @@ void AudioLibrary::addTrackFromCSV() {
             << "!" << std::endl;
 }
 
-void AudioLibrary::addTrackManually() {
-  std::string authorName, audioName, albumName, genre, duration, datePublished,
-      playlist;
-
-  std::cout << "Enter author name: ";
-  std::getline(std::cin, authorName);
-
-  std::cout << "Enter audio name: ";
-  std::getline(std::cin, audioName);
-
-  std::cout << "Enter album name: ";
-  std::getline(std::cin, albumName);
-
-  std::cout << "Enter genre: ";
-  std::getline(std::cin, genre);
-
-  std::cout << "Enter duration: ";
-  std::getline(std::cin, duration);
-
-  std::cout << "Enter date published: ";
-  std::getline(std::cin, datePublished);
-
-  std::cout << "Enter playlist: ";
-  std::getline(std::cin, playlist);
-
-  AudioTrack track(authorName, audioName, albumName, genre, duration,
-                   datePublished, playlist);
-  addTrackToHashTable(track);
-
-  std::cout << "The Audio tracks have been added successfully!" << std::endl;
-}
-
 bool AudioLibrary::checkFileExistence(const std::string &filename) {
   std::ifstream file(filename);
   return file.good();
 }
 
 bool AudioLibrary::deleteTrack(const std::string &audioName) {
-  if (tracks.remove(audioName)) {
+  AudioTrack *trackContent = hashTable.findTrack(audioName);
+
+  if (trackContent == nullptr) {
+    std::cout << "The Audio track '" << audioName << "' was not found."
+              << std::endl;
+    return false;
+  }
+
+  // Get the metadata of the audio track
+  std::string artistName = trackContent->getAuthorName();
+  std::string albumName = trackContent->getAlbumName();
+  std::string genre = trackContent->getGenre();
+  std::string playlist = trackContent->getPlaylist();
+
+  // Remove the audio track from all hash tables
+  bool tracksTableResult = tracksTable.remove(audioName);
+  bool artistTableResult = artistTable.remove(artistName);
+  bool albumNameTableResult = albumNameTable.remove(albumName);
+  bool genreTableResult = genreTable.remove(genre);
+  bool playlistTableResult = playlistTable.remove(playlist);
+
+  // Check if the audio track was successfully removed from all hash tables
+  if (tracksTableResult && artistTableResult && albumNameTableResult &&
+      genreTableResult && playlistTableResult) {
     std::cout << " The Audio track '" << audioName
               << "' has been deleted successfully!" << std::endl;
+
     return true;
   } else {
     std::cout << "The Audio track '" << audioName << "'was not found."
               << std::endl;
+
     return false;
   }
 }
@@ -121,7 +180,7 @@ void AudioLibrary::listAudio() {
 
   size_t counter = result.first;
   std::pair<std::string, AudioTrack> *items = result.second;
-  
+
   int count = 0;
 
   // Quicksort algorithm to sort the audio tracks by name (A-Z)
@@ -143,50 +202,4 @@ void AudioLibrary::listAudio() {
 
     ++count;
   }
-}
-
-// Quicksort helper function
-void AudioLibrary::quickSort(std::pair<std::string, AudioTrack> *items, int low,
-                             int high) {
-  if (low < high) {
-    int pivotIndex = partition(
-        items, low, high);  // Partition the array and get the pivot index
-    quickSort(items, low,
-              pivotIndex - 1);  // Recursively sort the left subarray
-    quickSort(items, pivotIndex + 1,
-              high);  // Recursively sort the right subarray
-  }
-}
-
-// Partition function for Quicksort
-int AudioLibrary::partition(std::pair<std::string, AudioTrack> *items, int low,
-                            int high) {
-  std::string pivot =
-      items[high]
-          .first;   // Use the key (audio name) of the last element as the pivot
-  int i = low - 1;  // Index of the smaller element
-
-  // Iterate over the subarray and partition it around the pivot
-  for (int j = low; j < high; ++j) {
-    // Convert both strings to lowercase before comparing
-    if (toLowercase(items[j].first) <= toLowercase(pivot)) {
-      ++i;  // Increment the index of the smaller element
-      std::swap(items[i],
-                items[j]);  // Swap the current element with the smaller element
-    }
-  }
-
-  std::swap(items[i + 1],
-            items[high]);  // Swap the pivot with the element at index i+1
-  return i + 1;            // Return the index of the pivot element
-}
-
-// Helper function to convert a string to lowercase
-std::string AudioLibrary::toLowercase(const std::string &str) {
-  std::string lowercaseStr = str;
-  // Transform each character in the string to lowercase using std::transform
-  // and std::tolower
-  std::transform(lowercaseStr.begin(), lowercaseStr.end(), lowercaseStr.begin(),
-                 [](unsigned char c) { return std::tolower(c); });
-  return lowercaseStr;
 }
