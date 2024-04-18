@@ -1,16 +1,21 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+#include <fstream>
+#include <iostream>
+#include <limits>
+#include <sstream>
 #include <string>
-#include "audiolibrary.hpp"
 
+#include "audioLibrary.hpp"
+#include "main.hpp"
+#include "validation.hpp"
 
 /*
     main.hpp
-    Created: 
-    Updated: 
+    Created:
+    Updated:
 */
-
 
 /**
  * @brief Ask the user to press Enter two times to go back to menu
