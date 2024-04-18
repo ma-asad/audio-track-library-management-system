@@ -1,6 +1,14 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+// TODO: Remove Win32 specific code
+#ifdef _WIN32
+    #define CLEAR "cls"
+#else
+    #define CLEAR "clear"
+#endif
+
+#include <cstdlib>
 #include <fstream>
 #include <iostream>
 #include <limits>
