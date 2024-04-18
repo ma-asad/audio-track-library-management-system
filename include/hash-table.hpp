@@ -95,14 +95,25 @@ class HashTable {
   bool remove(const Key& key);
 
   /**
-   * Retrieves all items stored in the hashtable.
+   * Retrieves all the items stored in the hash table.
    *
-   * @param items A pointer to an array of std::pair<Key, Value> objects to
-   * store the retrieved items.
-   * @param counter A reference to a size_t variable to store the number of
-   * retrieved items.
+   * @tparam Key The type of the key.
+   * @tparam Value The type of the value.
+   * @return A pair containing the number of items and an array of key-value
+   * pairs.
    */
-  void getItems(std::pair<Key, Value>*& items, size_t& counter);
+  std::pair<size_t, std::pair<Key, Value>*> listItems();
+  
+  /**
+   * @brief Finds the value associat*e with the given key in the hash table.
+   *
+   * @tparam Key The type of the key.
+   * @tparam Value The type of the value.
+   * @param key The key to search for.
+   * @return A pointer to the value associated with the key, or nullptr if
+   * the key was not found.
+   */
+  Value* findTrack(const Key& key);
 };
 
 #endif
