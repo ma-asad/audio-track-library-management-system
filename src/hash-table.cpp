@@ -7,11 +7,16 @@
 */
 
 template <typename Key, typename Value>
-size_t HashTable<Key, Value>::hasher(const Key& key) const{
+size_t HashTable<Key, Value>::hasher(const Key& key) const {
   size_t hashingValue = 0;
+
+  // Iterate over each character in the key
   for (char character : key) {
+    // Update the hashing value based on the current character
+    // The constant 31 is chosen because it's a prime number, which helps to distribute the hash values more evenly
     hashingValue = (hashingValue * 31) + character;
   }
+
   return hashingValue % tableSize;
 }
 
@@ -20,30 +25,37 @@ size_t HashTable<Key, Value>::nextPrimeNumber(size_t number) {
   while (!prime(number)) {
     ++number;
   }
+
   return number;
 }
 
 template <typename Key, typename Value>
 bool HashTable<Key, Value>::prime(size_t number) {
+  // If the number is less than or equal to 1, it's not prime
   if (number <= 1) {
     return false;
   }
+
+  // Check divisibility for all numbers up to the square root of the number
   for (size_t c = 2; c <= std::sqrt(number); ++c) {
+    // If the number is divisible by any of these numbers, it's not prime
     if (number % c == 0) {
       return false;
     }
   }
+
+  // If no divisors were found, the number is prime
   return true;
 }
 
-// element of table initialised to nullptr
 template <typename Key, typename Value>
 HashTable<Key, Value>::HashTable() {
   tableSize = nextPrimeNumber(503);
+
+  // Allocate memory for the hash table, which is an array of pointers to nodes
   table = new Node<std::pair<Key, Value>>*[tableSize]();
 }
 
-// frees allocated memory to prevent memory leaks
 template <typename Key, typename Value>
 HashTable<Key, Value>::~HashTable() {
   for (size_t c = 0; c < tableSize; ++c) {
@@ -74,8 +86,11 @@ bool HashTable<Key, Value>::insert(const Key& key, const Value& value) {
     while (currentNode) {
       // Check if the value is identical to the one being inserted
       if (currentNode->data.second == value) {
-        delete newNode;  // Delete the new node as it's not needed
-        return false;    // Indicate that insertion was not successful
+        // Delete the new node as it's not needed
+        delete newNode;
+
+        // Indicate that insertion was not successful
+        return false;
       }
 
       // If we're at the last node in the list, insert the new node
