@@ -25,7 +25,6 @@
 
 class AudioLibrary {
  private:
-  // tracksTable uses audio name as key
   HashTable<std::string, AudioTrack> tracksTable;
   HashTable<std::string, AudioTrack> artistTable;
   HashTable<std::string, AudioTrack> albumNameTable;
@@ -45,15 +44,13 @@ class AudioLibrary {
   AudioLibrary();
 
   /**
-   * @brief Adds an audio track to the hash table.
-   *
-   * This function takes an AudioTrack object as a parameter and adds it to the
-   * hash table. The hash table is used to store and manage audio tracks in the
-   * library.
+   * Adds an audio track to the hash tables in the audio library.
    *
    * @param track The audio track to be added.
+   * @return True if the track was successfully added to all hash tables, false
+   * otherwise.
    */
-  void addTrackToHashTables(const AudioTrack& track);
+  bool addTrackToHashTables(const AudioTrack& track);
 
   /**
    * @brief Loads data from a file into the audio library.
@@ -127,6 +124,54 @@ class AudioLibrary {
   void removeTrackFromPlaylist();
   void deletePlaylist();
   void viewPlaylist();
+
+  /**
+   * Returns a constant reference to the tracks table.
+   *
+   * @return A constant reference to the tracks table.
+   */
+  const HashTable<std::string, AudioTrack>& getTracksTable() const {
+    return tracksTable;
+  }
+
+  /**
+   * Retrieves the artist table.
+   *
+   * @return The artist table as a constant reference to a HashTable object.
+   */
+  const HashTable<std::string, AudioTrack>& getArtistTable() const {
+    return artistTable;
+  }
+
+  /**
+   * Retrieves the album name table.
+   *
+   * This function returns a constant reference to the album name table, which is a HashTable
+   * containing the album names as keys and the corresponding AudioTrack objects as values.
+   *
+   * @return A constant reference to the album name table.
+   */
+  const HashTable<std::string, AudioTrack>& getAlbumNameTable() const {
+    return albumNameTable;
+  }
+
+  /**
+   * Returns a constant reference to the genre table.
+   *
+   * @return A constant reference to the genre table.
+   */
+  const HashTable<std::string, AudioTrack>& getGenreTable() const {
+    return genreTable;
+  }
+
+  /**
+   * Returns a constant reference to the playlist table.
+   *
+   * @return A constant reference to the playlist table.
+   */
+  const HashTable<std::string, AudioTrack>& getPlaylistTable() const {
+    return playlistTable;
+  }
 };
 
 #endif
