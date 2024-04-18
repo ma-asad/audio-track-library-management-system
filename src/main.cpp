@@ -1,25 +1,47 @@
 #include "main.hpp"
 
-/*
-    main.cpp
-    Created:
-    Updated:
-*/
-
-// TODO: move enter() and clearScreen() to a separate file (utils.hpp)
-void enter() {
-  std::cout << "\nPress 'Enter' to go back to main menu";
-  std::cin.get();
-}
-
-void clearScreen(const std::string& message) {
-  std::system(CLEAR);
-  std::cout << message << std::endl;
-}
-
-void mainMenu() {
+void exitProgram(bool* stopProgram) {
+  std::cout << "Exiting the program. Goodbye!" << std::endl;
   std::cout << std::endl;
-  clearScreen("\n");
+  *stopProgram = true;
+}
+
+void newWindow(std::string windowTitle) {
+  const int bannerWidth = 47;
+  const int titleLength = windowTitle.length();
+
+  int paddingLeft = (bannerWidth - titleLength - 2) / 2;
+  int paddingRight = paddingLeft;
+  if (bannerWidth + titleLength % 2 != 0) paddingRight++;
+
+  std::string paddingSpacesLeft(paddingLeft, ' ');
+  std::string paddingSpacesRight(paddingRight, ' ');
+
+  std::system(CLEAR);
+  std::cout << "*=============================================*" << std::endl;
+  std::cout << "|" << paddingSpacesLeft << windowTitle << paddingSpacesRight
+            << "|" << std::endl;
+  std::cout << "*=============================================*" << std::endl;
+  std::cout << std::endl;
+}
+
+void displaySearchMenu() {
+  std::cout << std::endl;
+  std::cout << "*=============================================*" << std::endl;
+  std::cout << "|                  SEARCH MENU                |" << std::endl;
+  std::cout << "*=============================================*" << std::endl;
+  std::cout << "| Search by, choose an option below :         |" << std::endl;
+  std::cout << "| 1. Artist                                   |" << std::endl;
+  std::cout << "| 2. Audio Title                              |" << std::endl;
+  std::cout << "| 3. Album                                    |" << std::endl;
+  std::cout << "| 4. Genre                                    |" << std::endl;
+  std::cout << "| 5. Playlist                                 |" << std::endl;
+  std::cout << "| 6. <- Go Back to Main Menu                  |" << std::endl;
+  std::cout << "*=============================================*" << std::endl;
+  std::cout << std::endl;
+}
+
+void displayMainMenu() {
   std::cout << std::endl;
   std::cout << "*=============================================*" << std::endl;
   std::cout << "|                  MAIN MENU                  |" << std::endl;
@@ -35,67 +57,84 @@ void mainMenu() {
   std::cout << std::endl;
 }
 
-void userChoice(int choice, AudioLibrary& library) {
-  std::string audioName;
-  if (choice == 1) {
-    clearScreen("Add: Users can add new audio tracks \n");
+void searchMenuSelector(AudioLibrary& library) {
+  std::system(CLEAR);
 
-    library.addTrackFromCSV();
-    enter();
+  displaySearchMenu();
 
-  } else if (choice == 2) {
-    clearScreen("List Audio: View a list of audio tracks & details");
+  int searchOptionSelected;
+  std::cout << "Enter your choice: ";
+  std::cin >> searchOptionSelected;
 
-    // TODO: move below code to listAudio() function
-    std::cout << std::endl;
-    std::cout << "-----------------------------" << std::endl;
-    library.listAudio();
-    enter();
+  switch (searchOptionSelected) {
+    case 1:
+      newWindow("Search by Artist");
+      break;
+    case 2:
+      newWindow("Search by Audio Title");
+      break;
+    case 3:
+      newWindow("Search by Album");
+      break;
+    case 4:
+      newWindow("Search by Genre");
+      break;
+    case 5:
+      newWindow("Search by Playlist");
+      break;
+    case 6:
+      break;
+    default:
+      std::cout << "Invalid choice. Please try again." << std::endl;
+      std::cin.get();
+      searchMenuSelector(library);
+      break;
+  }
+}
 
-  } else if (choice == 3) {
-    clearScreen("Search: By Artist, Audio Title, Album, Genre, or Playlist \n");
-    // TODO: create sub-menu for search options
-    // 1. Artist
-    // 2. Audio Title
-    // 3. Album
-    // 4. Genre
-    // 5. Playlist
-    // 6. Back to main menu
-  
-  } else if (choice == 4) {
-    clearScreen("Create Playlist: By Audio Title \n");
-    // TODO: create a playlist function
-  
-  } else if (choice == 5) {
-    clearScreen("Delete: Users can delete existing audio tracks \n");
+void mainMenuSelector(bool* stopProgram, AudioLibrary& library) {
+  std::system(CLEAR);
 
-    // TODO: move below code to deleteTrack() function
-    std::cout << "Enter the name of the audio track to delete: ";
-    std::getline(std::cin, audioName);
-    library.deleteTrack(audioName);
-    enter();
-  } else if (choice == 6) {
-    std::cout << "Exiting the program. Goodbye!" << std::endl;
-  } else {
-    std::cout << "Invalid choice. Please try again." << std::endl;
+  displayMainMenu();
+
+  int menuOptionSelected;
+  std::cout << "Enter your choice: ";
+  std::cin >> menuOptionSelected;
+
+  switch (menuOptionSelected) {
+    case 1:
+      newWindow("Add Audio File");
+      library.addTrackFromCSV();
+      break;
+    case 2:
+      newWindow("List Audio");
+      break;
+    case 3:
+      searchMenuSelector(library);
+      break;
+    case 4:
+      newWindow("Create Playlist");
+      break;
+    case 5:
+      newWindow("Delete Audio");
+      break;
+    case 6:
+      exitProgram(stopProgram);
+      break;
+
+    default:
+      std::cout << "Invalid choice. Please try again." << std::endl;
+      std::cin.get();
+      break;
   }
 }
 
 int main() {
-  std::cout << std::endl
-            << "Audio Track Library Management System" << std::endl
-            << "Group Coursework" << std::endl
-            << std::endl;
-
   AudioLibrary library;
-  int choice;
-
+  bool stopProgram = false;
   do {
-    mainMenu();
-    choice = getValidChoice();
-    userChoice(choice, library);
-    std::cout << std::endl;
-  } while (choice != 6);
+    mainMenuSelector(&stopProgram, library);
+  } while (stopProgram == true);
 
   return 0;
 }
