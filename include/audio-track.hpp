@@ -3,8 +3,6 @@
 
 #include <string>
 
-#include "audio-track.hpp"
-
 /*
     audiotrack.hpp
     Created:

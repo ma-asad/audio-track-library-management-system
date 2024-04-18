@@ -7,7 +7,6 @@
 #include <string>
 
 #include "audio-track.hpp"
-#include "hash-table.hpp"
 
 /**
  * @brief A struct representing a node in a linked list.
