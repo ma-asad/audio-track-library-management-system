@@ -1,3 +1,5 @@
+#include "audio-track.hpp"
+
 /*
     audioTrack.cpp
     Created:

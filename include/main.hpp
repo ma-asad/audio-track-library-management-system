@@ -7,8 +7,7 @@
 #include <sstream>
 #include <string>
 
-#include "audioLibrary.hpp"
-#include "main.hpp"
+#include "audio-library.hpp"
 #include "validation.hpp"
 
 /*

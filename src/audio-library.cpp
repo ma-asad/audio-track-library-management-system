@@ -1,3 +1,5 @@
+#include "audiolibrary.hpp"
+
 /*
     audioLibrary.cpp
     Created:
