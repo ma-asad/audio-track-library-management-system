@@ -6,7 +6,6 @@
 #include "catch.hpp"
 #include "audio-library.hpp"
 #include "hash-table.hpp"
-#include "validation.hpp"
 
 // Assuming AudioTrack class has relevant constructors and getters/setters
 
