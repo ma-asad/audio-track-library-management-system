@@ -2,82 +2,113 @@
 #include <iostream>
 #include <sstream>
 
-#include "catch.hpp"
 #include "audio-track.hpp"
+#include "catch.hpp"
+#include "audio-library.hpp"
 #include "hash-table.hpp"
 #include "validation.hpp"
 
 // Assuming AudioTrack class has relevant constructors and getters/setters
 
 TEST_CASE("Adding and Deleting Audio Tracks in HashTable") {
-  HashTable<std::string, AudioTrack> tracksTable;
-  HashTable<std::string, AudioTrack> artistTable;
-  HashTable<std::string, AudioTrack> albumNameTable;
-  HashTable<std::string, AudioTrack> genreTable;
-  HashTable<std::string, AudioTrack> playlistTable;
+  AudioLibrary library;
 
   SECTION("Adding Audio Tracks") {
     AudioTrack track1("Debra Alexander", "Campaign eye interview", "Social age",
                       "Country", "0 : 09 : 51", "2023 - 04 - 14", "Home");
     AudioTrack track2("Lori Brown", "Call", "Her", "Hip Hop", "0 : 09 : 45",
                       "2016 - 10 - 10", "Over off");
-    REQUIRE(tracksTable.insert(track1.getAudioName(), track1));
-    REQUIRE(tracksTable.insert(track2.getAudioName(), track2));
+    // Duplicate track
+    AudioTrack track3("Lori Brown", "Call", "Her", "Hip Hop", "0 : 09 : 45",
+                      "2016 - 10 - 10", "Over off");
+    // Track with same name but different author
+    AudioTrack track4("John McLean", "Call", "Boom", "Jazz", "0 : 03 : 42",
+                      "2014 - 08 - 23", "Karaoke");
 
-    // // Duplicate track
-    // AudioTrack track3("Lori Brown", "Call", "Her", "Hip Hop", "0 : 09 : 45",
-    //                   "2016 - 10 - 10", "Over off");
-    // // Track with same name but different author
-    // AudioTrack track4("John McLean", "Call", "Boom", "Jazz", "0 : 03 : 42",
-    //                   "2014 - 08 - 23", "Karaoke");
-
-    // // Duplicate track
-    // REQUIRE_FALSE(tracksTable.insert(track3.getAudioName(), track3));
-    // // Track with same name but different author
-    // REQUIRE_FALSE(tracksTable.insert(track4.getAudioName(), track4));
+    REQUIRE(library.addTrackToHashTables(track1));
+    REQUIRE(library.addTrackToHashTables(track2));
+    REQUIRE_FALSE(library.addTrackToHashTables(track3));
+    REQUIRE(library.addTrackToHashTables(track4));
 
     // Retrieve items and check count
-    std::pair<size_t, std::pair<std::string, AudioTrack>*> result =
-        hashTable.listItems();
-    size_t count = result.first;
-    std::pair<std::string, AudioTrack>* items = result.second;
+    // Get count and items for tracksTable
+    std::pair<size_t, std::pair<std::string, AudioTrack>*> result1 =
+        library.getTracksTable().listItems();
+    size_t tracksCount = result1.first;
+    std::pair<std::string, AudioTrack>* tracksItems = result1.second;
 
-    REQUIRE(count == 4);
+    // Get count and items for artistTable
+    std::pair<size_t, std::pair<std::string, AudioTrack>*> result2 =
+        library.getArtistTable().listItems();
+    size_t artistCount = result2.first;
+    std::pair<std::string, AudioTrack>* artistItems = result2.second;
 
-    // Check if tracks are present and have correct data
-    bool foundTrack1 = false;
-    bool foundTrack2 = false;
+    // Get count and items for albumNameTable
+    std::pair<size_t, std::pair<std::string, AudioTrack>*> result3 =
+        library.getAlbumNameTable().listItems();
+    size_t albumCount = result3.first;
+    std::pair<std::string, AudioTrack>* albumItems = result3.second;
 
-    AudioTrack* value = hashTable.findTrack("Campaign eye interview");
+    // Get count and items for genreTable
+    std::pair<size_t, std::pair<std::string, AudioTrack>*> result4 =
+        library.getGenreTable().listItems();
+    size_t genreCount = result4.first;
+    std::pair<std::string, AudioTrack>* genreItems = result4.second;
 
-    if (value->getAudioName() == "Campaign eye interview") {
-      foundTrack1 = true;
-      REQUIRE(value->getAuthorName() == "Debra Alexander");
-      REQUIRE(value->getAudioName() == "Campaign eye interview");
-      REQUIRE(value->getAlbumName() == "Social age");
-      REQUIRE(value->getGenre() == "Country");
-      REQUIRE(value->getDuration() == "0 : 09 : 51");
-      REQUIRE(value->getDatePublished() == "2023 - 04 - 14");
-      REQUIRE(value->getPlaylist() == "Home");
-    }
+    // Get count and items for playlistTable
+    std::pair<size_t, std::pair<std::string, AudioTrack>*> result5 =
+        library.getPlaylistTable().listItems();
+    size_t playlistCount = result5.first;
+    std::pair<std::string, AudioTrack>* playlistItems = result5.second;
 
-    value = hashTable.findTrack("Call");
+    REQUIRE(tracksCount == 3);
+    REQUIRE(artistCount == 3);
+    REQUIRE(albumCount == 3);
+    REQUIRE(genreCount == 3);
+    REQUIRE(playlistCount == 3);
 
-    if (value->getAudioName() == "Call") {
-      foundTrack2 = true;
-      REQUIRE(value->getAuthorName() == "Lori Brown");
-      REQUIRE(value->getAudioName() == "Call");
-      REQUIRE(value->getAlbumName() == "Her");
-      REQUIRE(value->getGenre() == "Hip Hop");
-      REQUIRE(value->getDuration() == "0 : 09 : 45");
-      REQUIRE(value->getDatePublished() == "2016 - 10 - 10");
-      REQUIRE(value->getPlaylist() == "Over off");
-    }
+    AudioTrack* value1 = library.getTracksTable().findTrack("Campaign eye interview");
+    AudioTrack* value2 = library.getArtistTable().findTrack("Debra Alexander");
+    AudioTrack* value3 = library.getAlbumNameTable().findTrack("Social age");
+    AudioTrack* value4 = library.getGenreTable().findTrack("Country");
+    AudioTrack* value5 = library.getPlaylistTable().findTrack("Home");
 
-    REQUIRE(foundTrack1);
-    REQUIRE(foundTrack2);
+    REQUIRE(value1 != nullptr);
+    REQUIRE(value2 != nullptr);
+    REQUIRE(value3 != nullptr);
+    REQUIRE(value4 != nullptr);
+    REQUIRE(value5 != nullptr);
 
-    delete[] items;
+    REQUIRE(value1->getAudioName() == value2->getAudioName());
+    REQUIRE(value1->getAudioName() == value3->getAudioName());
+    REQUIRE(value1->getAudioName() == value4->getAudioName());
+    REQUIRE(value1->getAudioName() == value5->getAudioName());
+
+    REQUIRE(value1->getAuthorName() == value2->getAuthorName());
+    REQUIRE(value1->getAuthorName() == value3->getAuthorName());
+    REQUIRE(value1->getAuthorName() == value4->getAuthorName());
+    REQUIRE(value1->getAuthorName() == value5->getAuthorName());
+
+    REQUIRE(value1->getAlbumName() == value2->getAlbumName());
+    REQUIRE(value1->getAlbumName() == value3->getAlbumName());
+    REQUIRE(value1->getAlbumName() == value4->getAlbumName());
+    REQUIRE(value1->getAlbumName() == value5->getAlbumName());
+
+    REQUIRE(value1->getGenre() == value2->getGenre());
+    REQUIRE(value1->getGenre() == value3->getGenre());
+    REQUIRE(value1->getGenre() == value4->getGenre());
+    REQUIRE(value1->getGenre() == value5->getGenre());
+
+    REQUIRE(value1->getPlaylist() == value2->getPlaylist());
+    REQUIRE(value1->getPlaylist() == value3->getPlaylist());
+    REQUIRE(value1->getPlaylist() == value4->getPlaylist());
+    REQUIRE(value1->getPlaylist() == value5->getPlaylist());
+
+    delete[] tracksItems;
+    delete[] artistItems;
+    delete[] albumItems;
+    delete[] genreItems;
+    delete[] playlistItems;
   }
 
   SECTION("Deleting Audio Tracks") {
@@ -86,26 +117,80 @@ TEST_CASE("Adding and Deleting Audio Tracks in HashTable") {
     AudioTrack track2("Lori Brown", "Call", "Her", "Hip Hop", "0 : 09 : 45",
                       "2016 - 10 - 10", "Over off");
 
-    REQUIRE(hashTable.insert(track1.getAudioName(), track1));
-    REQUIRE(hashTable.insert(track2.getAudioName(), track2));
+    REQUIRE(library.addTrackToHashTables(track1));
+    REQUIRE(library.addTrackToHashTables(track2));
 
-    std::pair<size_t, std::pair<std::string, AudioTrack>*> result =
-        hashTable.listItems();
-    size_t count = result.first;
-    std::pair<std::string, AudioTrack>* items = result.second;
+    // Retrieve items and check count
+    // Get count and items for tracksTable
+    std::pair<size_t, std::pair<std::string, AudioTrack>*> result1 =
+        library.getTracksTable().listItems();
+    size_t tracksCount = result1.first;
+    std::pair<std::string, AudioTrack>* tracksItems = result1.second;
 
-    REQUIRE(count == 2);
+    // Get count and items for artistTable
+    std::pair<size_t, std::pair<std::string, AudioTrack>*> result2 =
+        library.getArtistTable().listItems();
+    size_t artistCount = result2.first;
+    std::pair<std::string, AudioTrack>* artistItems = result2.second;
 
-    REQUIRE(hashTable.remove("Call"));  // Removing existing track
+    // Get count and items for albumNameTable
+    std::pair<size_t, std::pair<std::string, AudioTrack>*> result3 =
+        library.getAlbumNameTable().listItems();
+    size_t albumCount = result3.first;
+    std::pair<std::string, AudioTrack>* albumItems = result3.second;
+
+    // Get count and items for genreTable
+    std::pair<size_t, std::pair<std::string, AudioTrack>*> result4 =
+        library.getGenreTable().listItems();
+    size_t genreCount = result4.first;
+    std::pair<std::string, AudioTrack>* genreItems = result4.second;
+
+    // Get count and items for playlistTable
+    std::pair<size_t, std::pair<std::string, AudioTrack>*> result5 =
+        library.getPlaylistTable().listItems();
+    size_t playlistCount = result5.first;
+    std::pair<std::string, AudioTrack>* playlistItems = result5.second;
+
+    REQUIRE(tracksCount == 2);
+    REQUIRE(artistCount == 2);
+    REQUIRE(albumCount == 2);
+    REQUIRE(genreCount == 2);
+    REQUIRE(playlistCount == 2);
+
+    REQUIRE(library.deleteTrack("Call"));  // Removing existing track
     REQUIRE_FALSE(
-        hashTable.remove("Nonexistent Track"));  // Removing non-existing track
+        library.deleteTrack("Nonexistent Track"));  // Removing non-existing track
 
-    result = hashTable.listItems();
-    count = result.first;
-    items = result.second;
+    result1 = library.getTracksTable().listItems();
+    tracksCount = result1.first;
+    tracksItems = result1.second;
 
-    REQUIRE(count == 1);
+    result2 = library.getArtistTable().listItems();
+    artistCount = result2.first;
+    artistItems = result2.second;
 
-    delete[] items;
+    result3 = library.getAlbumNameTable().listItems();
+    albumCount = result3.first;
+    albumItems = result3.second;
+
+    result4 = library.getGenreTable().listItems();
+    genreCount = result4.first;
+    genreItems = result4.second;
+
+    result5 = library.getPlaylistTable().listItems();
+    playlistCount = result5.first;
+    playlistItems = result5.second;
+
+    REQUIRE(tracksCount == 1);
+    REQUIRE(artistCount == 1);
+    REQUIRE(albumCount == 1);
+    REQUIRE(genreCount == 1);
+    REQUIRE(playlistCount == 1);
+
+    delete[] tracksItems;
+    delete[] artistItems;
+    delete[] albumItems;
+    delete[] genreItems;
+    delete[] playlistItems;
   }
 }
