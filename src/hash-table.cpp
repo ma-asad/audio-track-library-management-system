@@ -7,7 +7,7 @@
 */
 
 template <typename Key, typename Value>
-size_t HashTable<Key, Value>::hasher(const Key& key) {
+size_t HashTable<Key, Value>::hasher(const Key& key) const{
   size_t hashingValue = 0;
   for (char character : key) {
     hashingValue = (hashingValue * 31) + character;
@@ -68,17 +68,28 @@ bool HashTable<Key, Value>::insert(const Key& key, const Value& value) {
     table[position] = newNode;
 
     return true;
-
   } else {
     Node<std::pair<Key, Value>>* currentNode = table[position];
 
-    while (currentNode->next) {
+    while (currentNode) {
+      // Check if the value is identical to the one being inserted
+      if (currentNode->data.second == value) {
+        delete newNode;  // Delete the new node as it's not needed
+        return false;    // Indicate that insertion was not successful
+      }
+
+      // If we're at the last node in the list, insert the new node
+      if (!currentNode->next) {
+        currentNode->next = newNode;
+
+        return true;
+      }
+
       currentNode = currentNode->next;
     }
-
-    currentNode->next = newNode;
-    return false;
   }
+
+  return false;
 }
 
 template <typename Key, typename Value>
@@ -109,7 +120,8 @@ bool HashTable<Key, Value>::remove(const Key& key) {
 }
 
 template <typename Key, typename Value>
-std::pair<size_t, std::pair<Key, Value>*> HashTable<Key, Value>::listItems() {
+std::pair<size_t, std::pair<Key, Value>*> HashTable<Key, Value>::listItems()
+    const {
   size_t counter = 0;
   for (size_t c = 0; c < tableSize; ++c) {
     Node<std::pair<Key, Value>>* currentNode = table[c];
@@ -133,7 +145,7 @@ std::pair<size_t, std::pair<Key, Value>*> HashTable<Key, Value>::listItems() {
 }
 
 template <typename Key, typename Value>
-Value* HashTable<Key, Value>::findTrack(const Key& key) {
+Value* HashTable<Key, Value>::findTrack(const Key& key) const {
   size_t index = hasher(key);
   Node<std::pair<Key, Value>>* currentNode = table[index];
 
