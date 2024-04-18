@@ -1,6 +1,12 @@
 #ifndef AUDIOLIBRARY_H
 #define AUDIOLIBRARY_H
 
+#include <fstream>
+#include <iostream>
+#include <sstream>
+
+#include "audioLibrary.hpp"
+
 /*
     audiolibrary.hpp
     Created:
@@ -9,14 +15,17 @@
 
 #include <string>
 #include <vector>
+
 #include "audiotrack.hpp"
 #include "hashtable.hpp"
 
 /**
  * @class AudioLibrary
  * @brief Represents a library of audio tracks.
- * The AudioLibrary class provides functionality to manage a collection of audio tracks.
+ * The AudioLibrary class provides functionality to manage a collection of audio
+ * tracks.
  */
+
 class AudioLibrary
 {
 private:

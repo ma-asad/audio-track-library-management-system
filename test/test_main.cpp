@@ -1,49 +1,41 @@
 #define CATCH_CONFIG_MAIN
-#include "catch.hpp"
-#include "validation.hpp"
 #include <sstream>
 
+#include "catch.hpp"
+#include "validation.hpp"
 
 TEST_CASE("Get Valid Choice", "[input]") {
+  std::streambuf* cinBuffer = std::cin.rdbuf();
 
-    std::streambuf* cinBuffer = std::cin.rdbuf();
+  SECTION("Test valid menu choice") {
+    std::istringstream iss("1\n");
 
-    SECTION("Test valid menu choice") {
+    std::cin.rdbuf(iss.rdbuf());
 
-        std::istringstream iss("1\n");
+    int choice = getValidChoice();
 
-        std::cin.rdbuf(iss.rdbuf());
+    REQUIRE(choice == 1);
+  }
 
-        int choice = getValidChoice();
+  SECTION("Test invalid menu choice - Out of range") {
+    std::istringstream iss("7\n1\n");
 
-        REQUIRE(choice == 1);
+    std::cin.rdbuf(iss.rdbuf());
 
-    }
+    int choice = getValidChoice();
 
-    SECTION("Test invalid menu choice - Out of range") {
+    REQUIRE(choice == 1);
+  }
 
-        std::istringstream iss("7\n1\n");
+  SECTION("Test invalid menu Choice - Invalid input") {
+    std::istringstream iss("abc\n1\n");
 
-        std::cin.rdbuf(iss.rdbuf());
+    std::cin.rdbuf(iss.rdbuf());
 
-        int choice = getValidChoice();
+    int choice = getValidChoice();
 
-        REQUIRE(choice == 1);
+    REQUIRE(choice == 1);
+  }
 
-    }
-
-    SECTION("Test invalid menu Choice - Invalid input") {
-
-        std::istringstream iss("abc\n1\n");
-
-        std::cin.rdbuf(iss.rdbuf());
-
-        int choice = getValidChoice();
-
-        REQUIRE(choice == 1);
-
-    }
-
-    std::cin.rdbuf(cinBuffer);
-
+  std::cin.rdbuf(cinBuffer);
 }

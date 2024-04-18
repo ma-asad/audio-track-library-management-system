@@ -1,9 +1,3 @@
-#include "audiolibrary.hpp"
-#include <fstream>
-#include <sstream>
-#include <iostream>
-#include <algorithm>
-
 /*
     audioLibrary.cpp
     Created:
@@ -48,7 +42,8 @@ void AudioLibrary::loadData(const std::string &filename)
             addTrackToHashTable(track);
         }
     }
-    file.close();
+  }
+  file.close();
 }
 
 void AudioLibrary::addTrackFromCSV()
@@ -79,7 +74,7 @@ void AudioLibrary::addTrackFromCSV()
             std::cerr << "Invalid file format! Please only csv are allowed"
                       << std::endl;
         }
-    }
+  }
 
     loadData(filename);
     std::cout << "Audio tracks have been added successfully from "
@@ -91,32 +86,45 @@ void AudioLibrary::addTrackManually()
     std::string authorName, audioName, albumName, genre, duration,
         datePublished, playlist;
 
-    std::cout << "Enter author name: ";
-    std::getline(std::cin, authorName);
+  loadData(filename);
+  std::cout << "Audio tracks have been added successfully from " << filename
+            << "!" << std::endl;
+}
 
-    std::cout << "Enter audio name: ";
-    std::getline(std::cin, audioName);
+void AudioLibrary::addTrackManually() {
+  std::string authorName, audioName, albumName, genre, duration, datePublished,
+      playlist;
 
-    std::cout << "Enter album name: ";
-    std::getline(std::cin, albumName);
+  std::cout << "Enter author name: ";
+  std::getline(std::cin, authorName);
 
-    std::cout << "Enter genre: ";
-    std::getline(std::cin, genre);
+  std::cout << "Enter audio name: ";
+  std::getline(std::cin, audioName);
 
-    std::cout << "Enter duration: ";
-    std::getline(std::cin, duration);
+  std::cout << "Enter album name: ";
+  std::getline(std::cin, albumName);
 
-    std::cout << "Enter date published: ";
-    std::getline(std::cin, datePublished);
+  std::cout << "Enter genre: ";
+  std::getline(std::cin, genre);
 
-    std::cout << "Enter playlist: ";
-    std::getline(std::cin, playlist);
+  std::cout << "Enter duration: ";
+  std::getline(std::cin, duration);
 
-    AudioTrack track(authorName, audioName, albumName, genre, duration,
+  std::cout << "Enter date published: ";
+  std::getline(std::cin, datePublished);
+
+  std::cout << "Enter playlist: ";
+  std::getline(std::cin, playlist);
+
+  AudioTrack track(authorName, audioName, albumName, genre, duration,
                      datePublished, playlist);
-    addTrackToHashTable(track);
+  addTrackToHashTable(track);
 
-    std::cout << "The Audio tracks have been added successfully!" << std::endl;
+  AudioTrack track(authorName, audioName, albumName, genre, duration,
+                   datePublished, playlist);
+  addTrackToHashTable(track);
+
+  std::cout << "The Audio tracks have been added successfully!" << std::endl;
 }
 
 bool AudioLibrary::checkFileExistence(const std::string &filename)
