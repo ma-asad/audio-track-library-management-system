@@ -7,6 +7,15 @@
 */
 
 template <typename Key, typename Value>
+size_t HashTable<Key, Value>::hasher(const Key& key) {
+  size_t hashingValue = 0;
+  for (char character : key) {
+    hashingValue = (hashingValue * 31) + character;
+  }
+  return hashingValue % tableSize;
+}
+
+template <typename Key, typename Value>
 size_t HashTable<Key, Value>::nextPrimeNumber(size_t number) {
   while (!prime(number)) {
     ++number;
@@ -138,15 +147,6 @@ Value* HashTable<Key, Value>::findTrack(const Key& key) {
 
   // Return null if the key was not found.
   return nullptr;
-}
-
-template <typename Key, typename Value>
-size_t HashTable<Key, Value>::hasher(const Key& key) {
-  size_t hashingValue = 0;
-  for (char character : key) {
-    hashingValue = (hashingValue * 31) + character;
-  }
-  return hashingValue % tableSize;
 }
 
 template class HashTable<std::string, AudioTrack>;
