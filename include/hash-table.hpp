@@ -44,7 +44,7 @@ class HashTable {
    * @param key The key to be hashed.
    * @return The hash value generated for the key.
    */
-  size_t hasher(const Key& key);
+  size_t hasher(const Key& key) const;
 
   /**
    * @brief Finds the next prime number greater than the given size.
@@ -94,26 +94,29 @@ class HashTable {
    */
   bool remove(const Key& key);
 
+/**
+ * @brief Lists all the items in the hash table.
+ * 
+ * This function iterates through the hash table and returns an array of all the key-value pairs stored in the table.
+ * The function first counts the number of items in the table, then dynamically allocates an array to store the items.
+ * It then iterates through the table again and copies each item into the array.
+ * 
+ * @tparam Key The type of the keys in the hash table.
+ * @tparam Value The type of the values in the hash table.
+ * @return A pair containing the number of items in the table and a pointer to the array of key-value pairs.
+ */
+  std::pair<size_t, std::pair<Key, Value>*> listItems() const;
+
   /**
-   * Retrieves all the items stored in the hash table.
-   *
-   * @tparam Key The type of the key.
-   * @tparam Value The type of the value.
-   * @return A pair containing the number of items and an array of key-value
-   * pairs.
-   */
-  std::pair<size_t, std::pair<Key, Value>*> listItems();
-  
-  /**
-   * @brief Finds the value associat*e with the given key in the hash table.
+   * @brief Finds a track in the hash table based on the given key.
    *
    * @tparam Key The type of the key.
    * @tparam Value The type of the value.
    * @param key The key to search for.
-   * @return A pointer to the value associated with the key, or nullptr if
-   * the key was not found.
+   * @return A pointer to the value associated with the key, or nullptr if the
+   * key was not found.
    */
-  Value* findTrack(const Key& key);
+  Value* findTrack(const Key& key) const;
 };
 
 #endif
