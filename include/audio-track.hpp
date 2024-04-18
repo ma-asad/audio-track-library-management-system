@@ -1,8 +1,6 @@
 #ifndef AUDIOTRACK_H
 #define AUDIOTRACK_H
 
-#include <string>
-
 /*
     audiotrack.hpp
     Created:
