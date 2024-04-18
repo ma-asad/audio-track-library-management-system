@@ -24,7 +24,6 @@ AudioTrack::AudioTrack(const std::string authorName,
   this->playlist = playlist;
 }
 
-// Getter methods
 std::string AudioTrack::getAuthorName() const { return this->authorName; }
 
 std::string AudioTrack::getAudioName() const { return this->audioName; }
