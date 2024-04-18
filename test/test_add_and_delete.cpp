@@ -2,9 +2,9 @@
 #include <iostream>
 #include <sstream>
 
-#include "audiotrack.hpp"
+#include "audio-track.hpp"
 #include "catch.hpp"
-#include "hashtable.hpp"
+#include "hash-table.hpp"
 #include "validation.hpp"
 
 // Assuming AudioTrack class has relevant constructors and getters/setters
