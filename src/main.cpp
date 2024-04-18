@@ -1,26 +1,16 @@
 #include "main.hpp"
-#include <cstdlib>
 
 /*
     main.cpp
     Created:
     Updated:
 */
-// TODO: clear pevious commented code && move to a seperate class terminal-utils
-#ifdef _WIN32
-  #define CLEAR "cls"
-#else
-  #define CLEAR "clear"
-#endif
-
 void enter() {
   std::cout << "\nPress 'Enter' to go back to main menu";
-  // std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
   std::cin.get();
 }
 
 void clearScreen(const std::string& message) {
-  // std::cout << "\033[2J\033[1;1H";
   std::system(CLEAR);
   std::cout << message << std::endl;
 }
