@@ -19,10 +19,13 @@
 /**
  * @class AudioLibrary
  * @brief Represents a library of audio tracks.
- * The AudioLibrary class provides functionality to manage a collection of audio
- * tracks.
+ *
+ * The AudioLibrary class provides functionality to manage and manipulate a collection
+ * of audio tracks. It includes methods to add, delete, and search for tracks based on
+ * various criteria such as track name, artist, album, genre, and playlist. The class
+ * also supports loading data from a file, creating playlists, and performing sorting
+ * operations on the tracks.
  */
-
 class AudioLibrary {
  private:
   HashTable<std::string, AudioTrack> tracksTable;
@@ -31,16 +34,43 @@ class AudioLibrary {
   HashTable<std::string, AudioTrack> genreTable;
   HashTable<std::string, AudioTrack> playlistTable;
 
-  // Quicksort helper function
+  /**
+   * Sorts an array of AudioTrack objects using the QuickSort algorithm.
+   *
+   * @param items The array of AudioTrack objects to be sorted.
+   * @param low The starting index of the subarray to be sorted.
+   * @param high The ending index of the subarray to be sorted.
+   */
   void quickSort(std::pair<std::string, AudioTrack>* items, int low, int high);
 
-  // Partition function for Quicksort
+  /**
+   * Partitions the given array of audio tracks based on the audio name.
+   * Uses the last element as the pivot and rearranges the elements such that
+   * all elements smaller than or equal to the pivot are placed before it,
+   * and all elements greater than the pivot are placed after it.
+   *
+   * @param items The array of audio tracks to be partitioned.
+   * @param low The starting index of the subarray to be partitioned.
+   * @param high The ending index of the subarray to be partitioned.
+   * @return The index of the pivot element after partitioning.
+   */
   int partition(std::pair<std::string, AudioTrack>* items, int low, int high);
 
-  // Helper function to convert a string to lowercase
+  /**
+   * Converts a given string to lowercase.
+   *
+   * @param str The string to be converted to lowercase.
+   * @return The lowercase version of the input string.
+   */
   std::string toLowercase(const std::string& str);
 
  public:
+  /**
+   * @brief Constructs an instance of the AudioLibrary class.
+   *
+   * This constructor initializes the tracksTable, artistTable, albumNameTable,
+   * genreTable, and playlistTable data members of the AudioLibrary class.
+   */
   AudioLibrary();
 
   /**
@@ -99,31 +129,61 @@ class AudioLibrary {
    */
   void listAudio();
 
-  AudioTrack* findTrackByName(const std::string& track) {
-    return tracksTable.findTrack(track);
-  };
-
-  AudioTrack* findTrackByArtist(const std::string& artist) {
-    return artistTable.findTrack(artist);
-  }
-
-  AudioTrack* findTrackByAlbum(const std::string& album) {
-    return albumNameTable.findTrack(album);
-  }
-
-  AudioTrack* findTrackByGenre(const std::string& genre) {
-    return genreTable.findTrack(genre);
-  }
-
-  AudioTrack* findTrackByPlaylist(const std::string& playlist) {
-    return playlistTable.findTrack(playlist);
-  }
-
   void createPlaylist();
   void addTrackToPlaylist();
   void removeTrackFromPlaylist();
   void deletePlaylist();
   void viewPlaylist();
+
+  /**
+   * Finds an AudioTrack by its name.
+   *
+   * @param track The name of the track to find.
+   * @return A pointer to the found AudioTrack, or nullptr if not found.
+   */
+  AudioTrack* findTrackByName(const std::string& track) {
+    return tracksTable.findTrack(track);
+  };
+
+  /**
+   * Finds an audio track by artist.
+   *
+   * @param artist The name of the artist to search for.
+   * @return A pointer to the found AudioTrack object, or nullptr if not found.
+   */
+  AudioTrack* findTrackByArtist(const std::string& artist) {
+    return artistTable.findTrack(artist);
+  }
+
+  /**
+   * Finds an audio track by album.
+   * 
+   * @param album The name of the album to search for.
+   * @return A pointer to the found AudioTrack object, or nullptr if not found.
+  */
+  AudioTrack* findTrackByAlbum(const std::string& album) {
+    return albumNameTable.findTrack(album);
+  }
+
+  /**
+   * Finds an audio track by genre.
+   *
+   * @param genre The genre of the audio track to find.
+   * @return A pointer to the found AudioTrack object, or nullptr if not found.
+   */
+  AudioTrack* findTrackByGenre(const std::string& genre) {
+    return genreTable.findTrack(genre);
+  }
+
+  /**
+   * Finds an audio track by playlist.
+   *
+   * @param playlist The name of the playlist to search for.
+   * @return A pointer to the AudioTrack object if found, nullptr otherwise.
+   */
+  AudioTrack* findTrackByPlaylist(const std::string& playlist) {
+    return playlistTable.findTrack(playlist);
+  }
 
   /**
    * Returns a constant reference to the tracks table.
@@ -135,19 +195,16 @@ class AudioLibrary {
   }
 
   /**
-   * Retrieves the artist table.
+   * Returns a constant reference to the artist table.
    *
-   * @return The artist table as a constant reference to a HashTable object.
+   * @return A constant reference to the artist table.
    */
   const HashTable<std::string, AudioTrack>& getArtistTable() const {
     return artistTable;
   }
 
   /**
-   * Retrieves the album name table.
-   *
-   * This function returns a constant reference to the album name table, which is a HashTable
-   * containing the album names as keys and the corresponding AudioTrack objects as values.
+   * Returns a constant reference to the album name table.
    *
    * @return A constant reference to the album name table.
    */
