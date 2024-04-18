@@ -16,10 +16,4 @@
  */
 int getValidChoice();
 
-/**
- * @brief Prompts the user to enter a valid choice between 1 and 2.
- * @return The user's valid choice as an integer.
- */
-int getValidAddChoice();
-
 #endif
