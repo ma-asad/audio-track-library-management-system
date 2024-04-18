@@ -53,20 +53,28 @@ std::string AudioLibrary::toLowercase(const std::string &str) {
   return lowercaseStr;
 }
 
-AudioLibrary::AudioLibrary() : tracks() {}
+AudioLibrary::AudioLibrary()
+    : tracksTable(),
+      artistTable(),
+      albumNameTable(),
+      genreTable(),
+      playlistTable() {}
 
-void AudioLibrary::addTrackToHashTables(const AudioTrack &track) {
+bool AudioLibrary::addTrackToHashTables(const AudioTrack &track) {
   std::string authorName = track.getAuthorName();
   std::string audioName = track.getAudioName();
   std::string albumName = track.getAlbumName();
   std::string genre = track.getGenre();
   std::string playlist = track.getPlaylist();
 
-  tracksTable.insert(audioName, track);
-  artistTable.insert(authorName, track);
-  albumNameTable.insert(albumName, track);
-  genreTable.insert(genre, track);
-  playlistTable.insert(playlist, track);
+  bool trackInserted = tracksTable.insert(audioName, track);
+  bool artistInserted = artistTable.insert(authorName, track);
+  bool albumInserted = albumNameTable.insert(albumName, track);
+  bool genreInserted = genreTable.insert(genre, track);
+  bool playlistInserted = playlistTable.insert(playlist, track);
+
+  return trackInserted && artistInserted && albumInserted && genreInserted &&
+         playlistInserted;
 }
 
 void AudioLibrary::loadData(const std::string &filename) {
@@ -138,10 +146,10 @@ bool AudioLibrary::checkFileExistence(const std::string &filename) {
 }
 
 bool AudioLibrary::deleteTrack(const std::string &audioName) {
-  AudioTrack *trackContent = hashTable.findTrack(audioName);
+  AudioTrack *trackContent = tracksTable.findTrack(audioName);
 
   if (trackContent == nullptr) {
-    std::cout << "The Audio track '" << audioName << "' was not found."
+    std::cout << "The Audio track '" << audioName << "' is not available."
               << std::endl;
     return false;
   }
@@ -176,7 +184,7 @@ bool AudioLibrary::deleteTrack(const std::string &audioName) {
 
 void AudioLibrary::listAudio() {
   std::pair<size_t, std::pair<std::string, AudioTrack> *> result =
-      tracks.listItems();
+      tracksTable.listItems();
 
   size_t counter = result.first;
   std::pair<std::string, AudioTrack> *items = result.second;
