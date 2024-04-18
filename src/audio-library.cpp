@@ -6,25 +6,27 @@
     Updated:
 */
 
-// Quicksort helper function
 void AudioLibrary::quickSort(std::pair<std::string, AudioTrack> *items, int low,
                              int high) {
+    // Partition the array and get the pivot index
   if (low < high) {
-    int pivotIndex = partition(
-        items, low, high);  // Partition the array and get the pivot index
-    quickSort(items, low,
-              pivotIndex - 1);  // Recursively sort the left subarray
-    quickSort(items, pivotIndex + 1,
-              high);  // Recursively sort the right subarray
+    int pivotIndex = partition(items, low, high);
+
+    // Recursively sort the left subarray
+    quickSort(items, low, pivotIndex - 1);
+
+    // Recursively sort the right subarray
+    quickSort(items, pivotIndex + 1, high);
   }
 }
 
-// Partition function for Quicksort
 int AudioLibrary::partition(std::pair<std::string, AudioTrack> *items, int low,
                             int high) {
   // Use the key (audio name) of the last element as the pivot
   std::string pivot = items[high].first;
-  int i = low - 1;  // Index of the smaller element
+
+  // Index of the smaller element
+  int i = low - 1;
 
   // Iterate over the subarray and partition it around the pivot
   for (int j = low; j < high; ++j) {
@@ -38,18 +40,20 @@ int AudioLibrary::partition(std::pair<std::string, AudioTrack> *items, int low,
     }
   }
 
-  std::swap(items[i + 1],
-            items[high]);  // Swap the pivot with the element at index i+1
-  return i + 1;            // Return the index of the pivot element
+  // Swap the pivot with the element at index i+1
+  std::swap(items[i + 1], items[high]);
+
+  // Return the index of the pivot element
+  return i + 1;
 }
 
-// Helper function to convert a string to lowercase
 std::string AudioLibrary::toLowercase(const std::string &str) {
   std::string lowercaseStr = str;
   // Transform each character in the string to lowercase using std::transform
   // and std::tolower
   std::transform(lowercaseStr.begin(), lowercaseStr.end(), lowercaseStr.begin(),
                  [](unsigned char c) { return std::tolower(c); });
+
   return lowercaseStr;
 }
 
