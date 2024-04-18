@@ -1,7 +1,7 @@
 #include "main.hpp"
 
 void exitProgram(bool* stopProgram) {
-  std::cout << "Exiting the program. Goodbye!" << std::endl;
+  std::cout << "Exiting the program. BLYAT CYKA!" << std::endl;
   std::cout << std::endl;
   *stopProgram = true;
 }
@@ -25,7 +25,9 @@ void newWindow(std::string windowTitle) {
   std::cout << std::endl;
 }
 
-void displaySearchMenu() {
+void searchMenuSelector(AudioLibrary& library) {
+  std::system(CLEAR);
+
   std::cout << std::endl;
   std::cout << "*=============================================*" << std::endl;
   std::cout << "|                  SEARCH MENU                |" << std::endl;
@@ -39,28 +41,6 @@ void displaySearchMenu() {
   std::cout << "| 6. <- Go Back to Main Menu                  |" << std::endl;
   std::cout << "*=============================================*" << std::endl;
   std::cout << std::endl;
-}
-
-void displayMainMenu() {
-  std::cout << std::endl;
-  std::cout << "*=============================================*" << std::endl;
-  std::cout << "|                  MAIN MENU                  |" << std::endl;
-  std::cout << "*=============================================*" << std::endl;
-  std::cout << "| Choose an option below :                    |" << std::endl;
-  std::cout << "| 1. Add Audio File                           |" << std::endl;
-  std::cout << "| 2. List Audio                               |" << std::endl;
-  std::cout << "| 3. Search                                   |" << std::endl;
-  std::cout << "| 4. Create Playlist                          |" << std::endl;
-  std::cout << "| 5. Delete                                   |" << std::endl;
-  std::cout << "| 6. Exit                                     |" << std::endl;
-  std::cout << "*=============================================*" << std::endl;
-  std::cout << std::endl;
-}
-
-void searchMenuSelector(AudioLibrary& library) {
-  std::system(CLEAR);
-
-  displaySearchMenu();
 
   int searchOptionSelected;
   std::cout << "Enter your choice: ";
@@ -95,7 +75,19 @@ void searchMenuSelector(AudioLibrary& library) {
 void mainMenuSelector(bool* stopProgram, AudioLibrary& library) {
   std::system(CLEAR);
 
-  displayMainMenu();
+  std::cout << std::endl;
+  std::cout << "*=============================================*" << std::endl;
+  std::cout << "|                  MAIN MENU                  |" << std::endl;
+  std::cout << "*=============================================*" << std::endl;
+  std::cout << "| Choose an option below :                    |" << std::endl;
+  std::cout << "| 1. Add Audio File                           |" << std::endl;
+  std::cout << "| 2. List Audio                               |" << std::endl;
+  std::cout << "| 3. Search                                   |" << std::endl;
+  std::cout << "| 4. Create Playlist                          |" << std::endl;
+  std::cout << "| 5. Delete                                   |" << std::endl;
+  std::cout << "| 6. Exit                                     |" << std::endl;
+  std::cout << "*=============================================*" << std::endl;
+  std::cout << std::endl;
 
   int menuOptionSelected;
   std::cout << "Enter your choice: ";
@@ -132,6 +124,7 @@ void mainMenuSelector(bool* stopProgram, AudioLibrary& library) {
 int main() {
   AudioLibrary library;
   bool stopProgram = false;
+  
   do {
     mainMenuSelector(&stopProgram, library);
   } while (stopProgram == true);
