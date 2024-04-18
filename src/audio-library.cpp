@@ -44,8 +44,7 @@ void AudioLibrary::loadData(const std::string &filename)
             addTrackToHashTable(track);
         }
     }
-  }
-  file.close();
+    file.close();
 }
 
 void AudioLibrary::addTrackFromCSV()
@@ -83,16 +82,6 @@ void AudioLibrary::addTrackFromCSV()
               << filename << "!" << std::endl;
 }
 
-void AudioLibrary::addTrackManually()
-{
-    std::string authorName, audioName, albumName, genre, duration,
-        datePublished, playlist;
-
-  loadData(filename);
-  std::cout << "Audio tracks have been added successfully from " << filename
-            << "!" << std::endl;
-}
-
 void AudioLibrary::addTrackManually() {
   std::string authorName, audioName, albumName, genre, duration, datePublished,
       playlist;
@@ -120,10 +109,6 @@ void AudioLibrary::addTrackManually() {
 
   AudioTrack track(authorName, audioName, albumName, genre, duration,
                      datePublished, playlist);
-  addTrackToHashTable(track);
-
-  AudioTrack track(authorName, audioName, albumName, genre, duration,
-                   datePublished, playlist);
   addTrackToHashTable(track);
 
   std::cout << "The Audio tracks have been added successfully!" << std::endl;

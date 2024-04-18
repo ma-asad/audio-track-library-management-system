@@ -44,7 +44,7 @@ void userChoice(int choice, AudioLibrary& library) {
     } else if (addChoice == 2) {
       library.addTrackManually();
     }
-    s enter();
+    enter();
   } else if (choice == 2) {
     clearScreen("Delete: Users can delete existing audio tracks \n");
     std::cout << "Enter the name of the audio track to delete: ";

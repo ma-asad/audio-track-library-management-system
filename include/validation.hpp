@@ -1,6 +1,9 @@
 #ifndef VALIDATION_H
 #define VALIDATION_H
 
+#include <iostream>
+#include <limits>
+
 /*
     validation.hpp
     Created:
