@@ -6,8 +6,6 @@
     Updated:
 */
 
-// Constructor
-
 AudioTrack::AudioTrack() {}
 
 AudioTrack::AudioTrack(const std::string authorName,
