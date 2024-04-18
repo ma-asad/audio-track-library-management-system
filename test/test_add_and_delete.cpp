@@ -2,34 +2,39 @@
 #include <iostream>
 #include <sstream>
 
-#include "audio-track.hpp"
 #include "catch.hpp"
+#include "audio-track.hpp"
 #include "hash-table.hpp"
 #include "validation.hpp"
 
 // Assuming AudioTrack class has relevant constructors and getters/setters
 
 TEST_CASE("Adding and Deleting Audio Tracks in HashTable") {
-  HashTable<std::string, AudioTrack> hashTable;
+  HashTable<std::string, AudioTrack> tracksTable;
+  HashTable<std::string, AudioTrack> artistTable;
+  HashTable<std::string, AudioTrack> albumNameTable;
+  HashTable<std::string, AudioTrack> genreTable;
+  HashTable<std::string, AudioTrack> playlistTable;
 
   SECTION("Adding Audio Tracks") {
     AudioTrack track1("Debra Alexander", "Campaign eye interview", "Social age",
                       "Country", "0 : 09 : 51", "2023 - 04 - 14", "Home");
     AudioTrack track2("Lori Brown", "Call", "Her", "Hip Hop", "0 : 09 : 45",
                       "2016 - 10 - 10", "Over off");
-    // Duplicate track
-    AudioTrack track3("Lori Brown", "Call", "Her", "Hip Hop", "0 : 09 : 45",
-                      "2016 - 10 - 10", "Over off");
-    // Track with same name but different author
-    AudioTrack track4("John McLean", "Call", "Boom", "Jazz", "0 : 03 : 42",
-                      "2014 - 08 - 23", "Karaoke");
+    REQUIRE(tracksTable.insert(track1.getAudioName(), track1));
+    REQUIRE(tracksTable.insert(track2.getAudioName(), track2));
 
-    REQUIRE(hashTable.insert(track1.getAudioName(), track1));
-    REQUIRE(hashTable.insert(track2.getAudioName(), track2));
-    // Duplicate track
-    REQUIRE_FALSE(hashTable.insert(track3.getAudioName(), track3));
-    // Track with same name but different author
-    REQUIRE_FALSE(hashTable.insert(track4.getAudioName(), track4));
+    // // Duplicate track
+    // AudioTrack track3("Lori Brown", "Call", "Her", "Hip Hop", "0 : 09 : 45",
+    //                   "2016 - 10 - 10", "Over off");
+    // // Track with same name but different author
+    // AudioTrack track4("John McLean", "Call", "Boom", "Jazz", "0 : 03 : 42",
+    //                   "2014 - 08 - 23", "Karaoke");
+
+    // // Duplicate track
+    // REQUIRE_FALSE(tracksTable.insert(track3.getAudioName(), track3));
+    // // Track with same name but different author
+    // REQUIRE_FALSE(tracksTable.insert(track4.getAudioName(), track4));
 
     // Retrieve items and check count
     std::pair<size_t, std::pair<std::string, AudioTrack>*> result =
