@@ -6,6 +6,7 @@ void exitProgram(bool* stopProgram) {
   *stopProgram = true;
 }
 
+
 void newWindow(std::string windowTitle) {
   const int bannerWidth = 47;
   const int titleLength = windowTitle.length();
@@ -128,7 +129,7 @@ int main() {
 
   do {
     mainMenuSelector(&stopProgram, library);
-  } while (stopProgram == true);
+  } while (!stopProgram);
 
   return 0;
 }
