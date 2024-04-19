@@ -261,8 +261,7 @@ void AudioLibrary::listAudio() {
 
 void AudioLibrary::searchTracks(const SearchType searchType,
                                 const std::string &searchQuery) {
-
-  std::pair<std::string, AudioTrack> *searchResults = nullptr;
+  std::pair<size_t, std::pair<std::string, AudioTrack> *> searchResults;
 
   if (searchType == SearchType::Track) {
     searchResults = tracksTable.findAllTracks(searchQuery);
@@ -276,14 +275,26 @@ void AudioLibrary::searchTracks(const SearchType searchType,
     searchResults = playlistTable.findAllTracks(searchQuery);
   }
 
-  if (searchResults != nullptr) {
-    int i = 0;
-    while (searchResults[i].first != "") {
-      std::cout << "Key: " << searchResults[i].first << std::endl;
-      i++;
-    }
-  } else {
-    std::cout << "No results found." << std::endl;
+  size_t counter = searchResults.first;
+
+  if (counter == 0) {
+    std::cout << "No tracks found for the search query: " << searchQuery
+              << std::endl;
+    std::cin.get();
+    return;
+  }
+
+  for (size_t i = 0; i < counter; i++) {
+    const AudioTrack &track = searchResults.second[i].second;
+    std::cout << "-----------------------------" << std::endl;
+    std::cout << "Author Name: " << track.getAuthorName() << std::endl;
+    std::cout << "Audio Name: " << track.getAudioName() << std::endl;
+    std::cout << "Album Name: " << track.getAlbumName() << std::endl;
+    std::cout << "Genre: " << track.getGenre() << std::endl;
+    std::cout << "Duration: " << track.getDuration() << std::endl;
+    std::cout << "Date Published: " << track.getDatePublished() << std::endl;
+    std::cout << "Playlist: " << track.getPlaylist() << std::endl;
+    std::cout << "-----------------------------" << std::endl;
   }
 
   std::cin.get();
