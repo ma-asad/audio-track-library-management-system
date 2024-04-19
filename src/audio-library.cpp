@@ -64,6 +64,8 @@ AudioLibrary::AudioLibrary()
       genreTable(),
       playlistTable() {}
 
+AudioLibrary::~AudioLibrary() {}
+
 bool AudioLibrary::addTrackToHashTables(const AudioTrack &track) {
   std::string authorName = track.getAuthorName();
   std::string audioName = track.getAudioName();
