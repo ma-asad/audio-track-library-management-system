@@ -204,9 +204,10 @@ void AudioLibrary::listAudio() {
   quickSort(items, 0, counter - 1);
 
   // Iterate over the sorted audio tracks and display their details
+  std::cout << "-----------------------------" << std::endl;
   for (size_t c = 0; c < counter; ++c) {
     const AudioTrack &track = items[c].second;
-    std::cout << "Track number: " << count << std::endl;
+    std::cout << "No. " << count << std::endl;
     std::cout << "-----------------------------" << std::endl;
     std::cout << "Author Name: " << track.getAuthorName() << std::endl;
     std::cout << "Audio Name: " << track.getAudioName() << std::endl;
