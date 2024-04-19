@@ -58,34 +58,27 @@ void searchMenuSelector(AudioLibrary& library) {
   std::cout << "Enter your choice: ";
   std::cin >> searchOptionSelected;
 
-  switch (searchOptionSelected) {
-    case 1:
-      newWindow("Search by Artist");
+  if (searchOptionSelected == 1) {
+    newWindow("Search by Artist");
       library.findTrackByArtist(getSearchQuery("Artist"));
-      break;
-    case 2:
-      newWindow("Search by Audio Title");
+  } else if (searchOptionSelected == 2) {
+    newWindow("Search by Audio Title");
       library.findTrackByName(getSearchQuery("Audio"));
-      break;
-    case 3:
-      newWindow("Search by Album");
+  } else if (searchOptionSelected == 3) {
+    newWindow("Search by Album");
       library.findTrackByAlbum(getSearchQuery("Album"));
-      break;
-    case 4:
-      newWindow("Search by Genre");
+  } else if (searchOptionSelected == 4) {
+    newWindow("Search by Genre");
       library.findTrackByGenre(getSearchQuery("Genre"));
-      break;
-    case 5:
-      newWindow("Search by Playlist");
+  } else if (searchOptionSelected == 5) {
+    newWindow("Search by Playlist");
       library.findTrackByPlaylist(getSearchQuery("Playlist"));
-      break;
-    case 6:
-      break;
-    default:
-      std::cout << "Invalid choice. Please try again." << std::endl;
-      std::cin.get();
-      searchMenuSelector(library);
-      break;
+  } else if (searchOptionSelected == 6) {
+    // Go back to main menu
+  } else {
+    std::cout << "Invalid choice. Please try again." << std::endl;
+    std::cin.get();
+    searchMenuSelector(library);
   }
 }
 
@@ -110,38 +103,29 @@ void mainMenuSelector(bool* stopProgram, AudioLibrary& library) {
   std::cout << "Enter your choice: ";
   std::cin >> menuOptionSelected;
 
-  switch (menuOptionSelected) {
-    case 1:
-      newWindow("Add Audio File");
-      library.addTrackFromCSV();
-      break;
-    case 2:
-      newWindow("List Audio");
-      break;
-    case 3:
-      searchMenuSelector(library);
-      break;
-    case 4:
-      newWindow("Create Playlist");
-      break;
-    case 5:
-      newWindow("Delete Audio");
-      break;
-    case 6:
-      exitProgram(stopProgram);
-      break;
-
-    default:
-      std::cout << "Invalid choice. Please try again." << std::endl;
-      std::cin.get();
-      break;
+  if (menuOptionSelected == 1) {
+    newWindow("Add Audio File");
+    library.addTrackFromCSV();
+  } else if (menuOptionSelected == 2) {
+    newWindow("List Audio");
+  } else if (menuOptionSelected == 3) {
+    searchMenuSelector(library);
+  } else if (menuOptionSelected == 4) {
+    newWindow("Create Playlist");
+  } else if (menuOptionSelected == 5) {
+    newWindow("Delete Audio");
+  } else if (menuOptionSelected == 6) {
+    exitProgram(stopProgram);
+  } else {
+    std::cout << "Invalid choice. Please try again." << std::endl;
+    std::cin.get();
   }
 }
 
 int main() {
   AudioLibrary library;
   bool stopProgram = false;
-  
+
   do {
     mainMenuSelector(&stopProgram, library);
   } while (stopProgram == true);
