@@ -78,8 +78,8 @@ void searchMenuSelector(AudioLibrary& library) {
   } else {
     std::cout << "Invalid choice. Please try again." << std::endl;
     std::cin.get();
-    searchMenuSelector(library);
   }
+  searchMenuSelector(library);
 }
 
 void mainMenuSelector(bool* stopProgram, AudioLibrary& library) {
