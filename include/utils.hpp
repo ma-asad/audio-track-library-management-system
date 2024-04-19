@@ -59,4 +59,7 @@ void searchMenuSelector(AudioLibrary& library);
  */
 void mainMenuSelector(bool* stopProgram, AudioLibrary& library);
 
+
+void playlistMenuSelector(AudioLibrary& library);
+
 #endif

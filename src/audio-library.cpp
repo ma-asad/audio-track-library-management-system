@@ -306,18 +306,79 @@ void AudioLibrary::searchTracks(const SearchType searchType,
   std::cin.get();
 }
 
-void AudioLibrary::createPlaylist() {
-  // prompt user to input song name to add to playlist
-  // check if the song exists or not
-  // if it exists, add it to the playlist
-  // if it doesn't exist, prompt user to input another song name
-  // repeat until user is done adding songs to the playlist (press enter blank to complete)
-  // if user is done, prompt user to input the name of the playlist (allow user to cancel at this point)
-  // create a new playlist with the name and add all the songs to the playlist
-  // display the playlist to the user
-  // allow user to go back to main menu
+
+void AudioLibrary::createPlaylist(){
+  std::string playlistName;
+  std::cout << "Enter the name of the new playlist: ";
+  std::getline(std::cin, playlistName);
+
+  if (playlistName.empty()) {
+    std::cout << "Playlist creation canceled. " << std::endl;
+    return;
+  }
+  // check if the playlist already exists
+    std::pair<int, std::pair<std::string, AudioTrack>*> existingPlaylist 
+            = playlistTable.findAllTracks(playlistName);
+    if (existingPlaylist.first > 0) {
+        std::cout << "The playlist with name \"" << playlistName 
+                  << "\" already exists." << std::endl;
+        std::cout << "Press enter to go  back to playlist menu.";
+        std::cin.ignore();
+        return;
+    }
+    int choice = 1;
+    while (choice != 0) {
+      std::string trackName;
+      std::cout << "Enter the name of the track to add (or enter 0 to finish): ";
+      std::getline(std::cin, trackName);
+
+        if (trackName == "0") {
+            choice = 0;
+        } else{
+          AudioTrack* track = findTrackByName(trackName);
+          if (track != nullptr){
+            playlistTable.insert(playlistName, *track);
+            std::cout << "The track has been added to the playliss" << std::endl;
+          } else {
+            std::cout << "The Track was not found" << std::endl;
+          }
+        }
+
+        if (choice != 0){
+          std::cout << "Do you want to add another track?" << std::endl;
+          std::cout << "1. Yes" << std::endl;
+          std::cout << "0. No" << std::endl;
+          std::cout << "Enter your choice: " << std::endl;
+          std::cin >> choice;
+          std::cin.ignore();
+        }
+    }
+
+    std::cout << "Playlist created successfully." << std::endl;
+    std::cout << "Press Enter to go back to the playlist menu." << std::endl;
+    std::cin.ignore();
 }
 
-void AudioLibrary::createPlaylistFromTable() {
 
+
+void AudioLibrary::deletePlaylist() {
+  std::string playlistName;
+  std::cout << "Enter the name of the playlist to delete: ";
+  std::getline(std::cin, playlistName);
+  std::pair<int, std::pair<std::string, AudioTrack>*>
+          playlistTracks = playlistTable.findAllTracks(playlistName);
+  int numTracks = playlistTracks.first;
+
+  if (numTracks == 0){
+    std::cout << "Playlist not found." << std::endl;
+  } else {
+    for (int c = 0; c < numTracks; ++c){
+      playlistTable.remove(playlistName);
+    }
+    std::cout << "The Playlisthas been deleted successfully." << std::endl;
+  }
+  std::cout << "Press Enter to go back to the playlist menu." << std::endl;
+  std::cin.ignore();
 }
+
+

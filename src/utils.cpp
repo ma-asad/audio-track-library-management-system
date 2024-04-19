@@ -84,6 +84,29 @@ void searchMenuSelector(AudioLibrary& library) {
   searchMenuSelector(library);
 }
 
+void playlistMenuSelector(AudioLibrary& library) {
+  int playlistChoice;
+  do {
+    std::cout << "\nPlaylist Menu" << std::endl;
+    std::cout << "1. Create and Add Track to Playlist" << std::endl;
+    std::cout << "2. View playlist" << std::endl;
+    std::cout << "3. Delete playlist" << std::endl;
+    std::cout << "0. Go back to Main Menu << std::endl \n";
+    std::cin >> playlistChoice;
+    std::cin.ignore();
+
+    if (playlistChoice == 1) {
+      library.createPlaylist();
+    } else if (playlistChoice == 2) {
+      std::cout << "Not yet done";
+    } else if (playlistChoice == 3) {
+      library.deletePlaylist();
+    } else if (playlistChoice != 0) {
+      std::cout << "Invalid choice. Please try again." << std::endl;
+    }
+  } while (playlistChoice != 0);
+}
+
 void mainMenuSelector(bool* stopProgram, AudioLibrary& library) {
   std::system(CLEAR);
 
@@ -118,6 +141,7 @@ void mainMenuSelector(bool* stopProgram, AudioLibrary& library) {
     searchMenuSelector(library);
   } else if (menuOptionSelected == 4) {
     newWindow("Create Playlist");
+    playlistMenuSelector(library);
   } else if (menuOptionSelected == 5) {
     newWindow("Delete Audio");
     library.deleteAudio();
