@@ -109,6 +109,7 @@ void mainMenuSelector(bool* stopProgram, AudioLibrary& library) {
     library.addTrackFromCSV();
   } else if (menuOptionSelected == 2) {
     newWindow("List Audio");
+    library.listAudio();
   } else if (menuOptionSelected == 3) {
     searchMenuSelector(library);
   } else if (menuOptionSelected == 4) {

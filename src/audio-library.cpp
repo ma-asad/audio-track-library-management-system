@@ -114,7 +114,7 @@ void AudioLibrary::addTrackFromCSV() {
 
   std::string filename = "";
 
-  filename = "/data/audio_file.csv";
+  filename = "./data/audio_file.csv";
   loadData(filename);
 
   return;
@@ -138,7 +138,8 @@ void AudioLibrary::addTrackFromCSV() {
       continue;
     }
 
-    if (filename.size() >= 5 && filename.substr(filename.size() - 4) == ".csv") {
+    if (filename.size() >= 5 &&
+        filename.substr(filename.size() - 4) == ".csv") {
       loadData(filename);
       fileInputCompleted = true;
     } else {
@@ -218,4 +219,9 @@ void AudioLibrary::listAudio() {
 
     ++count;
   }
+
+  std::cout << "\n";
+  std::cout << "<- (Go Back, Press 'Enter')";
+  std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+  std::cin.get();
 }
