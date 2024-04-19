@@ -286,8 +286,10 @@ void AudioLibrary::searchTracks(const SearchType searchType,
     return;
   }
 
-  for (size_t i = 0; i < counter; i++) {
-    const AudioTrack &track = searchResults.second[i].second;
+  std::cout << "-----------------------------" << std::endl;
+  for (size_t count = 0; count < counter; count++) {
+    const AudioTrack &track = searchResults.second[count].second;
+    std::cout << "No. " << count << std::endl;
     std::cout << "-----------------------------" << std::endl;
     std::cout << "Author Name: " << track.getAuthorName() << std::endl;
     std::cout << "Audio Name: " << track.getAudioName() << std::endl;
@@ -299,5 +301,23 @@ void AudioLibrary::searchTracks(const SearchType searchType,
     std::cout << "-----------------------------" << std::endl;
   }
 
+  std::cout << "\n";
+  std::cout << "<- (Go Back, Press 'Enter')" << std::endl;
   std::cin.get();
+}
+
+void AudioLibrary::createPlaylist() {
+  // prompt user to input song name to add to playlist
+  // check if the song exists or not
+  // if it exists, add it to the playlist
+  // if it doesn't exist, prompt user to input another song name
+  // repeat until user is done adding songs to the playlist (press enter blank to complete)
+  // if user is done, prompt user to input the name of the playlist (allow user to cancel at this point)
+  // create a new playlist with the name and add all the songs to the playlist
+  // display the playlist to the user
+  // allow user to go back to main menu
+}
+
+void AudioLibrary::createPlaylistFromTable() {
+
 }

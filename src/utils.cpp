@@ -57,6 +57,8 @@ void searchMenuSelector(AudioLibrary& library) {
   std::cin >> searchOptionSelected;
   std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
+  // TODO: check if enter key is pressed without any value
+
   if (searchOptionSelected == 1) {
     newWindow("Search by Artist");
     library.searchTracks(SearchType::Artist, getSearchQuery("Artist"));
@@ -78,8 +80,8 @@ void searchMenuSelector(AudioLibrary& library) {
   } else {
     std::cout << "Invalid choice. Please try again." << std::endl;
     std::cin.get();
-    searchMenuSelector(library);
   }
+  searchMenuSelector(library);
 }
 
 void mainMenuSelector(bool* stopProgram, AudioLibrary& library) {
@@ -103,6 +105,8 @@ void mainMenuSelector(bool* stopProgram, AudioLibrary& library) {
   std::cout << "Enter your choice: ";
   std::cin >> menuOptionSelected;
   std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+  // TODO: check if enter key is pressed without any value
 
   if (menuOptionSelected == 1) {
     newWindow("Add Audio File");
