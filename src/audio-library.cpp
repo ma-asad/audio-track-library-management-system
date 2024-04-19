@@ -315,6 +315,8 @@ void AudioLibrary::createPlaylist() {
   // create a new playlist with the name and add all the songs to the playlist
   // display the playlist to the user
   // allow user to go back to main menu
+
+  // Not totally done still to fix issue and to modify
    std::string playlistName;
     std::cout << "Enter the name of the new playlist: ";
     std::getline(std::cin, playlistName);
