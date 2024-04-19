@@ -127,9 +127,10 @@ class HashTable {
    * @tparam Key The type of the key.
    * @tparam Value The type of the value.
    * @param key The key to search for.
-   * @return A pointer to a pair of Key and Value representing the found tracks, or nullptr if no tracks are found.
+   * @return A pointer to a pair of Key and Value representing the found tracks,
+   * or nullptr if no tracks are found.
    */
-  std::pair<Key, Value>* findAllTracks(const Key& key) const;
+  std::pair<int, std::pair<Key, Value>*> findAllTracks(const Key& key) const;
 
   /**
    * @brief Returns the size of the hash table.
