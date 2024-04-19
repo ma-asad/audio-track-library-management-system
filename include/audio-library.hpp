@@ -17,14 +17,25 @@
 */
 
 /**
+ * @enum SearchType
+ * @brief Enum class for defining the different types of searches that can be
+ * performed in the audio library.
+ *
+ * This enum class is used to specify the type of search to be performed when
+ * looking for audio tracks. The search can be performed based on the track
+ * name, artist name, album name, genre, or playlist.
+ */
+enum class SearchType { Track, Artist, Album, Genre, Playlist };
+
+/**
  * @class AudioLibrary
  * @brief Represents a library of audio tracks.
  *
- * The AudioLibrary class provides functionality to manage and manipulate a collection
- * of audio tracks. It includes methods to add, delete, and search for tracks based on
- * various criteria such as track name, artist, album, genre, and playlist. The class
- * also supports loading data from a file, creating playlists, and performing sorting
- * operations on the tracks.
+ * The AudioLibrary class provides functionality to manage and manipulate a
+ * collection of audio tracks. It includes methods to add, delete, and search
+ * for tracks based on various criteria such as track name, artist, album,
+ * genre, and playlist. The class also supports loading data from a file,
+ * creating playlists, and performing sorting operations on the tracks.
  */
 class AudioLibrary {
  private:
@@ -157,10 +168,10 @@ class AudioLibrary {
 
   /**
    * Finds an audio track by album.
-   * 
+   *
    * @param album The name of the album to search for.
    * @return A pointer to the found AudioTrack object, or nullptr if not found.
-  */
+   */
   AudioTrack* findTrackByAlbum(const std::string& album) {
     return albumNameTable.findTrack(album);
   }
@@ -184,6 +195,9 @@ class AudioLibrary {
   AudioTrack* findTrackByPlaylist(const std::string& playlist) {
     return playlistTable.findTrack(playlist);
   }
+
+  void searchTracks(const SearchType searchType,
+                    const std::string& searchQuery);
 
   /**
    * Returns a constant reference to the tracks table.
