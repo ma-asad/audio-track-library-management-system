@@ -261,17 +261,30 @@ void AudioLibrary::listAudio() {
 
 void AudioLibrary::searchTracks(const SearchType searchType,
                                 const std::string &searchQuery) {
-  AudioTrack *searchResult = nullptr;
+
+  std::pair<std::string, AudioTrack> *searchResults = nullptr;
 
   if (searchType == SearchType::Track) {
-    searchResult = tracksTable.findTrack(searchQuery);
+    searchResults = tracksTable.findAllTracks(searchQuery);
   } else if (searchType == SearchType::Artist) {
-    searchResult = artistTable.findTrack(searchQuery);
+    searchResults = artistTable.findAllTracks(searchQuery);
   } else if (searchType == SearchType::Album) {
-    searchResult = albumNameTable.findTrack(searchQuery);
+    searchResults = albumNameTable.findAllTracks(searchQuery);
   } else if (searchType == SearchType::Genre) {
-    searchResult = genreTable.findTrack(searchQuery);
+    searchResults = genreTable.findAllTracks(searchQuery);
   } else if (searchType == SearchType::Playlist) {
-    searchResult = playlistTable.findTrack(searchQuery);
+    searchResults = playlistTable.findAllTracks(searchQuery);
   }
+
+  if (searchResults != nullptr) {
+    int i = 0;
+    while (searchResults[i].first != "") {
+      std::cout << "Key: " << searchResults[i].first << std::endl;
+      i++;
+    }
+  } else {
+    std::cout << "No results found." << std::endl;
+  }
+
+  std::cin.get();
 }

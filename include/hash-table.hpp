@@ -94,17 +94,20 @@ class HashTable {
    */
   bool remove(const Key& key);
 
-/**
- * @brief Lists all the items in the hash table.
- * 
- * This function iterates through the hash table and returns an array of all the key-value pairs stored in the table.
- * The function first counts the number of items in the table, then dynamically allocates an array to store the items.
- * It then iterates through the table again and copies each item into the array.
- * 
- * @tparam Key The type of the keys in the hash table.
- * @tparam Value The type of the values in the hash table.
- * @return A pair containing the number of items in the table and a pointer to the array of key-value pairs.
- */
+  /**
+   * @brief Lists all the items in the hash table.
+   *
+   * This function iterates through the hash table and returns an array of all
+   * the key-value pairs stored in the table. The function first counts the
+   * number of items in the table, then dynamically allocates an array to store
+   * the items. It then iterates through the table again and copies each item
+   * into the array.
+   *
+   * @tparam Key The type of the keys in the hash table.
+   * @tparam Value The type of the values in the hash table.
+   * @return A pair containing the number of items in the table and a pointer to
+   * the array of key-value pairs.
+   */
   std::pair<size_t, std::pair<Key, Value>*> listItems() const;
 
   /**
@@ -119,6 +122,16 @@ class HashTable {
   Value* findTrack(const Key& key) const;
 
   /**
+   * @brief Finds all tracks associated with a given key.
+   *
+   * @tparam Key The type of the key.
+   * @tparam Value The type of the value.
+   * @param key The key to search for.
+   * @return A pointer to a pair of Key and Value representing the found tracks, or nullptr if no tracks are found.
+   */
+  std::pair<Key, Value>* findAllTracks(const Key& key) const;
+
+  /**
    * @brief Returns the size of the hash table.
    *
    * @return The size of the hash table.
@@ -127,7 +140,7 @@ class HashTable {
 
   /**
    * @brief Returns the table of nodes in the hash table.
-   * 
+   *
    * @return A pointer to the table of nodes in the hash table.
    */
   Node<std::pair<Key, Value>>** getTable() const { return table; }

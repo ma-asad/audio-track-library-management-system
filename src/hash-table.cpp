@@ -180,4 +180,38 @@ Value* HashTable<Key, Value>::findTrack(const Key& key) const {
   return nullptr;
 }
 
+template <typename Key, typename Value>
+std::pair<Key, Value>* HashTable<Key, Value>::findAllTracks(
+    const Key& key) const {
+  size_t index = hasher(key);
+  Node<std::pair<Key, Value>>* currentNode = table[index];
+
+  // Count the number of matches
+  int counter = 0;
+  while (currentNode) {
+    if (currentNode->data.first == key) {
+      counter++;
+    }
+    currentNode = currentNode->next;
+  }
+
+  // Allocate an array of the correct size
+  std::pair<Key, Value>* items = new std::pair<Key, Value>[counter];
+
+  // Reset the currentNode pointer to the start of the list
+  currentNode = table[index];
+
+  // Fill the array with the matches
+  int i = 0;
+  while (currentNode) {
+    if (currentNode->data.first == key) {
+      items[i] = currentNode->data;
+      i++;
+    }
+    currentNode = currentNode->next;
+  }
+
+  return items;
+}
+
 template class HashTable<std::string, AudioTrack>;
