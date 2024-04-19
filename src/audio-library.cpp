@@ -303,3 +303,19 @@ void AudioLibrary::searchTracks(const SearchType searchType,
   std::cout << "<- (Go Back, Press 'Enter')" << std::endl;
   std::cin.get();
 }
+
+void AudioLibrary::createPlaylist() {
+  // prompt user to input song name to add to playlist
+  // check if the song exists or not
+  // if it exists, add it to the playlist
+  // if it doesn't exist, prompt user to input another song name
+  // repeat until user is done adding songs to the playlist (press enter blank to complete)
+  // if user is done, prompt user to input the name of the playlist (allow user to cancel at this point)
+  // create a new playlist with the name and add all the songs to the playlist
+  // display the playlist to the user
+  // allow user to go back to main menu
+}
+
+void AudioLibrary::createPlaylistFromTable() {
+
+}
