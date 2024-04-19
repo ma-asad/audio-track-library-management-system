@@ -77,6 +77,7 @@ void searchMenuSelector(AudioLibrary& library) {
       library.findTrackByPlaylist(getSearchQuery("Playlist"));
   } else if (searchOptionSelected == 6) {
     // Go back to main menu
+    return;
   } else {
     std::cout << "Invalid choice. Please try again." << std::endl;
     std::cin.get();
