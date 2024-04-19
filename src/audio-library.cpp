@@ -1,4 +1,5 @@
 #include "audio-library.hpp"
+#include "playlist.hpp"
 
 /*
     audioLibrary.cpp
@@ -314,6 +315,38 @@ void AudioLibrary::createPlaylist() {
   // create a new playlist with the name and add all the songs to the playlist
   // display the playlist to the user
   // allow user to go back to main menu
+   std::string playlistName;
+    std::cout << "Enter the name of the new playlist: ";
+    std::getline(std::cin, playlistName);
+
+    Playlist newPlaylist(playlistName);
+
+    int choice;
+    do {
+        std::cout << "1. Add track to playlist" << std::endl;
+        std::cout << "2. Finish creating playlist" << std::endl;
+        std::cout << "Enter your choice: ";
+        std::cin >> choice;
+        std::cin.ignore();
+
+        if (choice == 1) {
+            std::string trackName;
+            std::cout << "Enter the name of the track to add: ";
+            std::getline(std::cin, trackName);
+
+            AudioTrack* track = findTrackByName(trackName);
+            if (track != nullptr) {
+                newPlaylist.addTrack(*track);
+                std::cout << "Track added to the playlist." << std::endl;
+            } else {
+                std::cout << "Track not found." << std::endl;
+            }
+        }
+    } while (choice != 2);
+
+    playlists.push(newPlaylist);
+    std::cout << "Playlist created successfully." << std::endl;
+
 }
 
 void AudioLibrary::createPlaylistFromTable() {

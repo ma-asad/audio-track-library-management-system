@@ -118,6 +118,7 @@ void mainMenuSelector(bool* stopProgram, AudioLibrary& library) {
     searchMenuSelector(library);
   } else if (menuOptionSelected == 4) {
     newWindow("Create Playlist");
+    library.createPlaylist();
   } else if (menuOptionSelected == 5) {
     newWindow("Delete Audio");
     library.deleteAudio();

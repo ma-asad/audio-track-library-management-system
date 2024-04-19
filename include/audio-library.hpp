@@ -8,6 +8,8 @@
 #include <vector>
 
 #include "audio-track.hpp"
+#include "dynamic-array.hpp"
+#include "playlist.hpp"
 #include "hash-table.hpp"
 
 /*
@@ -44,6 +46,7 @@ class AudioLibrary {
   HashTable<std::string, AudioTrack> albumNameTable;
   HashTable<std::string, AudioTrack> genreTable;
   HashTable<std::string, AudioTrack> playlistTable;
+  vectorDynamicArray<Playlist> playlists;
 
   /**
    * Sorts an array of AudioTrack objects using the QuickSort algorithm.
