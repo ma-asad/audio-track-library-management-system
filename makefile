@@ -79,3 +79,9 @@ run: $(TARGET)
 test: $(TEST_TARGETS)
 	@echo "Running test executables"
 	$(foreach test, $(TEST_TARGETS), ./$(test);)
+
+# Run a specific test executable, make run_test test=filename
+.PHONY: run_test
+run_test: $(BUILD_DIR)$(test)_test.exe
+	@echo "Building and running test executable: $<"
+	$<
