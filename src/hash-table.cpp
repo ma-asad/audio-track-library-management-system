@@ -181,7 +181,7 @@ Value* HashTable<Key, Value>::findTrack(const Key& key) const {
 }
 
 template <typename Key, typename Value>
-std::pair<Key, Value>* HashTable<Key, Value>::findAllTracks(
+std::pair<int, std::pair<Key, Value>*> HashTable<Key, Value>::findAllTracks(
     const Key& key) const {
   size_t index = hasher(key);
   Node<std::pair<Key, Value>>* currentNode = table[index];
@@ -211,7 +211,7 @@ std::pair<Key, Value>* HashTable<Key, Value>::findAllTracks(
     currentNode = currentNode->next;
   }
 
-  return items;
+  return {counter, items};
 }
 
 template class HashTable<std::string, AudioTrack>;
