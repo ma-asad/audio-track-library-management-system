@@ -88,6 +88,14 @@ class AudioLibrary {
   AudioLibrary();
 
   /**
+   * @brief Destructor for the AudioLibrary class.
+   *
+   * This destructor is responsible for cleaning up any resources
+   * allocated by the AudioLibrary class.
+   */
+  ~AudioLibrary();
+
+  /**
    * Adds an audio track to the hash tables in the audio library.
    *
    * @param track The audio track to be added.
@@ -137,7 +145,16 @@ class AudioLibrary {
    * @return True if the track was successfully deleted, false otherwise.
    */
   void deleteAudio();
-  
+
+  /**
+   * @brief Deletes an audio track from the library.
+   *
+   * This function deletes an audio track from the library by removing it from
+   * all relevant hash tables.
+   *
+   * @param audioName The name of the audio track to be deleted.
+   * @return True if the audio track was successfully deleted, false otherwise.
+   */
   bool deleteTrackFromTable(const std::string& audioName);
 
   /**
