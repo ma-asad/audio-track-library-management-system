@@ -259,7 +259,7 @@ void AudioLibrary::listAudio() {
   std::cin.get();
 }
 
-void Audiolibrary::searchTracks(const SearchType searchType,
+void AudioLibrary::searchTracks(const SearchType searchType,
                                 const std::string &searchQuery) {
   AudioTrack *searchResult = nullptr;
 
