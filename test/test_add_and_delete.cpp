@@ -156,9 +156,9 @@ TEST_CASE("Adding and Deleting Audio Tracks in HashTable") {
     REQUIRE(genreCount == 2);
     REQUIRE(playlistCount == 2);
 
-    REQUIRE(library.deleteTrack("Call"));  // Removing existing track
+    REQUIRE(library.deleteTrackFromTable("Call"));  // Removing existing track
     REQUIRE_FALSE(
-        library.deleteTrack("Nonexistent Track"));  // Removing non-existing track
+        library.deleteTrackFromTable("Nonexistent Track"));  // Removing non-existing track
 
     result1 = library.getTracksTable().listItems();
     tracksCount = result1.first;

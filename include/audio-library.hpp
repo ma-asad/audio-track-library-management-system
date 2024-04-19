@@ -133,7 +133,9 @@ class AudioLibrary {
    * @param audioName The name of the audio track to be deleted.
    * @return True if the track was successfully deleted, false otherwise.
    */
-  bool deleteTrack(const std::string& audioName);
+  void deleteAudio();
+  
+  bool deleteTrackFromTable(const std::string& audioName);
 
   /**
    * Lists all the audio tracks in the library.

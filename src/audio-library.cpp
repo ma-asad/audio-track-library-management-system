@@ -154,12 +154,51 @@ bool AudioLibrary::checkFileExistence(const std::string &filename) {
   return file.good();
 }
 
-bool AudioLibrary::deleteTrack(const std::string &audioName) {
+void AudioLibrary::deleteAudio() {
+  bool deleteAudioCompleted = false;
+
+  std::cout << "<- (Go Back: Input 'C')" << std::endl;
+
+  std::string audioName = "";
+
+  do {
+    std::cout << "\n" << std::endl;
+    std::cout << "Please input the name of the audio track you want to delete."
+              << std::endl;
+    std::cout << "\n";
+    std::cout << "Input Audio Name ('C' to go back): ";
+    std::cin >> audioName;
+
+    if (audioName == "C") {
+      deleteAudioCompleted = true;
+    }
+
+    if (audioName.empty()) {
+      std::cerr << "Audio name can't be empty! Please try again." << std::endl;
+      continue;
+    }
+
+    AudioTrack *trackContent = tracksTable.findTrack(audioName);
+
+    if (trackContent == nullptr) {
+      std::cerr << "The Audio track '" << audioName << "' is not available."
+                << std::endl;
+      continue;
+    }
+
+    if (deleteTrackFromTable(audioName)) {
+      // deleted successfully
+    } else {
+      // error while deleting
+    };
+
+  } while (!deleteAudioCompleted);
+}
+
+bool AudioLibrary::deleteTrackFromTable(const std::string &audioName) {
   AudioTrack *trackContent = tracksTable.findTrack(audioName);
 
   if (trackContent == nullptr) {
-    std::cout << "The Audio track '" << audioName << "' is not available."
-              << std::endl;
     return false;
   }
 
@@ -176,19 +215,12 @@ bool AudioLibrary::deleteTrack(const std::string &audioName) {
   bool genreTableResult = genreTable.remove(genre);
   bool playlistTableResult = playlistTable.remove(playlist);
 
-  // Check if the audio track was successfully removed from all hash tables
-  if (tracksTableResult && artistTableResult && albumNameTableResult &&
-      genreTableResult && playlistTableResult) {
-    std::cout << " The Audio track '" << audioName
-              << "' has been deleted successfully!" << std::endl;
-
-    return true;
-  } else {
-    std::cout << "The Audio track '" << audioName << "'was not found."
-              << std::endl;
-
+  // Return false if any of the removal operations failed
+  if (!tracksTableResult && !artistTableResult && !albumNameTableResult &&
+      !genreTableResult && !playlistTableResult) {
     return false;
   }
+  return true;
 }
 
 void AudioLibrary::listAudio() {
