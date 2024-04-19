@@ -225,3 +225,20 @@ void AudioLibrary::listAudio() {
   std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
   std::cin.get();
 }
+
+void Audiolibrary::searchTracks(const SearchType searchType,
+                                const std::string &searchQuery) {
+  AudioTrack *searchResult = nullptr;
+
+  if (searchType == SearchType::Track) {
+    searchResult = tracksTable.findTrack(searchQuery);
+  } else if (searchType == SearchType::Artist) {
+    searchResult = artistTable.findTrack(searchQuery);
+  } else if (searchType == SearchType::Album) {
+    searchResult = albumNameTable.findTrack(searchQuery);
+  } else if (searchType == SearchType::Genre) {
+    searchResult = genreTable.findTrack(searchQuery);
+  } else if (searchType == SearchType::Playlist) {
+    searchResult = playlistTable.findTrack(searchQuery);
+  }
+}
