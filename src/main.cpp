@@ -29,8 +29,6 @@ void newWindow(std::string windowTitle) {
 std::string getSearchQuery(std::string searchType) {
   std::string searchQuery = "";
 
-  std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
   std::cout << "Search " << searchType << ": ";
   std::getline(std::cin, searchQuery);
   std::cout << std::endl;
@@ -62,19 +60,19 @@ void searchMenuSelector(AudioLibrary& library) {
 
   if (searchOptionSelected == 1) {
     newWindow("Search by Artist");
-      library.findTrackByArtist(getSearchQuery("Artist"));
+      library.searchTracks(SearchType::Artist ,getSearchQuery("Artist"));
   } else if (searchOptionSelected == 2) {
     newWindow("Search by Audio Title");
-      library.findTrackByName(getSearchQuery("Audio"));
+      library.searchTracks(SearchType::Track ,getSearchQuery("Audio"));
   } else if (searchOptionSelected == 3) {
     newWindow("Search by Album");
-      library.findTrackByAlbum(getSearchQuery("Album"));
+      library.searchTracks(SearchType::Album ,getSearchQuery("Album"));
   } else if (searchOptionSelected == 4) {
     newWindow("Search by Genre");
-      library.findTrackByGenre(getSearchQuery("Genre"));
+      library.searchTracks(SearchType::Genre ,getSearchQuery("Genre"));
   } else if (searchOptionSelected == 5) {
     newWindow("Search by Playlist");
-      library.findTrackByPlaylist(getSearchQuery("Playlist"));
+      library.searchTracks(SearchType::Playlist ,getSearchQuery("Playlist"));
   } else if (searchOptionSelected == 6) {
     // Go back to main menu
     return;
