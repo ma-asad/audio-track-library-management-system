@@ -25,6 +25,18 @@ void newWindow(std::string windowTitle) {
   std::cout << std::endl;
 }
 
+std::string getSearchQuery(std::string searchType) {
+  std::string searchQuery = "";
+
+  std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+  std::cout << "Search " << searchType << ": ";
+  std::getline(std::cin, searchQuery);
+  std::cout << std::endl;
+
+  return searchQuery;
+}
+
 void searchMenuSelector(AudioLibrary& library) {
   std::system(CLEAR);
 
@@ -49,18 +61,23 @@ void searchMenuSelector(AudioLibrary& library) {
   switch (searchOptionSelected) {
     case 1:
       newWindow("Search by Artist");
+      library.findTrackByArtist(getSearchQuery("Artist"));
       break;
     case 2:
       newWindow("Search by Audio Title");
+      library.findTrackByName(getSearchQuery("Audio"));
       break;
     case 3:
       newWindow("Search by Album");
+      library.findTrackByAlbum(getSearchQuery("Album"));
       break;
     case 4:
       newWindow("Search by Genre");
+      library.findTrackByGenre(getSearchQuery("Genre"));
       break;
     case 5:
       newWindow("Search by Playlist");
+      library.findTrackByPlaylist(getSearchQuery("Playlist"));
       break;
     case 6:
       break;
