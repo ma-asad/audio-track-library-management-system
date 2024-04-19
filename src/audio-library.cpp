@@ -261,8 +261,7 @@ void AudioLibrary::listAudio() {
 
 void AudioLibrary::searchTracks(const SearchType searchType,
                                 const std::string &searchQuery) {
-
-  std::pair<std::string, AudioTrack> *searchResults = nullptr;
+  std::pair<size_t, std::pair<std::string, AudioTrack> *> searchResults;
 
   if (searchType == SearchType::Track) {
     searchResults = tracksTable.findAllTracks(searchQuery);
@@ -276,15 +275,47 @@ void AudioLibrary::searchTracks(const SearchType searchType,
     searchResults = playlistTable.findAllTracks(searchQuery);
   }
 
-  if (searchResults != nullptr) {
-    int i = 0;
-    while (searchResults[i].first != "") {
-      std::cout << "Key: " << searchResults[i].first << std::endl;
-      i++;
-    }
-  } else {
-    std::cout << "No results found." << std::endl;
+  size_t counter = searchResults.first;
+
+  if (counter == 0) {
+    std::cout << "No tracks found for the search query: " << searchQuery
+              << std::endl;
+    std::cin.get();
+    return;
   }
 
+  std::cout << "-----------------------------" << std::endl;
+  for (size_t count = 0; count < counter; count++) {
+    const AudioTrack &track = searchResults.second[count].second;
+    std::cout << "No. " << count << std::endl;
+    std::cout << "-----------------------------" << std::endl;
+    std::cout << "Author Name: " << track.getAuthorName() << std::endl;
+    std::cout << "Audio Name: " << track.getAudioName() << std::endl;
+    std::cout << "Album Name: " << track.getAlbumName() << std::endl;
+    std::cout << "Genre: " << track.getGenre() << std::endl;
+    std::cout << "Duration: " << track.getDuration() << std::endl;
+    std::cout << "Date Published: " << track.getDatePublished() << std::endl;
+    std::cout << "Playlist: " << track.getPlaylist() << std::endl;
+    std::cout << "-----------------------------" << std::endl;
+  }
+
+  std::cout << "\n";
+  std::cout << "<- (Go Back, Press 'Enter')" << std::endl;
   std::cin.get();
+}
+
+void AudioLibrary::createPlaylist() {
+  // prompt user to input song name to add to playlist
+  // check if the song exists or not
+  // if it exists, add it to the playlist
+  // if it doesn't exist, prompt user to input another song name
+  // repeat until user is done adding songs to the playlist (press enter blank to complete)
+  // if user is done, prompt user to input the name of the playlist (allow user to cancel at this point)
+  // create a new playlist with the name and add all the songs to the playlist
+  // display the playlist to the user
+  // allow user to go back to main menu
+}
+
+void AudioLibrary::createPlaylistFromTable() {
+
 }

@@ -143,6 +143,9 @@ class AudioLibrary {
   void listAudio();
 
   void createPlaylist();
+  void createPlaylistFromTable();
+
+  // TODO: cross check if this was used
   void addTrackToPlaylist();
   void removeTrackFromPlaylist();
   void deletePlaylist();
