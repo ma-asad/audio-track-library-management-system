@@ -58,6 +58,7 @@ void searchMenuSelector(AudioLibrary& library) {
   int searchOptionSelected;
   std::cout << "Enter your choice: ";
   std::cin >> searchOptionSelected;
+  std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
   if (searchOptionSelected == 1) {
     newWindow("Search by Artist");
@@ -103,6 +104,7 @@ void mainMenuSelector(bool* stopProgram, AudioLibrary& library) {
   int menuOptionSelected;
   std::cout << "Enter your choice: ";
   std::cin >> menuOptionSelected;
+  std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
   if (menuOptionSelected == 1) {
     newWindow("Add Audio File");
@@ -116,6 +118,7 @@ void mainMenuSelector(bool* stopProgram, AudioLibrary& library) {
     newWindow("Create Playlist");
   } else if (menuOptionSelected == 5) {
     newWindow("Delete Audio");
+    library.deleteAudio();
   } else if (menuOptionSelected == 6) {
     exitProgram(stopProgram);
   } else {

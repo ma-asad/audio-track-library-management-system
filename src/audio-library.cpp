@@ -126,11 +126,16 @@ void AudioLibrary::addTrackFromCSV() {
               << std::endl;
     std::cout << "\n";
     std::cout << "Input Path ('C' to go back): ";
-    std::cin >> filename;
+    std::getline(std::cin, filename);
 
     // check if filename is empty
     if (filename == "C") {
       fileInputCompleted = true;
+    }
+
+    if (filename.empty()) {
+      std::cerr << "Filename can't be empty! Please try again." << std::endl;
+      continue;
     }
 
     if (!checkFileExistence(filename)) {
@@ -167,7 +172,7 @@ void AudioLibrary::deleteAudio() {
               << std::endl;
     std::cout << "\n";
     std::cout << "Input Audio Name ('C' to go back): ";
-    std::cin >> audioName;
+    std::getline(std::cin, audioName);
 
     if (audioName == "C") {
       deleteAudioCompleted = true;
@@ -178,18 +183,14 @@ void AudioLibrary::deleteAudio() {
       continue;
     }
 
-    AudioTrack *trackContent = tracksTable.findTrack(audioName);
-
-    if (trackContent == nullptr) {
-      std::cerr << "The Audio track '" << audioName << "' is not available."
-                << std::endl;
-      continue;
-    }
-
     if (deleteTrackFromTable(audioName)) {
-      // deleted successfully
+      std::cout << "Track \"" << audioName << "\" Deleted Successfully."
+                << std::endl;
+
+      continue;
     } else {
-      // error while deleting
+      std::cout << "Error occured while deleting track! Please try again."
+                << std::endl;
     };
 
   } while (!deleteAudioCompleted);
@@ -254,8 +255,7 @@ void AudioLibrary::listAudio() {
   }
 
   std::cout << "\n";
-  std::cout << "<- (Go Back, Press 'Enter')";
-  std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+  std::cout << "<- (Go Back, Press 'Enter')" << std::endl;
   std::cin.get();
 }
 
