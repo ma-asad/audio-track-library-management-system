@@ -8,7 +8,7 @@
 
 void AudioLibrary::quickSort(std::pair<std::string, AudioTrack> *items, int low,
                              int high) {
-    // Partition the array and get the pivot index
+  // Partition the array and get the pivot index
   if (low < high) {
     int pivotIndex = partition(items, low, high);
 
@@ -108,19 +108,22 @@ void AudioLibrary::loadData(const std::string &filename) {
 }
 
 void AudioLibrary::addTrackFromCSV() {
-  std::string filename;
+  std::string filename = "";
   bool validFile = false;
 
-  while (!validFile) {
-    std::cout << "Please enter the full path to the CSV file (e.g., "
-                 "C:\\Users\\username\\Documents\\mydata.csv) or enter 'quit' "
-                 "to go back: ";
-    std::getline(std::cin, filename);
+  filename = "./data/audio_file.csv";
+      
 
-    // Checks if the user wants to quit
-    if (filename == "quit") {
-      return;
-    }
+  while (!validFile) {
+    // std::cout << "Please enter the full path to the CSV file (e.g., "
+    //              "C:\\Users\\username\\Documents\\mydata.csv) or enter 'quit'
+    //              " "to go back: ";
+    // std::getline(std::cin, filename);
+
+    // // Checks if the user wants to quit
+    // if (filename == "quit") {
+    //   return;
+    // }
 
     // Check if the file has a .csv extension
     if (filename.size() >= 5 &&
