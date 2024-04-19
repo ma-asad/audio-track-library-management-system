@@ -13,7 +13,8 @@ size_t HashTable<Key, Value>::hasher(const Key& key) const {
   // Iterate over each character in the key
   for (char character : key) {
     // Update the hashing value based on the current character
-    // The constant 31 is chosen because it's a prime number, which helps to distribute the hash values more evenly
+    // The constant 31 is chosen because it's a prime number, which helps to
+    // distribute the hash values more evenly
     hashingValue = (hashingValue * 31) + character;
   }
 
@@ -63,10 +64,13 @@ HashTable<Key, Value>::~HashTable() {
 
     while (currentNode) {
       Node<std::pair<Key, Value>>* nextNode = currentNode->next;
+
       delete currentNode;
+
       currentNode = nextNode;
     }
   }
+
   delete[] table;
 }
 
