@@ -8,7 +8,7 @@
 
 void AudioLibrary::quickSort(std::pair<std::string, AudioTrack> *items, int low,
                              int high) {
-    // Partition the array and get the pivot index
+  // Partition the array and get the pivot index
   if (low < high) {
     int pivotIndex = partition(items, low, high);
 
@@ -108,40 +108,39 @@ void AudioLibrary::loadData(const std::string &filename) {
 }
 
 void AudioLibrary::addTrackFromCSV() {
+  bool fileInputCompleted = false;
+
+  std::cout << "<- (Go Back: Input 'C')" << std::endl;
+
   std::string filename;
-  bool validFile = false;
 
-  while (!validFile) {
-    std::cout << "Please enter the full path to the CSV file (e.g., "
-                 "C:\\Users\\username\\Documents\\mydata.csv) or enter 'quit' "
-                 "to go back: ";
-    std::getline(std::cin, filename);
+  do {
+    std::cout << "\n" << std::endl;
+    std::cout << "Please input the full path to the CSV file." << std::endl;
+    std::cout << "(e.g., \"C:\\Users\\<username>\\Documents\\mydata.csv)\""
+              << std::endl;
+    std::cout << "\n";
+    std::cout << "Input Path ('C' to go back): ";
+    std::cin >> filename;
 
-    // Checks if the user wants to quit
-    if (filename == "quit") {
-      return;
+    // check if filename is empty
+    if (filename == "C") {
+      fileInputCompleted = true;
     }
 
-    // Check if the file has a .csv extension
-    if (filename.size() >= 5 &&
-        filename.substr(filename.size() - 4) == ".csv") {
-      if (checkFileExistence(filename)) {
-        validFile = true;
-      } else {
-        std::cerr << "This file does not exist!: " << filename << std::endl;
-        std::cerr << "Please enter the full path to the file, including the "
-                     "drive letter and all directory names."
-                  << std::endl;
-      }
+    if (!checkFileExistence(filename)) {
+      std::cerr << "File can't be found! Please try again." << std::endl;
+      continue;
+    }
+
+    if (filename.size() >= 5 && filename.substr(filename.size() - 4) == ".csv") {
+      loadData(filename);
+      fileInputCompleted = true;
     } else {
-      std::cerr << "Invalid file format! Please enter a path to a CSV file."
-                << std::endl;
+      std::cerr << "Wrong file format! Please try again" << std::endl;
     }
-  }
 
-  loadData(filename);
-  std::cout << "Audio tracks have been added successfully from " << filename
-            << "!" << std::endl;
+  } while (!fileInputCompleted);
 }
 
 bool AudioLibrary::checkFileExistence(const std::string &filename) {
