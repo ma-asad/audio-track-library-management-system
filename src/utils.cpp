@@ -35,6 +35,10 @@ std::string getSearchQuery(std::string searchType) {
   return searchQuery;
 }
 
+// TODO: check if enter key is pressed without any value
+// do validation for incorrect characters other than the below digit
+// alphabets should not be accepted
+
 void searchMenuSelector(AudioLibrary& library) {
   std::system(CLEAR);
 
@@ -116,7 +120,7 @@ void playlistMenuSelector(AudioLibrary& library) {
         } else if (playlistChoice == 2) {
           library.addTrackToExistingPlaylist();
         } else if (playlistChoice == 3) {
-          std::cout << "Not yet done";
+          library.viewPlaylist();
         } else if (playlistChoice == 4) {
           library.deletePlaylist();
         } else if (playlistChoice != 0) {

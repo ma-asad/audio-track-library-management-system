@@ -418,87 +418,32 @@ void AudioLibrary::deletePlaylist() {
   std::cin.ignore();
 }
 
+void AudioLibrary::viewPlaylist() {
+    std::string playlistName;
+    std::cout << "Enter the name of the playlist to view: ";
+    std::getline(std::cin, playlistName);
+
+    std::pair<int, std::pair<std::string, AudioTrack>*> playlistTracks 
+                    = playlistTable.findAllTracks(playlistName);
+
+    int numTracks = playlistTracks.first;
+    std::pair<std::string, AudioTrack>* tracks = playlistTracks.second;
+    
+    if (numTracks == 0){
+      std::cout << "The Playlist not found or empty. " << std::endl;
+    } else {
+      std::cout << "Playlist: " << playlistName << std::endl;
+      for (int c = 0; c <numTracks; ++c){
+        const AudioTrack& track = tracks[c].second;
+        std::cout << "Track " << (c + 1) << ": " << track.getAudioName() 
+                  << std::endl;
+      }
+    }
+    std::cout << "Press Enter to go back to the playlist menu ";
+    std::cin.ignore(); 
+}
 
 
 
-// std::string* AudioLibrary::getUniquePlaylists(int& uniquePlaylistsCount) {
-//     std::pair<int, std::pair<std::string, AudioTrack>*> allPlaylists = playlistTable.listItems();
-//     int numPlaylists = allPlaylists.first;
-//     std::pair<std::string, AudioTrack>* playlistItems = allPlaylists.second;
 
-//     std::string* uniquePlaylists = new std::string[numPlaylists];
-//     uniquePlaylistsCount = 0;
-
-//     for (int i = 0; i < numPlaylists; ++i) {
-//         const std::string& playlistName = playlistItems[i].first;
-//         bool found = false;
-//         for (int j = 0; j < uniquePlaylistsCount; ++j) {
-//             if (uniquePlaylists[j] == playlistName) {
-//                 found = true;
-//             }
-//         }
-//         if (!found) {
-//             uniquePlaylists[uniquePlaylistsCount++] = playlistName;
-//         }
-//     }
-
-//     return uniquePlaylists;
-// }
-
-// void AudioLibrary::viewPlaylist() {
-//     // Get unique playlists
-//     int uniquePlaylistsCount;
-//     std::string* uniquePlaylists = getUniquePlaylists(uniquePlaylistsCount);
-
-//     if (uniquePlaylistsCount == 0) {
-//         std::cout << "No playlists found." << std::endl;
-//         std::cout << "Press Enter to go back to the playlist menu...";
-//         std::cin.ignore();
-//         delete[] uniquePlaylists;
-//         return;
-//     }
-
-//     // Display the list of unique playlists
-//     std::cout << "Available Playlists:" << std::endl;
-//     for (int i = 0; i < uniquePlaylistsCount; ++i) {
-//         std::cout << (i + 1) << ". " << uniquePlaylists[i] << std::endl;
-//     }
-
-//     // Prompt the user to choose a playlist
-//     int playlistChoice;
-//     std::cout << "Enter the number of the playlist to view (0 to go back): ";
-//     std::cin >> playlistChoice;
-//     std::cin.ignore();
-
-//     if (playlistChoice == 0) {
-//         delete[] uniquePlaylists;
-//         return;
-//     }
-
-//     if (playlistChoice < 1 || playlistChoice > uniquePlaylistsCount) {
-//         std::cout << "Invalid choice. Please try again." << std::endl;
-//         std::cout << "Press Enter to go back to the playlist menu...";
-//         std::cin.ignore();
-//         delete[] uniquePlaylists;
-//         return;
-//     }
-
-//     // Get the selected playlist name
-//     std::string selectedPlaylist = uniquePlaylists[playlistChoice - 1];
-
-//     // Display the tracks in the selected playlist
-//     std::cout << "Playlist: " << selectedPlaylist << std::endl;
-//     std::pair<int, std::pair<std::string, AudioTrack>*> playlistTracks = playlistTable.findAllTracks(selectedPlaylist);
-//     int numTracks = playlistTracks.first;
-//     std::pair<std::string, AudioTrack>* tracks = playlistTracks.second;
-
-//     for (int i = 0; i < numTracks; ++i) {
-//         const AudioTrack& track = tracks[i].second;
-//         std::cout << "Track " << (i + 1) << ": " << track.getAudioName() << std::endl;
-//     }
-
-//     std::cout << "Press Enter to go back to the playlist menu...";
-//     std::cin.ignore();
-//     delete[] uniquePlaylists;
-// }
 
