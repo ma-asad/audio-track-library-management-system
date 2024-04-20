@@ -3,12 +3,6 @@
 
 #include <sstream>
 
-/*
-    audiotrack.hpp
-    Created:
-    Updated:
-*/
-
 /**
  * @class AudioTrack
  * @brief Represents an audio track with various properties such as author name, audio name, album name, genre, duration, date published, and playlist.
@@ -34,13 +28,6 @@ class AudioTrack {
 
  public:
   /**
-   * @brief Default constructor for the AudioTrack class.
-   *
-   * This constructor initializes a new instance of the AudioTrack class.
-   */
-  AudioTrack();
-
-  /**
    * @brief Constructor for the AudioTrack class.
    * @param authorName The name of the author of the audio track.
    * @param audioName The name of the audio track.
@@ -54,6 +41,14 @@ class AudioTrack {
              const std::string albumName, const std::string genre,
              const std::string duration, const std::string datePublished,
              const std::string playlist);
+
+  /**
+   * @brief Destructor for the AudioTrack class.
+   *
+   * This destructor is responsible for cleaning up any resources
+   * allocated by an instance of the AudioTrack class.
+   */
+  ~AudioTrack();
 
   /**
    * @brief Retrieves the name of the author of the audio track.
@@ -98,7 +93,7 @@ class AudioTrack {
   std::string getDatePublished() const;
 
   /**
-   * Retrieves the playlist associated with the audio track.
+   * @brief Retrieves the playlist associated with the audio track.
    *
    * @return The playlist of the audio track.
    */

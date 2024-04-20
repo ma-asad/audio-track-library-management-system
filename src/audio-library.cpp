@@ -1,11 +1,5 @@
 #include "audio-library.hpp"
 
-/*
-    audioLibrary.cpp
-    Created:
-    Updated:
-*/
-
 void AudioLibrary::quickSort(std::pair<std::string, AudioTrack> *items, int low,
                              int high) {
   // Partition the array and get the pivot index
@@ -160,71 +154,6 @@ bool AudioLibrary::checkFileExistence(const std::string &filename) {
   return file.good();
 }
 
-void AudioLibrary::deleteAudio() {
-  bool deleteAudioCompleted = false;
-
-  std::cout << "<- (Go Back: Input 'C')" << std::endl;
-
-  std::string audioName = "";
-
-  do {
-    std::cout << "\n" << std::endl;
-    std::cout << "Please input the name of the audio track you want to delete."
-              << std::endl;
-    std::cout << "\n";
-    std::cout << "Input Audio Name ('C' to go back): ";
-    std::getline(std::cin, audioName);
-
-    if (audioName == "C") {
-      deleteAudioCompleted = true;
-    }
-
-    if (audioName.empty()) {
-      std::cerr << "Audio name can't be empty! Please try again." << std::endl;
-      continue;
-    }
-
-    if (deleteTrackFromTable(audioName)) {
-      std::cout << "Track \"" << audioName << "\" Deleted Successfully."
-                << std::endl;
-
-      continue;
-    } else {
-      std::cout << "Error occured while deleting track! Please try again."
-                << std::endl;
-    };
-
-  } while (!deleteAudioCompleted);
-}
-
-bool AudioLibrary::deleteTrackFromTable(const std::string &audioName) {
-  AudioTrack *trackContent = tracksTable.findTrack(audioName);
-
-  if (trackContent == nullptr) {
-    return false;
-  }
-
-  // Get the metadata of the audio track
-  std::string artistName = trackContent->getAuthorName();
-  std::string albumName = trackContent->getAlbumName();
-  std::string genre = trackContent->getGenre();
-  std::string playlist = trackContent->getPlaylist();
-
-  // Remove the audio track from all hash tables
-  bool tracksTableResult = tracksTable.remove(audioName);
-  bool artistTableResult = artistTable.remove(artistName);
-  bool albumNameTableResult = albumNameTable.remove(albumName);
-  bool genreTableResult = genreTable.remove(genre);
-  bool playlistTableResult = playlistTable.remove(playlist);
-
-  // Return false if any of the removal operations failed
-  if (!tracksTableResult && !artistTableResult && !albumNameTableResult &&
-      !genreTableResult && !playlistTableResult) {
-    return false;
-  }
-  return true;
-}
-
 void AudioLibrary::listAudio() {
   std::pair<size_t, std::pair<std::string, AudioTrack> *> result =
       tracksTable.listItems();
@@ -303,6 +232,71 @@ void AudioLibrary::searchTracks(const SearchType searchType,
   std::cout << "\n";
   std::cout << "<- (Go Back, Press 'Enter')" << std::endl;
   std::cin.get();
+}
+
+void AudioLibrary::deleteAudio() {
+  bool deleteAudioCompleted = false;
+
+  std::cout << "<- (Go Back: Input 'C')" << std::endl;
+
+  std::string audioName = "";
+
+  do {
+    std::cout << "\n" << std::endl;
+    std::cout << "Please input the name of the audio track you want to delete."
+              << std::endl;
+    std::cout << "\n";
+    std::cout << "Input Audio Name ('C' to go back): ";
+    std::getline(std::cin, audioName);
+
+    if (audioName == "C") {
+      deleteAudioCompleted = true;
+    }
+
+    if (audioName.empty()) {
+      std::cerr << "Audio name can't be empty! Please try again." << std::endl;
+      continue;
+    }
+
+    if (deleteTrackFromTable(audioName)) {
+      std::cout << "Track \"" << audioName << "\" Deleted Successfully."
+                << std::endl;
+
+      continue;
+    } else {
+      std::cout << "Error occured while deleting track! Please try again."
+                << std::endl;
+    };
+
+  } while (!deleteAudioCompleted);
+}
+
+bool AudioLibrary::deleteTrackFromTable(const std::string &audioName) {
+  AudioTrack *trackContent = tracksTable.findTrack(audioName);
+
+  if (trackContent == nullptr) {
+    return false;
+  }
+
+  // Get the metadata of the audio track
+  std::string artistName = trackContent->getAuthorName();
+  std::string albumName = trackContent->getAlbumName();
+  std::string genre = trackContent->getGenre();
+  std::string playlist = trackContent->getPlaylist();
+
+  // Remove the audio track from all hash tables
+  bool tracksTableResult = tracksTable.remove(audioName);
+  bool artistTableResult = artistTable.remove(artistName);
+  bool albumNameTableResult = albumNameTable.remove(albumName);
+  bool genreTableResult = genreTable.remove(genre);
+  bool playlistTableResult = playlistTable.remove(playlist);
+
+  // Return false if any of the removal operations failed
+  if (!tracksTableResult && !artistTableResult && !albumNameTableResult &&
+      !genreTableResult && !playlistTableResult) {
+    return false;
+  }
+  return true;
 }
 
 void AudioLibrary::addTrackToPlaylist(const std::string &playlistName) {

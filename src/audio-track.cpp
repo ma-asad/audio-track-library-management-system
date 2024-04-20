@@ -1,12 +1,12 @@
 #include "audio-track.hpp"
 
-/*
-    audioTrack.cpp
-    Created:
-    Updated:
-*/
-
-AudioTrack::AudioTrack() {}
+bool operator==(const AudioTrack& lhs, const AudioTrack& rhs) {
+  return (lhs.authorName == rhs.authorName && lhs.audioName == rhs.audioName &&
+          lhs.albumName == rhs.albumName && lhs.genre == rhs.genre &&
+          lhs.duration == rhs.duration &&
+          lhs.datePublished == rhs.datePublished &&
+          lhs.playlist == rhs.playlist);
+}
 
 AudioTrack::AudioTrack(const std::string authorName,
                        const std::string audioName, const std::string albumName,
@@ -22,6 +22,8 @@ AudioTrack::AudioTrack(const std::string authorName,
   this->playlist = playlist;
 }
 
+AudioTrack::~AudioTrack() {}
+
 std::string AudioTrack::getAuthorName() const { return this->authorName; }
 
 std::string AudioTrack::getAudioName() const { return this->audioName; }
@@ -35,11 +37,3 @@ std::string AudioTrack::getDuration() const { return this->duration; }
 std::string AudioTrack::getDatePublished() const { return this->datePublished; }
 
 std::string AudioTrack::getPlaylist() const { return this->playlist; }
-
-bool operator==(const AudioTrack& lhs, const AudioTrack& rhs) {
-  return (lhs.authorName == rhs.authorName && lhs.audioName == rhs.audioName &&
-          lhs.albumName == rhs.albumName && lhs.genre == rhs.genre &&
-          lhs.duration == rhs.duration &&
-          lhs.datePublished == rhs.datePublished &&
-          lhs.playlist == rhs.playlist);
-}
