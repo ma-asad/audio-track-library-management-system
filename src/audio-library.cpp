@@ -116,10 +116,9 @@ void AudioLibrary::addTrackFromCSV() {
 
   std::string filename = "";
 
-  filename = "./data/audio_file.csv";
-  loadData(filename);
-
-  return;
+  // filename = "./data/audio_file.csv";
+  // loadData(filename);
+  // return;
 
   do {
     std::cout << "\n" << std::endl;
@@ -306,70 +305,71 @@ void AudioLibrary::searchTracks(const SearchType searchType,
   std::cin.get();
 }
 
-void AudioLibrary::addTrackToPlaylist(const std::string& playlistName){
+void AudioLibrary::addTrackToPlaylist(const std::string &playlistName) {
   int choice = 1;
-    while (choice != 0) {
-      std::string trackName;
-      std::cout << "Enter the name of the track to add (or enter 0 to finish): ";
-      std::getline(std::cin, trackName);
+  while (choice != 0) {
+    std::string trackName;
+    std::cout << "Enter the name of the track to add (or enter 0 to finish): ";
+    std::getline(std::cin, trackName);
 
-        if (trackName == "0") {
-            choice = 0;
-        } else{
-          AudioTrack* track = findTrackByName(trackName);
-          if (track != nullptr){
-            playlistTable.insert(playlistName, *track);
-            std::cout << "The track has been added to the playliss" << std::endl;
-          } else {
-            std::cout << "The Track was not found" << std::endl;
-          }
-        }
-
-        if (choice != 0){
-          bool validChoice = false;
-          while (!validChoice){
-              std::cout << "Do you want to add another track?" << std::endl;
-              std::cout << "1. Yes" << std::endl;
-              std::cout << "0. No" << std::endl;
-              std::cout << "Enter your choice: " << std::endl;
-              std::string input;
-              std::getline(std::cin, input);
-              if (input.length() == 1 && std::isdigit(input[0])) {
-                choice = std::stoi(input);
-                if (choice == 0 || choice == 1) {
-                  validChoice = true;
-                } else {
-                  std::cout << "Invalid choice. Please enter either 0 or 1." 
-                            << std::endl;
-                }
-              } else {
-                std::cout << "Invalid choice. Please enter a valid choice." 
-                          << std::endl;
-              }
-          }
-        }
+    if (trackName == "0") {
+      choice = 0;
+    } else {
+      AudioTrack *track = findTrackByName(trackName);
+      if (track != nullptr) {
+        playlistTable.insert(playlistName, *track);
+        std::cout << "The track has been added to the playliss" << std::endl;
+      } else {
+        std::cout << "The Track was not found" << std::endl;
+      }
     }
+
+    if (choice != 0) {
+      bool validChoice = false;
+      while (!validChoice) {
+        std::cout << "Do you want to add another track?" << std::endl;
+        std::cout << "1. Yes" << std::endl;
+        std::cout << "0. No" << std::endl;
+        std::cout << "Enter your choice: " << std::endl;
+        std::string input;
+        std::getline(std::cin, input);
+        if (input.length() == 1 && std::isdigit(input[0])) {
+          choice = std::stoi(input);
+          if (choice == 0 || choice == 1) {
+            validChoice = true;
+          } else {
+            std::cout << "Invalid choice. Please enter either 0 or 1."
+                      << std::endl;
+          }
+        } else {
+          std::cout << "Invalid choice. Please enter a valid choice."
+                    << std::endl;
+        }
+      }
+    }
+  }
 }
 
-void AudioLibrary::addTrackToExistingPlaylist(){
+void AudioLibrary::addTrackToExistingPlaylist() {
   std::string playlistName;
   std::cout << "Enter the name of playlist where to add tracks: ";
   std::getline(std::cin, playlistName);
 
   // check if the playlist alredy exists and tracks to it
-  std::pair<int, std::pair<std::string, AudioTrack>*> existingPlaylist = playlistTable.findAllTracks(playlistName);
+  std::pair<int, std::pair<std::string, AudioTrack> *> existingPlaylist =
+      playlistTable.findAllTracks(playlistName);
   if (existingPlaylist.first > 0) {
-      addTrackToPlaylist(playlistName);
+    addTrackToPlaylist(playlistName);
   } else {
-      std::cout << "The playlist with name \"" << playlistName 
-                << "\" does not exists." << std::endl;
-      std::cout << "Please create the playlist first or enter a valid playlist.";
-      std::cout << "Press enter to go  back to playlist menu.";
-      std::cin.ignore();
+    std::cout << "The playlist with name \"" << playlistName
+              << "\" does not exists." << std::endl;
+    std::cout << "Please create the playlist first or enter a valid playlist.";
+    std::cout << "Press enter to go  back to playlist menu.";
+    std::cin.ignore();
   }
 }
 
-void AudioLibrary::createPlaylist(){
+void AudioLibrary::createPlaylist() {
   std::string playlistName;
   std::cout << "Enter the name of the new playlist: ";
   std::getline(std::cin, playlistName);
@@ -379,37 +379,35 @@ void AudioLibrary::createPlaylist(){
     return;
   }
   // check if the playlist already exists
-    std::pair<int, std::pair<std::string, AudioTrack>*> existingPlaylist 
-            = playlistTable.findAllTracks(playlistName);
-    if (existingPlaylist.first > 0) {
-        std::cout << "The playlist with name \"" << playlistName 
-                  << "\" already exists." << std::endl;
-        std::cout << "Press enter to go  back to playlist menu.";
-        std::cin.ignore();
-        return;
-    }
-    
-    addTrackToPlaylist(playlistName);
-    
-    std::cout << "Playlist created successfully." << std::endl;
-    std::cout << "Press Enter to go back to the playlist menu." << std::endl;
+  std::pair<int, std::pair<std::string, AudioTrack> *> existingPlaylist =
+      playlistTable.findAllTracks(playlistName);
+  if (existingPlaylist.first > 0) {
+    std::cout << "The playlist with name \"" << playlistName
+              << "\" already exists." << std::endl;
+    std::cout << "Press enter to go  back to playlist menu.";
     std::cin.ignore();
+    return;
+  }
+
+  addTrackToPlaylist(playlistName);
+
+  std::cout << "Playlist created successfully." << std::endl;
+  std::cout << "Press Enter to go back to the playlist menu." << std::endl;
+  std::cin.ignore();
 }
-
-
 
 void AudioLibrary::deletePlaylist() {
   std::string playlistName;
   std::cout << "Enter the name of the playlist to delete: ";
   std::getline(std::cin, playlistName);
-  std::pair<int, std::pair<std::string, AudioTrack>*>
-          playlistTracks = playlistTable.findAllTracks(playlistName);
+  std::pair<int, std::pair<std::string, AudioTrack> *> playlistTracks =
+      playlistTable.findAllTracks(playlistName);
   int numTracks = playlistTracks.first;
 
-  if (numTracks == 0){
+  if (numTracks == 0) {
     std::cout << "Playlist not found." << std::endl;
   } else {
-    for (int c = 0; c < numTracks; ++c){
+    for (int c = 0; c < numTracks; ++c) {
       playlistTable.remove(playlistName);
     }
     std::cout << "The Playlist has been deleted successfully." << std::endl;
@@ -419,31 +417,26 @@ void AudioLibrary::deletePlaylist() {
 }
 
 void AudioLibrary::viewPlaylist() {
-    std::string playlistName;
-    std::cout << "Enter the name of the playlist to view: ";
-    std::getline(std::cin, playlistName);
+  std::string playlistName;
+  std::cout << "Enter the name of the playlist to view: ";
+  std::getline(std::cin, playlistName);
 
-    std::pair<int, std::pair<std::string, AudioTrack>*> playlistTracks 
-                    = playlistTable.findAllTracks(playlistName);
+  std::pair<int, std::pair<std::string, AudioTrack> *> playlistTracks =
+      playlistTable.findAllTracks(playlistName);
 
-    int numTracks = playlistTracks.first;
-    std::pair<std::string, AudioTrack>* tracks = playlistTracks.second;
-    
-    if (numTracks == 0){
-      std::cout << "The Playlist not found or empty. " << std::endl;
-    } else {
-      std::cout << "Playlist: " << playlistName << std::endl;
-      for (int c = 0; c <numTracks; ++c){
-        const AudioTrack& track = tracks[c].second;
-        std::cout << "Track " << (c + 1) << ": " << track.getAudioName() 
-                  << std::endl;
-      }
+  int numTracks = playlistTracks.first;
+  std::pair<std::string, AudioTrack> *tracks = playlistTracks.second;
+
+  if (numTracks == 0) {
+    std::cout << "The Playlist not found or empty. " << std::endl;
+  } else {
+    std::cout << "Playlist: " << playlistName << std::endl;
+    for (int c = 0; c < numTracks; ++c) {
+      const AudioTrack &track = tracks[c].second;
+      std::cout << "Track " << (c + 1) << ": " << track.getAudioName()
+                << std::endl;
     }
-    std::cout << "Press Enter to go back to the playlist menu ";
-    std::cin.ignore(); 
+  }
+  std::cout << "Press Enter to go back to the playlist menu ";
+  std::cin.ignore();
 }
-
-
-
-
-

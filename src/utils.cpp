@@ -12,7 +12,7 @@ void newWindow(std::string windowTitle) {
 
   int paddingLeft = (bannerWidth - titleLength - 2) / 2;
   int paddingRight = (bannerWidth - titleLength - 2) / 2;
-  if (bannerWidth + titleLength % 2 != 0) paddingRight++;
+  if (titleLength % 2 == 0) paddingRight++;
 
   std::string paddingSpacesLeft(paddingLeft, ' ');
   std::string paddingSpacesRight(paddingRight, ' ');
@@ -85,60 +85,68 @@ void searchMenuSelector(AudioLibrary& library) {
     newWindow("Search by Playlist");
     library.searchTracks(SearchType::Playlist, getSearchQuery("Playlist"));
   } else if (searchOptionSelected == 6) {
-    // Go back to main menu
+    // go back to main menu
     return;
   } else {
-    std::cout << "Invalid choice. Please try again." << std::endl;
+    std::cout << "Invalid choice. Press 'Enter' to try again." << std::endl;
     std::cin.get();
   }
   searchMenuSelector(library);
 }
 
 void playlistMenuSelector(AudioLibrary& library) {
-  int playlistChoice;
-  do {
-    std::cout << std::endl;
-    std::cout << "*=============================================*" << std::endl;
-    std::cout << "|                  PLAYLIST MENU              |" << std::endl;
-    std::cout << "*=============================================*" << std::endl;
-    std::cout << "| Search by, choose an option below :         |" << std::endl;
-    std::cout << "| 1. Create Playlist and add track            |" << std::endl;
-    std::cout << "| 2. Add track to Playlist                    |" << std::endl;
-    std::cout << "| 3. View Playlist                            |" << std::endl;
-    std::cout << "| 4. Delete Playlist                          |" << std::endl;
-    std::cout << "| 0. <- Go Back to Main Menu                  |" << std::endl;
-    std::cout << "*=============================================*" << std::endl;
-    std::cout << std::endl;
-    std::cout << "Enter your choice: ";
+  std::system(CLEAR);
 
-    std::string input;
-    std::getline(std::cin, input);
+  std::cout << std::endl;
+  std::cout << "*=============================================*" << std::endl;
+  std::cout << "|                  PLAYLIST MENU              |" << std::endl;
+  std::cout << "*=============================================*" << std::endl;
+  std::cout << "| Search by, choose an option below :         |" << std::endl;
+  std::cout << "| 1. Create Playlist and add track            |" << std::endl;
+  std::cout << "| 2. Add track to Playlist                    |" << std::endl;
+  std::cout << "| 3. View Playlist                            |" << std::endl;
+  std::cout << "| 4. Delete Playlist                          |" << std::endl;
+  std::cout << "| 5. <- Go Back to Main Menu                  |" << std::endl;
+  std::cout << "*=============================================*" << std::endl;
+  std::cout << std::endl;
 
-    // check if input is a single digit
-    if (input.length() == 1 && std::isdigit(input[0])) {
-      playlistChoice = std::stoi(input);
+  int playlistOptionSelected = 0;
+  std::string userInput;
+  std::cout << "Enter your choice (e.g. 1): ";
+  std::getline(std::cin, userInput);
 
-      if (playlistChoice >= 0 && playlistChoice <= 4) {
-        if (playlistChoice == 1) {
-          library.createPlaylist();
-        } else if (playlistChoice == 2) {
-          library.addTrackToExistingPlaylist();
-        } else if (playlistChoice == 3) {
-          library.viewPlaylist();
-        } else if (playlistChoice == 4) {
-          library.deletePlaylist();
-        } else if (playlistChoice != 0) {
-          std::cout << "Invalid choice. Please try again." << std::endl;
-        }
-      } else {
-        std::cout << "Invalid choice. Please enter a number between 0 and 3."
-                  << std::endl;
-      }
-    } else {
-      std::cout << "Invalid input. Please enter a valid menu choice."
-                << std::endl;
-    }
-  } while (playlistChoice != 0);
+  if (userInput.empty()) {
+    playlistOptionSelected = 0;
+  }
+
+  try {
+    playlistOptionSelected = std::stoi(userInput);
+  } catch (std::invalid_argument const& e) {
+    playlistOptionSelected = 0;
+  } catch (std::out_of_range const& e) {
+    playlistOptionSelected = 0;
+  }
+
+  if (playlistOptionSelected == 1) {
+    newWindow("Create Playlist and add track");
+    library.createPlaylist();
+  } else if (playlistOptionSelected == 2) {
+    newWindow("Add track to Playlist");
+    library.addTrackToExistingPlaylist();
+  } else if (playlistOptionSelected == 3) {
+    newWindow("View Playlist");
+    library.viewPlaylist();
+  } else if (playlistOptionSelected == 4) {
+    newWindow("Delete Playlist");
+    library.deletePlaylist();
+  } else if (playlistOptionSelected == 5) {
+    // go back to main menu
+    return;
+  } else {
+    std::cout << "Invalid choice. Press 'Enter' to try again." << std::endl;
+    std::cin.get();
+  }
+  playlistMenuSelector(library);
 }
 
 void mainMenuSelector(bool* stopProgram, AudioLibrary& library) {
@@ -184,7 +192,6 @@ void mainMenuSelector(bool* stopProgram, AudioLibrary& library) {
   } else if (menuOptionSelected == 3) {
     searchMenuSelector(library);
   } else if (menuOptionSelected == 4) {
-    newWindow("Create Playlist");
     playlistMenuSelector(library);
   } else if (menuOptionSelected == 5) {
     newWindow("Delete Audio");
