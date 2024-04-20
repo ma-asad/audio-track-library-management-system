@@ -89,11 +89,18 @@ void searchMenuSelector(AudioLibrary& library) {
 void playlistMenuSelector(AudioLibrary& library) {
   int playlistChoice;
   do {
-    std::cout << "\nPlaylist Menu" << std::endl;
-    std::cout << "1. Create and Add Track to Playlist" << std::endl;
-    std::cout << "2. View playlist" << std::endl;
-    std::cout << "3. Delete playlist" << std::endl;
-    std::cout << "0. Go back to Main Menu << std::endl \n";
+    std::cout << std::endl;
+    std::cout << "*=============================================*" << std::endl;
+    std::cout << "|                  PLAYLIST MENU              |" << std::endl;
+    std::cout << "*=============================================*" << std::endl;
+    std::cout << "| Search by, choose an option below :         |" << std::endl;
+    std::cout << "| 1. Create Playlist and add track            |" << std::endl;
+    std::cout << "| 2. Add track to Playlist                    |" << std::endl;
+    std::cout << "| 3. View Playlist                            |" << std::endl;
+    std::cout << "| 4. Delete Playlist                          |" << std::endl;
+    std::cout << "| 0. <- Go Back to Main Menu                  |" << std::endl;
+    std::cout << "*=============================================*" << std::endl;
+    std::cout << std::endl;
     std::cout << "Enter your choice: ";
 
     std::string input;
@@ -103,12 +110,14 @@ void playlistMenuSelector(AudioLibrary& library) {
     if (input.length() == 1 && std::isdigit(input[0])) {
       playlistChoice = std::stoi(input);
 
-      if (playlistChoice >= 0 && playlistChoice <= 3){
+      if (playlistChoice >= 0 && playlistChoice <= 4){
         if (playlistChoice == 1) {
           library.createPlaylist();
         } else if (playlistChoice == 2) {
-          std::cout << "Not yet done";
+          library.addTrackToExistingPlaylist();
         } else if (playlistChoice == 3) {
+          std::cout << "Not yet done";
+        } else if (playlistChoice == 4) {
           library.deletePlaylist();
         } else if (playlistChoice != 0) {
           std::cout << "Invalid choice. Please try again." << std::endl;
