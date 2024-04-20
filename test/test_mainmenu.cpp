@@ -50,7 +50,7 @@ TEST_CASE("Main Menu Selection")
         std::cout.rdbuf(sbuf);
         std::string output = buffer.str();
 
-        REQUIRE(output.find("Exiting the program. BLYAT CYKA!") != std::string::npos);
+        REQUIRE(output.find("Exiting the program. Goodbye!") != std::string::npos);
         REQUIRE(stopProgram == true);
     }
 

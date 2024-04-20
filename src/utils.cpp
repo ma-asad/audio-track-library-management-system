@@ -1,7 +1,7 @@
 #include "utils.hpp"
 
 void exitProgram(bool* stopProgram) {
-  std::cout << "Exiting the program. BLYAT CYKA!" << std::endl;
+  std::cout << "Exiting the program. Goodbye!" << std::endl;
   std::cout << std::endl;
   *stopProgram = true;
 }

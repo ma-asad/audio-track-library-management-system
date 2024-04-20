@@ -8,6 +8,8 @@ bool operator==(const AudioTrack& lhs, const AudioTrack& rhs) {
           lhs.playlist == rhs.playlist);
 }
 
+AudioTrack::AudioTrack() {}
+
 AudioTrack::AudioTrack(const std::string authorName,
                        const std::string audioName, const std::string albumName,
                        const std::string genre, const std::string duration,
@@ -21,8 +23,6 @@ AudioTrack::AudioTrack(const std::string authorName,
   this->datePublished = datePublished;
   this->playlist = playlist;
 }
-
-AudioTrack::~AudioTrack() {}
 
 std::string AudioTrack::getAuthorName() const { return this->authorName; }
 
