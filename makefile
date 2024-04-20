@@ -36,12 +36,9 @@ TARGET = audio_track_library.exe
 # Test Targets
 TEST_TARGETS = $(TEST_SOURCES:$(TEST_DIR)%.cpp=$(BUILD_DIR)%_test.exe)
 
-# Test target
-test: $(TEST_TARGET)
-
 # Build target
 .PHONY: all
-all: $(BUILD_DIR) $(TARGET) 
+all: $(BUILD_DIR) $(TARGET) test
 
 $(BUILD_DIR):
 	@echo "Creating build directory: $@"

@@ -26,7 +26,7 @@ TEST_CASE("Main Menu Selection")
         std::cin.rdbuf(oldCinBuf);
         std::cout.rdbuf(sbuf);
         std::string output = buffer.str();
-        REQUIRE(output.find("Invalid choice. Please try again.") != std::string::npos);
+        REQUIRE(output.find("Invalid choice. Press 'Enter' to try again.") != std::string::npos);
     }
 
     /**
