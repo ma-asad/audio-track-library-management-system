@@ -5,7 +5,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <vector>
+
 
 #include "audio-track.hpp"
 #include "hash-table.hpp"
@@ -159,9 +159,10 @@ class AudioLibrary {
    */
   void listAudio();
 
-  void createPlaylist();
- 
 
+  void addTrackToPlaylist(const std::string& playlistName);
+  void addTrackToExistingPlaylist();
+  void createPlaylist();
   // TODO: cross check if this was used
   void deletePlaylist();
   void viewPlaylist();
