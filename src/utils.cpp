@@ -11,7 +11,7 @@ void newWindow(std::string windowTitle) {
   const int titleLength = windowTitle.length();
 
   int paddingLeft = (bannerWidth - titleLength - 2) / 2;
-  int paddingRight = paddingLeft;
+  int paddingRight = (bannerWidth - titleLength - 2) / 2;
   if (bannerWidth + titleLength % 2 != 0) paddingRight++;
 
   std::string paddingSpacesLeft(paddingLeft, ' ');
@@ -35,10 +35,6 @@ std::string getSearchQuery(std::string searchType) {
   return searchQuery;
 }
 
-// TODO: check if enter key is pressed without any value
-// do validation for incorrect characters other than the below digit
-// alphabets should not be accepted
-
 void searchMenuSelector(AudioLibrary& library) {
   std::system(CLEAR);
 
@@ -56,14 +52,22 @@ void searchMenuSelector(AudioLibrary& library) {
   std::cout << "*=============================================*" << std::endl;
   std::cout << std::endl;
 
-  int searchOptionSelected;
-  std::cout << "Enter your choice: ";
-  std::cin >> searchOptionSelected;
-  std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+  int searchOptionSelected = 0;
+  std::string userInput;
+  std::cout << "Enter your choice (e.g. 1): ";
+  std::getline(std::cin, userInput);
 
-  // TODO: check if enter key is pressed without any value
-  // do validation for incorrect characters other than the below digit
-  // alphabets should not be accepted
+  if (userInput.empty()) {
+    searchOptionSelected = 0;
+  }
+
+  try {
+    searchOptionSelected = std::stoi(userInput);
+  } catch (std::invalid_argument const& e) {
+    searchOptionSelected = 0;
+  } catch (std::out_of_range const& e) {
+    searchOptionSelected = 0;
+  }
 
   if (searchOptionSelected == 1) {
     newWindow("Search by Artist");
@@ -114,7 +118,7 @@ void playlistMenuSelector(AudioLibrary& library) {
     if (input.length() == 1 && std::isdigit(input[0])) {
       playlistChoice = std::stoi(input);
 
-      if (playlistChoice >= 0 && playlistChoice <= 4){
+      if (playlistChoice >= 0 && playlistChoice <= 4) {
         if (playlistChoice == 1) {
           library.createPlaylist();
         } else if (playlistChoice == 2) {
@@ -126,10 +130,10 @@ void playlistMenuSelector(AudioLibrary& library) {
         } else if (playlistChoice != 0) {
           std::cout << "Invalid choice. Please try again." << std::endl;
         }
-      } else{
+      } else {
         std::cout << "Invalid choice. Please enter a number between 0 and 3."
                   << std::endl;
-      } 
+      }
     } else {
       std::cout << "Invalid input. Please enter a valid menu choice."
                 << std::endl;
@@ -154,12 +158,22 @@ void mainMenuSelector(bool* stopProgram, AudioLibrary& library) {
   std::cout << "*=============================================*" << std::endl;
   std::cout << std::endl;
 
-  int menuOptionSelected;
-  std::cout << "Enter your choice: ";
-  std::cin >> menuOptionSelected;
-  std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+  int menuOptionSelected = 0;
+  std::string userInput;
+  std::cout << "Enter your choice (e.g. 1): ";
+  std::getline(std::cin, userInput);
 
-  // TODO: check if enter key is pressed without any value
+  if (userInput.empty()) {
+    menuOptionSelected = 0;
+  }
+
+  try {
+    menuOptionSelected = std::stoi(userInput);
+  } catch (std::invalid_argument const& e) {
+    menuOptionSelected = 0;
+  } catch (std::out_of_range const& e) {
+    menuOptionSelected = 0;
+  }
 
   if (menuOptionSelected == 1) {
     newWindow("Add Audio File");
@@ -178,7 +192,7 @@ void mainMenuSelector(bool* stopProgram, AudioLibrary& library) {
   } else if (menuOptionSelected == 6) {
     exitProgram(stopProgram);
   } else {
-    std::cout << "Invalid choice. Please try again." << std::endl;
+    std::cout << "Invalid choice. Press 'Enter' to try again." << std::endl;
     std::cin.get();
   }
 }
