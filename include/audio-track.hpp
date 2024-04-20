@@ -49,6 +49,14 @@ class AudioTrack {
              const std::string playlist);
 
   /**
+   * @brief Destructor for the AudioTrack class.
+   *
+   * This destructor is responsible for cleaning up any resources
+   * allocated by an AudioTrack object.
+   */
+  ~AudioTrack();
+
+  /**
    * @brief Retrieves the name of the author of the audio track.
    *
    * @return The name of the author as a std::string.
