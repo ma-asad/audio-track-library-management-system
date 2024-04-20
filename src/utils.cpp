@@ -58,6 +58,8 @@ void searchMenuSelector(AudioLibrary& library) {
   std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
   // TODO: check if enter key is pressed without any value
+  // do validation for incorrect characters other than the below digit
+  // alphabets should not be accepted
 
   if (searchOptionSelected == 1) {
     newWindow("Search by Artist");
@@ -92,17 +94,32 @@ void playlistMenuSelector(AudioLibrary& library) {
     std::cout << "2. View playlist" << std::endl;
     std::cout << "3. Delete playlist" << std::endl;
     std::cout << "0. Go back to Main Menu << std::endl \n";
-    std::cin >> playlistChoice;
-    std::cin.ignore();
+    std::cout << "Enter your choice: ";
 
-    if (playlistChoice == 1) {
-      library.createPlaylist();
-    } else if (playlistChoice == 2) {
-      std::cout << "Not yet done";
-    } else if (playlistChoice == 3) {
-      library.deletePlaylist();
-    } else if (playlistChoice != 0) {
-      std::cout << "Invalid choice. Please try again." << std::endl;
+    std::string input;
+    std::getline(std::cin, input);
+
+    // check if input is a single digit
+    if (input.length() == 1 && std::isdigit(input[0])) {
+      playlistChoice = std::stoi(input);
+
+      if (playlistChoice >= 0 && playlistChoice <= 3){
+        if (playlistChoice == 1) {
+          library.createPlaylist();
+        } else if (playlistChoice == 2) {
+          std::cout << "Not yet done";
+        } else if (playlistChoice == 3) {
+          library.deletePlaylist();
+        } else if (playlistChoice != 0) {
+          std::cout << "Invalid choice. Please try again." << std::endl;
+        }
+      } else{
+        std::cout << "Invalid choice. Please enter a number between 0 and 3."
+                  << std::endl;
+      } 
+    } else {
+      std::cout << "Invalid input. Please enter a valid menu choice."
+                << std::endl;
     }
   } while (playlistChoice != 0);
 }
