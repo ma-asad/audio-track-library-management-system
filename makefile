@@ -40,9 +40,6 @@ TEST_TARGETS = $(TEST_SOURCES:$(TEST_DIR)%.cpp=$(BUILD_DIR)%_test.exe)
 .PHONY: all
 all: $(BUILD_DIR) $(TARGET) 
 
-# Test target
-test: $(TEST_TARGET)
-
 $(BUILD_DIR):
 	@echo "Creating build directory: $@"
 	mkdir -p $@
