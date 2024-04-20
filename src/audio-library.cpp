@@ -110,10 +110,6 @@ void AudioLibrary::addTrackFromCSV() {
 
   std::string filename = "";
 
-  // filename = "./data/audio_file.csv";
-  // loadData(filename);
-  // return;
-
   do {
     std::cout << "\n" << std::endl;
     std::cout << "Please input the full path to the CSV file." << std::endl;
