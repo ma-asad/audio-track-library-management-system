@@ -418,7 +418,6 @@ void AudioLibrary::deletePlaylist() {
   std::cin.ignore();
 }
 
-
 void AudioLibrary::viewPlaylist() {
   std::string playlistName;
   std::cout << "Enter the name of the playlist to view: ";

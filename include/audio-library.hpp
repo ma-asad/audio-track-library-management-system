@@ -159,12 +159,64 @@ class AudioLibrary {
    */
   void listAudio();
 
-
+  /**
+   * Adds a track to a playlist in the audio library.
+   *
+   * @param playlistName The name of the playlist to add the track to.
+   */
   void addTrackToPlaylist(const std::string& playlistName);
+
+  /**
+   * Adds a track to an existing playlist in the audio library.
+   *
+   * This function prompts the user to enter the name of the playlist where they
+   * want to add tracks. If the playlist already exists, the function calls the
+   * `addTrackToPlaylist` function to add tracks to it. If the playlist does not
+   * exist, an error message is displayed and the user is prompted to create the
+   * playlist or enter a valid playlist name.
+   *
+   * @return None
+   */
   void addTrackToExistingPlaylist();
+
+  /**
+   * Creates a new playlist in the audio library.
+   * Prompts the user to enter the name of the new playlist.
+   * If the playlist name is empty, the creation is canceled.
+   * Checks if the playlist already exists in the library.
+   * If the playlist already exists, displays a message and returns.
+   * Otherwise, adds tracks to the playlist and displays a success message.
+   *
+   * @return None
+   */
   void createPlaylist();
-  // TODO: cross check if this was used
+
+  /**
+   * Deletes a playlist from the audio library.
+   *
+   * This function prompts the user to enter the name of the playlist to delete.
+   * It then removes all tracks associated with the playlist from the playlist
+   * table. If the playlist is empty, it also removes the empty playlist from
+   * the table. Finally, it displays a success message and waits for the user to
+   * press Enter to go back to the playlist menu.
+   * 
+   * @return None
+   */
   void deletePlaylist();
+
+  /**
+   * Displays the tracks in a playlist.
+   *
+   * Prompts the user to enter the name of the playlist to view.
+   * If the playlist is found and not empty, it displays the name of the
+   * playlist and the tracks it contains. Otherwise, it displays a message
+   * indicating that the playlist was not found or is empty.
+   *
+   * After displaying the tracks, it prompts the user to press Enter to go back
+   * to the playlist menu.
+   * 
+   * @return None
+   */
   void viewPlaylist();
 
   /**
@@ -217,6 +269,14 @@ class AudioLibrary {
     return playlistTable.findTrack(playlist);
   }
 
+  /**
+   * Searches for tracks in the audio library based on the specified search type
+   * and query.
+   *
+   * @param searchType The type of search to perform (Track, Artist, Album,
+   * Genre, or Playlist).
+   * @param searchQuery The search query to match against the tracks.
+   */
   void searchTracks(const SearchType searchType,
                     const std::string& searchQuery);
 
