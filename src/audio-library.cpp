@@ -345,15 +345,29 @@ void AudioLibrary::createPlaylist(){
         }
 
         if (choice != 0){
-          std::cout << "Do you want to add another track?" << std::endl;
-          std::cout << "1. Yes" << std::endl;
-          std::cout << "0. No" << std::endl;
-          std::cout << "Enter your choice: " << std::endl;
-          std::cin >> choice;
-          std::cin.ignore();
+          bool validChoice = false;
+          while (!validChoice){
+              std::cout << "Do you want to add another track?" << std::endl;
+              std::cout << "1. Yes" << std::endl;
+              std::cout << "0. No" << std::endl;
+              std::cout << "Enter your choice: " << std::endl;
+              std::string input;
+              std::getline(std::cin, input);
+              if (input.length() == 1 && std::isdigit(input[0])) {
+                choice = std::stoi(input);
+                if (choice == 0 || choice == 1) {
+                  validChoice = true;
+                } else {
+                  std::cout << "Invalid choice. Please enter either 0 or 1." 
+                            << std::endl;
+                }
+              } else {
+                std::cout << "Invalid choice. Please enter a valid choice." 
+                          << std::endl;
+              }
+          }
         }
     }
-
     std::cout << "Playlist created successfully." << std::endl;
     std::cout << "Press Enter to go back to the playlist menu." << std::endl;
     std::cin.ignore();
@@ -375,7 +389,7 @@ void AudioLibrary::deletePlaylist() {
     for (int c = 0; c < numTracks; ++c){
       playlistTable.remove(playlistName);
     }
-    std::cout << "The Playlisthas been deleted successfully." << std::endl;
+    std::cout << "The Playlist has been deleted successfully." << std::endl;
   }
   std::cout << "Press Enter to go back to the playlist menu." << std::endl;
   std::cin.ignore();
