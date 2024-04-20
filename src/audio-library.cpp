@@ -312,7 +312,7 @@ void AudioLibrary::addTrackToPlaylist(const std::string &playlistName) {
       AudioTrack *track = findTrackByName(trackName);
       if (track != nullptr) {
         playlistTable.insert(playlistName, *track);
-        std::cout << "The track has been added to the playliss" << std::endl;
+        std::cout << "The track has been added to the playlist" << std::endl;
       } else {
         std::cout << "The Track was not found" << std::endl;
       }
@@ -372,6 +372,7 @@ void AudioLibrary::createPlaylist() {
     std::cout << "Playlist creation canceled. " << std::endl;
     return;
   }
+
   // check if the playlist already exists
   std::pair<int, std::pair<std::string, AudioTrack> *> existingPlaylist =
       playlistTable.findAllTracks(playlistName);
