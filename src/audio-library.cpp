@@ -404,17 +404,20 @@ void AudioLibrary::deletePlaylist() {
       playlistTable.findAllTracks(playlistName);
   int numTracks = playlistTracks.first;
 
-  if (numTracks == 0) {
-    std::cout << "Playlist not found." << std::endl;
-  } else {
-    for (int c = 0; c < numTracks; ++c) {
-      playlistTable.remove(playlistName);
-    }
-    std::cout << "The Playlist has been deleted successfully." << std::endl;
+  for (int c = 0; c < numTracks; ++c) {
+    playlistTable.remove(playlistName);
   }
+
+  if (numTracks == 0) {
+    // Remove the empty playlist
+    playlistTable.remove(playlistName);
+  }
+
+  std::cout << "The playlist has been deleted successfully." << std::endl;
   std::cout << "Press Enter to go back to the playlist menu." << std::endl;
   std::cin.ignore();
 }
+
 
 void AudioLibrary::viewPlaylist() {
   std::string playlistName;
@@ -440,3 +443,5 @@ void AudioLibrary::viewPlaylist() {
   std::cout << "Press Enter to go back to the playlist menu ";
   std::cin.ignore();
 }
+
+
