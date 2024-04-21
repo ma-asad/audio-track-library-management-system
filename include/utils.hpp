@@ -1,11 +1,6 @@
-#ifndef UTILS_H
-#define UTILS_H
-
-#ifdef _WIN32
-#define CLEAR "cls"
-#else
+#ifndef _UTILS_H
+#define _UTILS_H
 #define CLEAR "clear"
-#endif
 
 #include <iostream>
 #include <limits>

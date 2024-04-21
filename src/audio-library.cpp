@@ -345,7 +345,7 @@ void AudioLibrary::addTrackToExistingPlaylist() {
   std::cout << "Enter the name of playlist where to add tracks: ";
   std::getline(std::cin, playlistName);
 
-  // check if the playlist alredy exists and tracks to it
+  // Check if the playlist alredy exists and tracks to it
   std::pair<int, std::pair<std::string, AudioTrack> *> existingPlaylist =
       playlistTable.findAllTracks(playlistName);
   if (existingPlaylist.first > 0) {
@@ -369,7 +369,7 @@ void AudioLibrary::createPlaylist() {
     return;
   }
 
-  // check if the playlist already exists
+  // Check if the playlist already exists
   std::pair<int, std::pair<std::string, AudioTrack> *> existingPlaylist =
       playlistTable.findAllTracks(playlistName);
   if (existingPlaylist.first > 0) {
@@ -433,5 +433,3 @@ void AudioLibrary::viewPlaylist() {
   std::cout << "Press Enter to go back to the playlist menu ";
   std::cin.ignore();
 }
-
-

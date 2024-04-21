@@ -7,21 +7,30 @@ void exitProgram(bool* stopProgram) {
 }
 
 void newWindow(std::string windowTitle) {
+  // Define the width of the banner
   const int bannerWidth = 47;
+
   const int titleLength = windowTitle.length();
 
+  // Calculate the padding on the left and right of the title
   int paddingLeft = (bannerWidth - titleLength - 2) / 2;
   int paddingRight = (bannerWidth - titleLength - 2) / 2;
-  if (titleLength % 2 == 0) paddingRight++;
 
+  if (titleLength % 2 == 0) {
+    paddingRight++
+  };
+
+  // Create strings of spaces for the left and right padding
   std::string paddingSpacesLeft(paddingLeft, ' ');
   std::string paddingSpacesRight(paddingRight, ' ');
 
   std::system(CLEAR);
+
   std::cout << "*=============================================*" << std::endl;
   std::cout << "|" << paddingSpacesLeft << windowTitle << paddingSpacesRight
             << "|" << std::endl;
   std::cout << "*=============================================*" << std::endl;
+
   std::cout << std::endl;
 }
 
@@ -57,18 +66,24 @@ void searchMenuSelector(AudioLibrary& library) {
   std::cout << "Enter your choice (e.g. 1): ";
   std::getline(std::cin, userInput);
 
+  // If the user input is empty, set the selected option to 0
   if (userInput.empty()) {
     searchOptionSelected = 0;
   }
 
+  // Try to convert the user input to an integer
   try {
     searchOptionSelected = std::stoi(userInput);
   } catch (std::invalid_argument const& e) {
+    // If the conversion fails due to an invalid argument, set the selected
+    // option to 0
     searchOptionSelected = 0;
   } catch (std::out_of_range const& e) {
+    // If the conversion fails due to out of range, set the selected option to 0
     searchOptionSelected = 0;
   }
 
+  // Perform the action based on the selected option
   if (searchOptionSelected == 1) {
     newWindow("Search by Artist");
     library.searchTracks(SearchType::Artist, getSearchQuery("Artist"));
@@ -91,6 +106,7 @@ void searchMenuSelector(AudioLibrary& library) {
     std::cout << "Invalid choice. Press 'Enter' to try again." << std::endl;
     std::cin.get();
   }
+  
   searchMenuSelector(library);
 }
 

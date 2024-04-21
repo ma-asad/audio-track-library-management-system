@@ -1,5 +1,5 @@
-#ifndef AUDIOTRACK_H
-#define AUDIOTRACK_H
+#ifndef _AUDIOTRACK_H
+#define _AUDIOTRACK_H
 
 #include <sstream>
 

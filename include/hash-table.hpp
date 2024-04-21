@@ -1,5 +1,5 @@
-#ifndef HASHTABLE_H
-#define HASHTABLE_H
+#ifndef _HASHTABLE_H
+#define _HASHTABLE_H
 
 #include <algorithm>
 #include <cmath>

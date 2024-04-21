@@ -1,5 +1,5 @@
-#ifndef AUDIOLIBRARY_H
-#define AUDIOLIBRARY_H
+#ifndef _AUDIOLIBRARY_H
+#define _AUDIOLIBRARY_H
 
 #include <fstream>
 #include <iostream>
@@ -142,13 +142,16 @@ class AudioLibrary {
                     const std::string& searchQuery);
 
   /**
-   * @brief Deletes a track from the audio library.
+   * Deletes an audio track from the library.
    *
-   * This function takes the name of the audio track as a parameter and deletes
-   * it from the audio library.
-   *
-   * @param audioName The name of the audio track to be deleted.
-   * @return True if the track was successfully deleted, false otherwise.
+   * This function prompts the user to input the name of the audio track they
+   * want to delete. If the user inputs 'C', the function will exit and go back
+   * to the previous menu. If the user inputs an empty string, an error message
+   * will be displayed and the user will be prompted again. If the user inputs a
+   * valid audio track name, the function will attempt to delete the track from
+   * the library. If the deletion is successful, a success message will be
+   * displayed. If an error occurs during the deletion process, an error message
+   * will be displayed.
    */
   void deleteAudio();
 
@@ -178,8 +181,6 @@ class AudioLibrary {
    * `addTrackToPlaylist` function to add tracks to it. If the playlist does not
    * exist, an error message is displayed and the user is prompted to create the
    * playlist or enter a valid playlist name.
-   *
-   * @return None
    */
   void addTrackToExistingPlaylist();
 
@@ -190,8 +191,6 @@ class AudioLibrary {
    * Checks if the playlist already exists in the library.
    * If the playlist already exists, displays a message and returns.
    * Otherwise, adds tracks to the playlist and displays a success message.
-   *
-   * @return None
    */
   void createPlaylist();
 
@@ -203,8 +202,6 @@ class AudioLibrary {
    * table. If the playlist is empty, it also removes the empty playlist from
    * the table. Finally, it displays a success message and waits for the user to
    * press Enter to go back to the playlist menu.
-   *
-   * @return None
    */
   void deletePlaylist();
 
@@ -218,8 +215,6 @@ class AudioLibrary {
    *
    * After displaying the tracks, it prompts the user to press Enter to go back
    * to the playlist menu.
-   *
-   * @return None
    */
   void viewPlaylist();
 

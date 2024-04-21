@@ -119,8 +119,10 @@ bool HashTable<Key, Value>::remove(const Key& key) {
         table[position] = currentNode->next;
       }
       delete currentNode;
+
       return true;
     }
+
     previousNode = currentNode;
     currentNode = currentNode->next;
   }
@@ -143,6 +145,7 @@ std::pair<size_t, std::pair<Key, Value>*> HashTable<Key, Value>::listItems()
   size_t position = 0;
   for (size_t c = 0; c < tableSize; ++c) {
     Node<std::pair<Key, Value>>* currentNode = table[c];
+
     while (currentNode) {
       items[position++] = currentNode->data;
       currentNode = currentNode->next;
