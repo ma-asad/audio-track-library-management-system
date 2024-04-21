@@ -1,5 +1,5 @@
-#ifndef _AUDIOLIBRARY_H
-#define _AUDIOLIBRARY_H
+#ifndef AUDIOLIBRARY_H
+#define AUDIOLIBRARY_H
 
 #include <fstream>
 #include <iostream>
@@ -142,7 +142,7 @@ class AudioLibrary {
                     const std::string& searchQuery);
 
   /**
-   * Deletes an audio track from the library.
+   * @brief Deletes an audio track from the library.
    *
    * This function prompts the user to input the name of the audio track they
    * want to delete. If the user inputs 'C', the function will exit and go back
@@ -219,7 +219,7 @@ class AudioLibrary {
   void viewPlaylist();
 
   /**
-   * Finds an AudioTrack by its name.
+   * @brief Finds an AudioTrack by its name.
    *
    * @param track The name of the track to find.
    * @return A pointer to the found AudioTrack, or nullptr if not found.
