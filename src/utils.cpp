@@ -1,7 +1,7 @@
 #include "utils.hpp"
 
 void exitProgram(bool* stopProgram) {
-  std::cout << "Exiting the program. BLYAT CYKA!" << std::endl;
+  std::cout << "Exiting the program. Goodbye!" << std::endl;
   std::cout << std::endl;
   *stopProgram = true;
 }
@@ -85,7 +85,7 @@ void searchMenuSelector(AudioLibrary& library) {
     newWindow("Search by Playlist");
     library.searchTracks(SearchType::Playlist, getSearchQuery("Playlist"));
   } else if (searchOptionSelected == 6) {
-    // go back to main menu
+    // Go back to main menu
     return;
   } else {
     std::cout << "Invalid choice. Press 'Enter' to try again." << std::endl;
@@ -140,7 +140,7 @@ void playlistMenuSelector(AudioLibrary& library) {
     newWindow("Delete Playlist");
     library.deletePlaylist();
   } else if (playlistOptionSelected == 5) {
-    // go back to main menu
+    // Go back to main menu
     return;
   } else {
     std::cout << "Invalid choice. Press 'Enter' to try again." << std::endl;

@@ -1,11 +1,5 @@
 #include "hash-table.hpp"
 
-/*
-    audioTrack.cpp
-    Created:
-    Updated:
-*/
-
 template <typename Key, typename Value>
 size_t HashTable<Key, Value>::hasher(const Key& key) const {
   size_t hashingValue = 0;
@@ -116,13 +110,8 @@ bool HashTable<Key, Value>::remove(const Key& key) {
   size_t position = hasher(key);
   Node<std::pair<Key, Value>>* currentNode = table[position];
   Node<std::pair<Key, Value>>* previousNode = nullptr;
-  // std::cout << "currentNode: " << currentNode << std::endl;
 
   while (currentNode) {
-    // std::cout << "currentNode->data.first: " << currentNode->data.first
-    //           << std::endl;
-    // std::cout << "key: " << key << std::endl;
-
     if (currentNode->data.first == key) {
       if (previousNode) {
         previousNode->next = currentNode->next;

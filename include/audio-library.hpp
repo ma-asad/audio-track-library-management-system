@@ -6,15 +6,8 @@
 #include <sstream>
 #include <string>
 
-
 #include "audio-track.hpp"
 #include "hash-table.hpp"
-
-/*
-    audiolibrary.hpp
-    Created:
-    Updated:
-*/
 
 /**
  * @enum SearchType
@@ -46,7 +39,7 @@ class AudioLibrary {
   HashTable<std::string, AudioTrack> playlistTable;
 
   /**
-   * Sorts an array of AudioTrack objects using the QuickSort algorithm.
+   * @brief Sorts an array of AudioTrack objects using the QuickSort algorithm.
    *
    * @param items The array of AudioTrack objects to be sorted.
    * @param low The starting index of the subarray to be sorted.
@@ -55,7 +48,7 @@ class AudioLibrary {
   void quickSort(std::pair<std::string, AudioTrack>* items, int low, int high);
 
   /**
-   * Partitions the given array of audio tracks based on the audio name.
+   * @brief Partitions the given array of audio tracks based on the audio name.
    * Uses the last element as the pivot and rearranges the elements such that
    * all elements smaller than or equal to the pivot are placed before it,
    * and all elements greater than the pivot are placed after it.
@@ -68,7 +61,7 @@ class AudioLibrary {
   int partition(std::pair<std::string, AudioTrack>* items, int low, int high);
 
   /**
-   * Converts a given string to lowercase.
+   * @brief Converts a given string to lowercase.
    *
    * @param str The string to be converted to lowercase.
    * @return The lowercase version of the input string.
@@ -93,7 +86,7 @@ class AudioLibrary {
   ~AudioLibrary();
 
   /**
-   * Adds an audio track to the hash tables in the audio library.
+   * @brief Adds an audio track to the hash tables in the audio library.
    *
    * @param track The audio track to be added.
    * @return True if the track was successfully added to all hash tables, false
@@ -113,7 +106,7 @@ class AudioLibrary {
   void loadData(const std::string& filename);
 
   /**
-   * Adds a track to the audio library from a CSV file.
+   * @brief Adds a track to the audio library from a CSV file.
    * The CSV file should contain the necessary information for the track, such
    * as the title, artist, duration, etc. This function reads the CSV file,
    * parses the data, and adds the track to the audio library. If the CSV file
@@ -131,6 +124,22 @@ class AudioLibrary {
    * @return true if the file exists, false otherwise.
    */
   bool checkFileExistence(const std::string& filename);
+
+  /**
+   * @brief Lists all the audio tracks in the library.
+   */
+  void listAudio();
+
+  /**
+   * @brief Searches for tracks in the audio library based on the specified
+   * search type and query.
+   *
+   * @param searchType The type of search to perform (Track, Artist, Album,
+   * Genre, or Playlist).
+   * @param searchQuery The search query to match against the tracks.
+   */
+  void searchTracks(const SearchType searchType,
+                    const std::string& searchQuery);
 
   /**
    * @brief Deletes a track from the audio library.
@@ -155,16 +164,63 @@ class AudioLibrary {
   bool deleteTrackFromTable(const std::string& audioName);
 
   /**
-   * Lists all the audio tracks in the library.
+   * @brief Adds a track to a playlist in the audio library.
+   *
+   * @param playlistName The name of the playlist to add the track to.
    */
-  void listAudio();
-
-
   void addTrackToPlaylist(const std::string& playlistName);
+
+  /**
+   * @brief Adds a track to an existing playlist in the audio library.
+   *
+   * This function prompts the user to enter the name of the playlist where they
+   * want to add tracks. If the playlist already exists, the function calls the
+   * `addTrackToPlaylist` function to add tracks to it. If the playlist does not
+   * exist, an error message is displayed and the user is prompted to create the
+   * playlist or enter a valid playlist name.
+   *
+   * @return None
+   */
   void addTrackToExistingPlaylist();
+
+  /**
+   * @brief Creates a new playlist in the audio library.
+   * Prompts the user to enter the name of the new playlist.
+   * If the playlist name is empty, the creation is canceled.
+   * Checks if the playlist already exists in the library.
+   * If the playlist already exists, displays a message and returns.
+   * Otherwise, adds tracks to the playlist and displays a success message.
+   *
+   * @return None
+   */
   void createPlaylist();
-  // TODO: cross check if this was used
+
+  /**
+   * @brief Deletes a playlist from the audio library.
+   *
+   * This function prompts the user to enter the name of the playlist to delete.
+   * It then removes all tracks associated with the playlist from the playlist
+   * table. If the playlist is empty, it also removes the empty playlist from
+   * the table. Finally, it displays a success message and waits for the user to
+   * press Enter to go back to the playlist menu.
+   *
+   * @return None
+   */
   void deletePlaylist();
+
+  /**
+   * @brief Displays the tracks in a playlist.
+   *
+   * Prompts the user to enter the name of the playlist to view.
+   * If the playlist is found and not empty, it displays the name of the
+   * playlist and the tracks it contains. Otherwise, it displays a message
+   * indicating that the playlist was not found or is empty.
+   *
+   * After displaying the tracks, it prompts the user to press Enter to go back
+   * to the playlist menu.
+   *
+   * @return None
+   */
   void viewPlaylist();
 
   /**
@@ -178,7 +234,7 @@ class AudioLibrary {
   };
 
   /**
-   * Finds an audio track by artist.
+   * @brief Finds an audio track by artist.
    *
    * @param artist The name of the artist to search for.
    * @return A pointer to the found AudioTrack object, or nullptr if not found.
@@ -188,7 +244,7 @@ class AudioLibrary {
   }
 
   /**
-   * Finds an audio track by album.
+   * @brief Finds an audio track by album.
    *
    * @param album The name of the album to search for.
    * @return A pointer to the found AudioTrack object, or nullptr if not found.
@@ -198,7 +254,7 @@ class AudioLibrary {
   }
 
   /**
-   * Finds an audio track by genre.
+   * @brief Finds an audio track by genre.
    *
    * @param genre The genre of the audio track to find.
    * @return A pointer to the found AudioTrack object, or nullptr if not found.
@@ -208,7 +264,7 @@ class AudioLibrary {
   }
 
   /**
-   * Finds an audio track by playlist.
+   * @brief Finds an audio track by playlist.
    *
    * @param playlist The name of the playlist to search for.
    * @return A pointer to the AudioTrack object if found, nullptr otherwise.
@@ -217,11 +273,8 @@ class AudioLibrary {
     return playlistTable.findTrack(playlist);
   }
 
-  void searchTracks(const SearchType searchType,
-                    const std::string& searchQuery);
-
   /**
-   * Returns a constant reference to the tracks table.
+   * @brief Returns a constant reference to the tracks table.
    *
    * @return A constant reference to the tracks table.
    */
@@ -230,7 +283,7 @@ class AudioLibrary {
   }
 
   /**
-   * Returns a constant reference to the artist table.
+   * @brief Returns a constant reference to the artist table.
    *
    * @return A constant reference to the artist table.
    */
@@ -239,7 +292,7 @@ class AudioLibrary {
   }
 
   /**
-   * Returns a constant reference to the album name table.
+   * @brief Returns a constant reference to the album name table.
    *
    * @return A constant reference to the album name table.
    */
@@ -248,7 +301,7 @@ class AudioLibrary {
   }
 
   /**
-   * Returns a constant reference to the genre table.
+   * @brief Returns a constant reference to the genre table.
    *
    * @return A constant reference to the genre table.
    */
@@ -257,7 +310,7 @@ class AudioLibrary {
   }
 
   /**
-   * Returns a constant reference to the playlist table.
+   * @brief Returns a constant reference to the playlist table.
    *
    * @return A constant reference to the playlist table.
    */

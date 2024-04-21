@@ -1,7 +1,6 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-// TODO: Remove Win32 specific code
 #ifdef _WIN32
 #define CLEAR "cls"
 #else
@@ -25,7 +24,7 @@
 void exitProgram(bool* stopProgram);
 
 /**
- * Creates a new window with the specified title.
+ * @brief Creates a new window with the specified title.
  *
  * @param windowTitle The title of the window.
  */
@@ -40,9 +39,9 @@ void newWindow(std::string windowTitle);
 std::string getSearchQuery(std::string searchType);
 
 /**
- * Displays the search menu and allows the user to select a search option.
- * Based on the selected option, it performs the corresponding search operation
- * on the given AudioLibrary object.
+ * @brief Displays the search menu and allows the user to select a search
+ * option. Based on the selected option, it performs the corresponding search
+ * operation on the given AudioLibrary object.
  *
  * @param library The AudioLibrary object on which the search operation will be
  * performed.
@@ -50,16 +49,21 @@ std::string getSearchQuery(std::string searchType);
 void searchMenuSelector(AudioLibrary& library);
 
 /**
- * Displays the main menu and handles user input to perform various actions
- * in the audio library.
+ * @brief Displays the playlist menu and handles user input to perform various
+ * operations on the audio library.
+ *
+ * @param library The AudioLibrary object representing the audio library.
+ */
+void playlistMenuSelector(AudioLibrary& library);
+
+/**
+ * @brief Displays the main menu and handles user input to perform various
+ * actions in the audio library.
  *
  * @param stopProgram A pointer to a boolean variable indicating whether the
  * program should stop.
  * @param library The AudioLibrary object representing the audio library.
  */
 void mainMenuSelector(bool* stopProgram, AudioLibrary& library);
-
-
-void playlistMenuSelector(AudioLibrary& library);
 
 #endif
