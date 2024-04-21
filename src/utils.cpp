@@ -17,8 +17,8 @@ void newWindow(std::string windowTitle) {
   int paddingRight = (bannerWidth - titleLength - 2) / 2;
 
   if (titleLength % 2 == 0) {
-    paddingRight++
-  };
+    paddingRight++;
+  }
 
   // Create strings of spaces for the left and right padding
   std::string paddingSpacesLeft(paddingLeft, ' ');
@@ -106,7 +106,7 @@ void searchMenuSelector(AudioLibrary& library) {
     std::cout << "Invalid choice. Press 'Enter' to try again." << std::endl;
     std::cin.get();
   }
-  
+
   searchMenuSelector(library);
 }
 
