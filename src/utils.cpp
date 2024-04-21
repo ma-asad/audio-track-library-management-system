@@ -1,5 +1,7 @@
 #include "utils.hpp"
 
+bool isTestEnvironment = false;
+
 void exitProgram(bool* stopProgram) {
   std::cout << "Exiting the program. Goodbye!" << std::endl;
   std::cout << std::endl;
@@ -24,7 +26,7 @@ void newWindow(std::string windowTitle) {
   std::string paddingSpacesLeft(paddingLeft, ' ');
   std::string paddingSpacesRight(paddingRight, ' ');
 
-  std::system(CLEAR);
+  clearWindow();
 
   std::cout << "*=============================================*" << std::endl;
   std::cout << "|" << paddingSpacesLeft << windowTitle << paddingSpacesRight
@@ -45,7 +47,7 @@ std::string getSearchQuery(std::string searchType) {
 }
 
 void searchMenuSelector(AudioLibrary& library) {
-  std::system(CLEAR);
+  clearWindow();
 
   std::cout << std::endl;
   std::cout << "*=============================================*" << std::endl;
@@ -111,7 +113,7 @@ void searchMenuSelector(AudioLibrary& library) {
 }
 
 void playlistMenuSelector(AudioLibrary& library) {
-  std::system(CLEAR);
+  clearWindow();
 
   std::cout << std::endl;
   std::cout << "*=============================================*" << std::endl;
@@ -166,7 +168,7 @@ void playlistMenuSelector(AudioLibrary& library) {
 }
 
 void mainMenuSelector(bool* stopProgram, AudioLibrary& library) {
-  std::system(CLEAR);
+  clearWindow();
 
   std::cout << std::endl;
   std::cout << "*=============================================*" << std::endl;
@@ -218,4 +220,8 @@ void mainMenuSelector(bool* stopProgram, AudioLibrary& library) {
     std::cout << "Invalid choice. Press 'Enter' to try again." << std::endl;
     std::cin.get();
   }
+}
+
+void clearWindow() {
+  if (!isTestEnvironment) std::system(CLEAR);
 }

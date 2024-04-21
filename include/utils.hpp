@@ -61,4 +61,9 @@ void playlistMenuSelector(AudioLibrary& library);
  */
 void mainMenuSelector(bool* stopProgram, AudioLibrary& library);
 
+/**
+ * Clears the window by removing all content from it.
+ */
+void clearWindow();
+
 #endif
