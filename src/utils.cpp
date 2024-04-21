@@ -101,7 +101,7 @@ void playlistMenuSelector(AudioLibrary& library) {
   std::cout << "*=============================================*" << std::endl;
   std::cout << "|                  PLAYLIST MENU              |" << std::endl;
   std::cout << "*=============================================*" << std::endl;
-  std::cout << "| Search by, choose an option below :         |" << std::endl;
+  std::cout << "| Choose an option below :                    |" << std::endl;
   std::cout << "| 1. Create Playlist and add track            |" << std::endl;
   std::cout << "| 2. Add track to Playlist                    |" << std::endl;
   std::cout << "| 3. View Playlist                            |" << std::endl;
